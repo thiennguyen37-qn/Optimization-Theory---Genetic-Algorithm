@@ -29,15 +29,6 @@ Yêu cầu Python >= 3.10.
 pip install -r requirements.txt
 ```
 
-## Cách sử dụng
-
-1. Mở `GA_test.ipynb` bằng Jupyter/JupyterLab hoặc VS Code.
-2. Chạy **Run All**.
-3. Ở cell ① (form nhập liệu): nhập hàm mục tiêu, ràng buộc (mỗi dòng một ràng buộc) và tham số GA (quần thể, số thế hệ, số lần chạy), rồi bấm **Áp dụng bài toán**.
-4. Chạy lại từ cell ② để xem kết quả GA, kết quả SciPy SLSQP và bảng so sánh.
-
-> Notebook dùng `ipywidgets` để vẽ form. Nếu chạy trong VS Code và được hỏi tải script hỗ trợ từ CDN (`@jupyter-widgets/controls`), chọn **Enable Downloads** — đây là CDN chính thức của Jupyter Widgets.
-
 ## Cơ sở lý thuyết
 
 GA được cài đặt dựa trên khung lý thuyết gồm 4 phần chính:
@@ -53,8 +44,8 @@ Nội dung đầy đủ (định nghĩa toán học, giả mã, bảng đối ch
 
 GA được/dự kiến áp dụng trên 4 nhóm bài toán:
 
-- **Tối ưu không ràng buộc** (Ackley function)
-- **Tối ưu có ràng buộc** (ràng buộc tuyến tính và phi tuyến) — đã cài đặt trong `GA_test.ipynb`
+- **Tối ưu không ràng buộc** (Easom function)
+- **Tối ưu có ràng buộc** (ràng buộc tuyến tính và phi tuyến) 
 - **Bài toán người du lịch (TSP)**
 - **Machine Learning**: Feature Selection và Hyperparameter Tuning
 
@@ -64,7 +55,3 @@ GA được/dự kiến áp dụng trên 4 nhóm bài toán:
 2. Goldberg, D. E. (1989). *Genetic Algorithms in Search, Optimization, and Machine Learning*. Addison-Wesley.
 3. Mitchell, M. (1998). *An Introduction to Genetic Algorithms*. MIT Press.
 4. Deb, K., Pratap, A., Agarwal, S., & Meyarivan, T. (2002). A fast and elitist multiobjective genetic algorithm: NSGA-II. *IEEE Transactions on Evolutionary Computation*, 6(2), 182-197.
-
-## Giấy phép
-
-Phát hành theo giấy phép [MIT](LICENSE).
