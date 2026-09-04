@@ -1,0 +1,108 @@
+% ============================================================
+% TIỂU LUẬN HỌC PHẦN: LÝ THUYẾT TỐI ƯU
+% Đề tài: Thuật toán Di truyền: Cơ sở lý thuyết và các ứng dụng
+%
+% Biên dịch: pdfLaTeX (cùng engine/font với Deep Learning Report gốc:
+% babel vietnamese + vntex, font Computer Modern có dấu tiếng Việt VnR/
+% VnBX/VnTI) - cần chạy 2 lần để Mục lục / Danh sách hình / bảng cập
+% nhật đúng số trang.
+%
+%   pdflatex REPORT.tex
+%   pdflatex REPORT.tex
+%
+% Hiện tại file chỉ có Chương 1 (Cơ sở lý thuyết GA) hoàn chỉnh; Mở đầu,
+% Chương 2 (thực nghiệm GA vs SciPy SLSQP dựa trên test.py) và Kết luận
+% còn để TODO, sẽ bổ sung sau.
+% ============================================================
+
+\documentclass[12pt,a4paper]{report}
+
+% ------------------------------------------------------------
+% Ngôn ngữ & font (pdfLaTeX + babel vietnamese tự dịch "Chapter" ->
+% "Chương", "Contents" -> "Mục lục", "List of Figures" -> "Danh sách
+% hình vẽ"... ; fontenc T5 nạp font Computer Modern có dấu tiếng Việt
+% (vntex) - cùng bộ font với bản Deep Learning Report gốc)
+% ------------------------------------------------------------
+\usepackage[utf8]{inputenc}
+\usepackage[T5]{fontenc}
+\usepackage[vietnamese]{babel}
+
+% ------------------------------------------------------------
+% Toán học
+% ------------------------------------------------------------
+\usepackage{amsmath,amssymb,amsfonts}
+\numberwithin{equation}{chapter}   % đánh số công thức theo chương: (1.1), (1.2), ...
+
+% ------------------------------------------------------------
+% Trang & bố cục
+% ------------------------------------------------------------
+\usepackage[a4paper,left=3cm,right=2.5cm,top=2.5cm,bottom=2.5cm]{geometry}
+\usepackage{setspace}
+\onehalfspacing
+
+% ------------------------------------------------------------
+% Hình, bảng
+% ------------------------------------------------------------
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{booktabs}
+\renewcommand{\figurename}{Hình}
+\renewcommand{\tablename}{Bảng}
+
+% ------------------------------------------------------------
+% Sơ đồ (TikZ) & giả mã thuật toán
+% ------------------------------------------------------------
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\floatname{algorithm}{Thuật toán}
+\renewcommand{\listalgorithmname}{Danh sách thuật toán}
+
+% ------------------------------------------------------------
+% Liên kết
+% ------------------------------------------------------------
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    citecolor=black,
+    urlcolor=blue,
+    pdftitle={Thuật toán Di truyền: Cơ sở lý thuyết và các ứng dụng},
+    pdfauthor={Nguyễn Hồ Bảo Thiên},
+}
+
+\begin{document}
+
+% ================= TRANG BÌA =================
+\input{chapters/trang_bia}
+
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+% ================= MỤC LỤC =================
+\tableofcontents
+\listoffigures
+\listoftables
+
+% ================= MỞ ĐẦU =================
+% TODO: viết phần Mở đầu (đặt vấn đề, mục tiêu, phạm vi tiểu luận) sau khi
+% Chương 2 (thực nghiệm) đã hoàn thiện, để nội dung mở đầu phản ánh đúng
+% toàn bộ bài làm.
+
+% ================= CHƯƠNG 1 =================
+\input{chapters/chuong1_co_so_ly_thuyet}
+
+% ================= CHƯƠNG 2 (thực nghiệm) =================
+% TODO: Chương 2 - Triển khai thực nghiệm: cài đặt GA mã hóa số thực,
+% SciPy SLSQP đa điểm khởi tạo, và so sánh kết quả trên các bài toán tối
+% ưu có ràng buộc (dựa trên test.py / GA_test.ipynb).
+
+% ================= KẾT LUẬN =================
+% TODO: viết sau khi có kết quả thực nghiệm ở Chương 2.
+
+% ================= TÀI LIỆU THAM KHẢO =================
+\input{chapters/tai_lieu_tham_khao}
+
+\end{document}

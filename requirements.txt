@@ -1,0 +1,12 @@
+# Constrained Optimization: Genetic Algorithm vs SciPy SLSQP
+# Cài đặt:  pip install -r requirements.txt
+# Yêu cầu:  Python >= 3.10
+
+numpy==2.5.2
+scipy==1.18.1
+sympy==1.14.0
+
+# Chỉ cần cho notebook GA_test.ipynb
+matplotlib==3.11.1     # đồ thị hội tụ
+ipykernel==7.3.0       # kernel Jupyter
+ipywidgets==8.1.9      # form nhập bài toán ở cell 1
