@@ -48,6 +48,7 @@ GA được/dự kiến áp dụng trên 4 nhóm bài toán:
 - **Tối ưu có ràng buộc** (ràng buộc tuyến tính và phi tuyến) 
 - **Bài toán người du lịch (TSP)**
 - **Machine Learning**: Feature Selection và Hyperparameter Tuning
+- GP (Genetic Programming): Symbolic Regression
 
 ## Tài liệu tham khảo
 

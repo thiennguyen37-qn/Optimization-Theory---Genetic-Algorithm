@@ -10,3 +10,6 @@ sympy==1.14.0
 matplotlib==3.11.1     # đồ thị hội tụ
 ipykernel==7.3.0       # kernel Jupyter
 ipywidgets==8.1.9      # form nhập bài toán ở cell 1
+
+# Chỉ cần cho notebook 01_unconstrained_optimization.ipynb
+pygad==3.7.0           # đối chiếu với GA tự cài
