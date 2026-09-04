@@ -1,0 +1,70 @@
+# Optimization Theory — Genetic Algorithm
+
+Dự án học phần **Lý thuyết Tối ưu**: cài đặt Thuật toán Di truyền (Genetic Algorithm — GA) cho bài toán tối ưu có/không ràng buộc, đối chiếu kết quả với **SciPy SLSQP** làm mốc so sánh.
+
+## Cấu trúc thư mục
+
+```
+.
+├── GA_test.ipynb                    # Notebook chính: GA vs SciPy SLSQP, form nhập bài toán tương tác
+├── requirements.txt                 # Thư viện Python cần cài
+├── TieuLuan.pdf
+├── Deep Learning Report.pdf
+├── report/                          # Mã nguồn LaTeX của báo cáo
+│   ├── REPORT.tex
+│   ├── REPORT.pdf
+│   ├── logo.png
+│   └── chapters/
+│       ├── trang_bia.tex
+│       ├── chuong1_co_so_ly_thuyet.tex
+│       └── tai_lieu_tham_khao.tex
+└── LICENSE
+```
+
+## Cài đặt
+
+Yêu cầu Python >= 3.10.
+
+```bash
+pip install -r requirements.txt
+```
+
+## Cách sử dụng
+
+1. Mở `GA_test.ipynb` bằng Jupyter/JupyterLab hoặc VS Code.
+2. Chạy **Run All**.
+3. Ở cell ① (form nhập liệu): nhập hàm mục tiêu, ràng buộc (mỗi dòng một ràng buộc) và tham số GA (quần thể, số thế hệ, số lần chạy), rồi bấm **Áp dụng bài toán**.
+4. Chạy lại từ cell ② để xem kết quả GA, kết quả SciPy SLSQP và bảng so sánh.
+
+> Notebook dùng `ipywidgets` để vẽ form. Nếu chạy trong VS Code và được hỏi tải script hỗ trợ từ CDN (`@jupyter-widgets/controls`), chọn **Enable Downloads** — đây là CDN chính thức của Jupyter Widgets.
+
+## Cơ sở lý thuyết
+
+GA được cài đặt dựa trên khung lý thuyết gồm 4 phần chính:
+
+1. Tổng quan bài toán tối ưu và họ thuật toán tiến hóa (Evolutionary Computation)
+2. Cơ sở khoa học & nguyên lý hoạt động của GA (mã hóa nhị phân, số thực, hoán vị...)
+3. Các thành phần cốt lõi: hàm thích nghi, chọn lọc, lai ghép, đột biến, elitism
+4. Quy trình thuật toán và điều kiện dừng
+
+Nội dung đầy đủ (định nghĩa toán học, giả mã, bảng đối chiếu thuật ngữ sinh học — tin học...) xem tại [`report/REPORT.pdf`](report/REPORT.pdf).
+
+## Ứng dụng
+
+GA được/dự kiến áp dụng trên 4 nhóm bài toán:
+
+- **Tối ưu không ràng buộc** (Ackley function)
+- **Tối ưu có ràng buộc** (ràng buộc tuyến tính và phi tuyến) — đã cài đặt trong `GA_test.ipynb`
+- **Bài toán người du lịch (TSP)**
+- **Machine Learning**: Feature Selection và Hyperparameter Tuning
+
+## Tài liệu tham khảo
+
+1. Holland, J. H. (1975). *Adaptation in Natural and Artificial Systems*. University of Michigan Press.
+2. Goldberg, D. E. (1989). *Genetic Algorithms in Search, Optimization, and Machine Learning*. Addison-Wesley.
+3. Mitchell, M. (1998). *An Introduction to Genetic Algorithms*. MIT Press.
+4. Deb, K., Pratap, A., Agarwal, S., & Meyarivan, T. (2002). A fast and elitist multiobjective genetic algorithm: NSGA-II. *IEEE Transactions on Evolutionary Computation*, 6(2), 182-197.
+
+## Giấy phép
+
+Phát hành theo giấy phép [MIT](LICENSE).
