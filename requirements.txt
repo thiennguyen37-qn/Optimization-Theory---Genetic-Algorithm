@@ -1,15 +1,10 @@
-# Constrained Optimization: Genetic Algorithm vs SciPy SLSQP
+# Genetic Algorithm vs PyGAD — Lý thuyết Tối ưu
 # Cài đặt:  pip install -r requirements.txt
 # Yêu cầu:  Python >= 3.10
 
 numpy==2.5.2
-scipy==1.18.1
 sympy==1.14.0
+pygad==3.7.0            # đối chiếu với GA tự cài
 
-# Chỉ cần cho notebook GA_test.ipynb
-matplotlib==3.11.1     # đồ thị hội tụ
-ipykernel==7.3.0       # kernel Jupyter
-ipywidgets==8.1.9      # form nhập bài toán ở cell 1
-
-# Chỉ cần cho notebook 01_unconstrained_optimization.ipynb
-pygad==3.7.0           # đối chiếu với GA tự cài
+ipykernel==7.3.0        # kernel Jupyter
+ipywidgets==8.1.9       # form nhập bài toán tương tác

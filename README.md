@@ -1,12 +1,13 @@
 # Optimization Theory — Genetic Algorithm
 
-Dự án học phần **Lý thuyết Tối ưu**: cài đặt Thuật toán Di truyền (Genetic Algorithm — GA) cho bài toán tối ưu có/không ràng buộc, đối chiếu kết quả với **SciPy SLSQP** làm mốc so sánh.
+Dự án học phần **Lý thuyết Tối ưu**: cài đặt Thuật toán Di truyền (Genetic Algorithm — GA) cho bài toán tối ưu có/không ràng buộc, đối chiếu kết quả với **PyGAD** (thư viện GA có sẵn) làm mốc so sánh.
 
 ## Cấu trúc thư mục
 
 ```
 .
-├── GA_test.ipynb                    # Notebook chính: GA vs SciPy SLSQP, form nhập bài toán tương tác
+├── 01_unconstrained_optimization.ipynb  # GA vs PyGAD — tối ưu không ràng buộc (Easom, Rastrigin, Rosenbrock, Ackley, Schwefel...)
+├── 02_constrained_optimization.ipynb    # GA vs PyGAD — tối ưu có ràng buộc, form nhập hàm mục tiêu + ràng buộc
 ├── requirements.txt                 # Thư viện Python cần cài
 ├── TieuLuan.pdf
 ├── Deep Learning Report.pdf
