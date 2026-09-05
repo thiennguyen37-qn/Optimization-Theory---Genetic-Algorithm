@@ -1,10 +1,11 @@
-# Genetic Algorithm vs PyGAD — Lý thuyết Tối ưu
+# Genetic Algorithm — Lý thuyết Tối ưu
 # Cài đặt:  pip install -r requirements.txt
 # Yêu cầu:  Python >= 3.10
 
 numpy==2.5.2
 sympy==1.14.0
-pygad==3.7.0            # đối chiếu với GA tự cài
+scipy==1.18.1           # notebook 02: đối chiếu với SciPy SLSQP
+pygad==3.7.0            # notebook 01: đối chiếu với GA tự cài
 
 ipykernel==7.3.0        # kernel Jupyter
 ipywidgets==8.1.9       # form nhập bài toán tương tác
