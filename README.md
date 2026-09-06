@@ -7,7 +7,9 @@ Dự án học phần **Lý thuyết Tối ưu**: cài đặt Thuật toán Di t
 ```
 .
 ├── 01_unconstrained_optimization.ipynb  # GA vs PyGAD — tối ưu không ràng buộc (Easom, Rastrigin, Rosenbrock, Ackley, Schwefel...)
-├── 02_constrained_optimization.ipynb    # GA vs SciPy SLSQP — tối ưu có ràng buộc, form nhập hàm mục tiêu + ràng buộc
+├── 02_A_constrained_optimization.ipynb  # GA vs SciPy SLSQP — tối ưu có ràng buộc, form nhập hàm mục tiêu + ràng buộc
+├── 02_B_examples.ipynb                  # Các bài toán ứng dụng cố định: Entropy tối đa, điểm gần nhất, LP, QP, tối ưu lồi...
+├── 03_TSP.ipynb                         # GA mã hóa hoán vị cho bài toán người du lịch, đối chiếu vét cạn
 ├── requirements.txt                 # Thư viện Python cần cài
 ├── TieuLuan.pdf
 ├── Deep Learning Report.pdf
@@ -45,9 +47,9 @@ Nội dung đầy đủ (định nghĩa toán học, giả mã, bảng đối ch
 
 GA được/dự kiến áp dụng trên 4 nhóm bài toán:
 
-- **Tối ưu không ràng buộc** (Easom function)
-- **Tối ưu có ràng buộc** (ràng buộc tuyến tính và phi tuyến) 
-- **Bài toán người du lịch (TSP)**
+- **Tối ưu không ràng buộc** (Easom, Rastrigin, Rosenbrock, Ackley, Schwefel)
+- **Tối ưu có ràng buộc** (ràng buộc tuyến tính và phi tuyến; Entropy tối đa, LP, QP, tối ưu lồi...)
+- **Bài toán người du lịch (TSP)** — mã hóa hoán vị, đối chiếu vét cạn
 - **Machine Learning**: Feature Selection và Hyperparameter Tuning
 - GP (Genetic Programming): Symbolic Regression
 
