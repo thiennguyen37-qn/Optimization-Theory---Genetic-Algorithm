@@ -50,7 +50,6 @@ GA được/dự kiến áp dụng trên 4 nhóm bài toán:
 - **Tối ưu không ràng buộc** (Easom, Rastrigin, Rosenbrock, Ackley, Schwefel)
 - **Tối ưu có ràng buộc** (ràng buộc tuyến tính và phi tuyến; Entropy tối đa, LP, QP, tối ưu lồi...)
 - **Bài toán người du lịch (TSP)** — mã hóa hoán vị, đối chiếu vét cạn
-- **Machine Learning**: Feature Selection và Hyperparameter Tuning
 - GP (Genetic Programming): Symbolic Regression
 
 ## Tài liệu tham khảo
