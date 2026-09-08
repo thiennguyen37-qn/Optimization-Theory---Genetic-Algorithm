@@ -10,7 +10,7 @@ from io import StringIO
 CDAWEB_BASE_URL = "https://cdaweb.gsfc.nasa.gov/hapi"
 
 
-def scrape_wind_solar_wind(output_path="data/NASA_WIND_solar_wind.csv"):
+def scrape_wind_solar_wind(output_path="data/data_NASA/NASA_WIND_solar_wind.csv"):
     """Tải dữ liệu plasma/từ trường của vệ tinh WIND từ NASA CDAWeb HAPI."""
 
     # Dataset thật của vệ tinh WIND đặt tên "WI_..." hoặc "WIND_..." — lọc
