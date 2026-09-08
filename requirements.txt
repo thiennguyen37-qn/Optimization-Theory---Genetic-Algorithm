@@ -6,6 +6,9 @@ numpy==2.5.2
 sympy==1.14.0
 scipy==1.18.1           # notebook 02: đối chiếu với SciPy SLSQP
 pygad==3.7.0            # notebook 01: đối chiếu với GA tự cài
+pandas==2.2.3           # NASA.ipynb: đọc/xử lý dữ liệu
+scikit-learn==1.6.1     # NASA.ipynb: tiền xử lý + Linear Regression
+requests==2.33.1        # scrape_NASA_data.py: gọi NASA CDAWeb HAPI
 
 ipykernel==7.3.0        # kernel Jupyter
 ipywidgets==8.1.9       # form nhập bài toán tương tác
