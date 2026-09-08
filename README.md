@@ -6,14 +6,15 @@ Dự án học phần **Lý thuyết Tối ưu**: cài đặt Thuật toán Di t
 
 ```
 .
-├── 01_unconstrained_optimization.ipynb  # GA vs PyGAD — tối ưu không ràng buộc (Easom, Rastrigin, Rosenbrock, Ackley, Schwefel...)
-├── 02_A_constrained_optimization.ipynb  # GA vs SciPy SLSQP — tối ưu có ràng buộc, form nhập hàm mục tiêu + ràng buộc
-├── 02_B_examples.ipynb                  # Các bài toán ứng dụng cố định: Entropy tối đa, điểm gần nhất, LP, QP, tối ưu lồi...
-├── 03_TSP.ipynb                         # GA mã hóa hoán vị cho bài toán người du lịch, đối chiếu vét cạn
+├── 01_unconstrained_optimization.ipynb  # GA vs PyGAD — 5 hàm benchmark cố định: Easom, Rastrigin, Rosenbrock, Ackley, Schwefel
+├── 02_constrained_optimization.ipynb    # GA vs SciPy SLSQP — các bài toán mẫu cố định: Entropy tối đa, điểm gần nhất, LP, QP, tối ưu lồi...
+├── 03_TSP.ipynb                         # GA mã hóa hoán vị cho bài toán người du lịch, đối chiếu nghiệm tối ưu TSPLIB95 (2-opt memetic algorithm)
 ├── 04_symbolic_regression.ipynb         # Genetic Programming (cây biểu thức) cho Symbolic Regression trên dữ liệu plasma NASA (WIND), đối chiếu Linear Regression
-├── scrape_NASA_data.py              # Tải dữ liệu WIND từ NASA CDAWeb HAPI về data/
+├── scrape_NASA_data.py              # Tải dữ liệu WIND từ NASA CDAWeb HAPI về data/data_NASA/
 ├── data/
-│   └── NASA_WIND_solar_wind.csv     # Dữ liệu plasma/từ trường vệ tinh WIND (đã scrape sẵn)
+│   ├── data_NASA/
+│   │   └── NASA_WIND_solar_wind.csv # Dữ liệu plasma/từ trường vệ tinh WIND (đã scrape sẵn)
+│   └── data_TSPLIB/                 # 3 bộ chuẩn TSPLIB95 (berlin52, rd100, ch150): .tsp + .opt.tour
 ├── requirements.txt                 # Thư viện Python cần cài
 ├── TieuLuan.pdf
 ├── report/                          # Mã nguồn LaTeX của báo cáo
@@ -52,7 +53,7 @@ GA được áp dụng trên 4 nhóm bài toán:
 
 - **Tối ưu không ràng buộc** (Easom, Rastrigin, Rosenbrock, Ackley, Schwefel)
 - **Tối ưu có ràng buộc** (ràng buộc tuyến tính và phi tuyến; Entropy tối đa, LP, QP, tối ưu lồi...)
-- **Bài toán người du lịch (TSP)** — mã hóa hoán vị, đối chiếu vét cạn
+- **Bài toán người du lịch (TSP)** — mã hóa hoán vị, kết hợp 2-opt local search (memetic algorithm), đối chiếu nghiệm tối ưu trên 3 bộ dữ liệu thực TSPLIB95
 - **Genetic Programming (GP): Symbolic Regression** — cá thể là cây biểu thức, áp dụng cho các quan hệ phi tuyến dạng tổng bình phương trong dữ liệu plasma gió mặt trời (NASA WIND: |B|², vận tốc Alfvén²), đối chiếu Linear Regression
 
 ## Tài liệu tham khảo
