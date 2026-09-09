@@ -1,12 +1,12 @@
 # Optimization Theory — Genetic Algorithm
 
-Dự án học phần **Lý thuyết Tối ưu**: cài đặt Thuật toán Di truyền (Genetic Algorithm — GA) cho bài toán tối ưu có/không ràng buộc, đối chiếu kết quả với các phương pháp có sẵn (**PyGAD**, **SciPy SLSQP**) làm mốc so sánh.
+Dự án học phần **Lý thuyết Tối ưu**: cài đặt Thuật toán Di truyền (Genetic Algorithm — GA) cho bài toán tối ưu có/không ràng buộc, đối chiếu kết quả với các phương pháp có sẵn (**SciPy SLSQP**, nghiệm tối ưu công bố, hồi quy tuyến tính) làm mốc so sánh.
 
 ## Cấu trúc thư mục
 
 ```
 .
-├── 01_unconstrained_optimization.ipynb  # GA vs PyGAD — 5 hàm benchmark cố định: Easom, Rastrigin, Rosenbrock, Ackley, Schwefel
+├── 01_unconstrained_optimization.ipynb  # GA trên 5 hàm benchmark cố định: Easom, Rastrigin, Rosenbrock, Ackley, Schwefel
 ├── 02_constrained_optimization.ipynb    # GA vs SciPy SLSQP — các bài toán mẫu cố định: Entropy tối đa, điểm gần nhất, LP, QP, tối ưu lồi...
 ├── 03_TSP.ipynb                         # GA mã hóa hoán vị cho bài toán người du lịch, đối chiếu nghiệm tối ưu TSPLIB95 (2-opt memetic algorithm)
 ├── 04_symbolic_regression.ipynb         # Genetic Programming (cây biểu thức) cho Symbolic Regression trên dữ liệu plasma NASA (WIND), đối chiếu Linear Regression
