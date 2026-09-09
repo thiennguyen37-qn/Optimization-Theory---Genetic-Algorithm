@@ -10,9 +10,9 @@
 %   pdflatex REPORT.tex
 %   pdflatex REPORT.tex
 %
-% Hiện tại file chỉ có Chương 1 (Cơ sở lý thuyết GA) hoàn chỉnh; Mở đầu,
-% Chương 2 (thực nghiệm GA vs SciPy SLSQP dựa trên test.py) và Kết luận
-% còn để TODO, sẽ bổ sung sau.
+% Chương 1 (Cơ sở lý thuyết GA + GP) và Chương 2 (Ứng dụng: 4 thực
+% nghiệm dựa trên 01-04_*.ipynb) đã hoàn chỉnh; Mở đầu và Kết luận còn
+% để TODO, sẽ bổ sung sau.
 % ============================================================
 
 \documentclass[12pt,a4paper]{report}
@@ -47,6 +47,7 @@
 \usepackage{caption}
 \usepackage{subcaption}
 \usepackage{booktabs}
+\usepackage{multirow}
 \renewcommand{\figurename}{Hình}
 \renewcommand{\tablename}{Bảng}
 
@@ -95,9 +96,7 @@
 \input{chapters/chuong1_co_so_ly_thuyet}
 
 % ================= CHƯƠNG 2 (thực nghiệm) =================
-% TODO: Chương 2 - Triển khai thực nghiệm: cài đặt GA mã hóa số thực,
-% SciPy SLSQP đa điểm khởi tạo, và so sánh kết quả trên các bài toán tối
-% ưu có ràng buộc (dựa trên test.py / GA_test.ipynb).
+\input{chapters/chuong2_ung_dung}
 
 % ================= KẾT LUẬN =================
 % TODO: viết sau khi có kết quả thực nghiệm ở Chương 2.

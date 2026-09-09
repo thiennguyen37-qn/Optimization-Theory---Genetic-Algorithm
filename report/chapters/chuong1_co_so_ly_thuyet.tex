@@ -141,16 +141,17 @@ Thế hệ (Generation) & Một vòng lặp tiến hóa \\
 \end{table}
 
 Nhờ phép tương ứng này, một bài toán tối ưu bất kỳ có thể được diễn dịch
-lại thành một quá trình "tiến hóa nhân tạo": xuất phát từ một quần thể
-giải pháp ngẫu nhiên, để các giải pháp tốt hơn có nhiều cơ hội "sinh
-sản" hơn qua nhiều thế hệ, quần thể dần dịch chuyển về phía các vùng có
+lại thành một quá trình ``tiến hóa nhân tạo'': xuất phát từ một quần
+thể giải pháp ngẫu nhiên, để các giải pháp tốt hơn có nhiều cơ hội
+``sinh sản'' hơn qua nhiều thế hệ, quần thể dần dịch chuyển về phía
+các vùng có
 giá trị hàm mục tiêu tốt của không gian tìm kiếm.
 
 \subsection*{Phương pháp Mã hóa Giải pháp (Representation / Encoding)}
 \label{subsec:ma-hoa}
 
 Bước đầu tiên khi áp dụng GA cho một bài toán cụ thể là chọn cách biểu
-diễn (mã hóa) một giải pháp dưới dạng "nhiễm sắc thể" mà các toán tử di
+diễn (mã hóa) một giải pháp dưới dạng ``nhiễm sắc thể'' mà các toán tử di
 truyền có thể thao tác được. Bốn cách mã hóa phổ biến nhất là:
 
 \begin{itemize}
@@ -209,7 +210,7 @@ giá kém hơn cá thể khả thi có cùng giá trị hàm mục tiêu.
 
 Hạn chế cố hữu của hàm phạt tĩnh (static penalty) là hệ số $\lambda_i$
 phải được chọn thủ công và cố định trong suốt quá trình tiến hóa: chọn
-$\lambda_i$ quá nhỏ khiến quần thể "phớt lờ" ràng buộc, trong khi chọn
+$\lambda_i$ quá nhỏ khiến quần thể ``phớt lờ'' ràng buộc, trong khi chọn
 quá lớn khiến số hạng phạt lấn át hoàn toàn hàm mục tiêu, làm quần thể
 chỉ tập trung thỏa mãn ràng buộc mà mất khả năng phân biệt các nghiệm
 khả thi tốt và xấu. Nhiều phương pháp xử lý ràng buộc nâng cao hơn đã
@@ -222,7 +223,7 @@ nghiệm ở Chương 2.
 \label{subsec:chon-loc}
 
 Phép chọn lọc quyết định cá thể nào trong quần thể hiện tại được chọn
-làm "bố mẹ" để sinh ra thế hệ tiếp theo, thiên vị có chủ đích về phía
+làm ``bố mẹ'' để sinh ra thế hệ tiếp theo, thiên vị có chủ đích về phía
 các cá thể có độ thích nghi cao hơn.
 
 \begin{itemize}
@@ -307,7 +308,7 @@ các toán tử chuyên biệt:
     \item \textbf{OX (Order Crossover):} giữ nguyên một đoạn con từ bố
     mẹ thứ nhất, các phần tử còn lại được điền theo đúng thứ tự xuất
     hiện của chúng ở bố mẹ thứ hai.
-    \item \textbf{CX (Cycle Crossover):} xác định các "chu trình"
+    \item \textbf{CX (Cycle Crossover):} xác định các ``chu trình''
     (cycle) giữa vị trí phần tử ở hai bố mẹ, mỗi cá thể con được tạo
     bằng cách giữ nguyên các chu trình xen kẽ từ mỗi bố mẹ.
 \end{itemize}
@@ -452,10 +453,69 @@ minh; ba tiêu chuẩn phổ biến, có thể kết hợp với nhau, là:
     tục tiến triển ở các thế hệ sau.
 \end{itemize}
 
+\section{Lập trình Di truyền (Genetic Programming)}
+\label{sec:gp}
+
+Lập trình Di truyền (Genetic Programming — GP), do John Koza phát
+triển từ cuối thập niên 1980 và hệ thống hoá trong công trình kinh
+điển năm 1992 [8], là một mở rộng tự nhiên của GA đã giới thiệu ở
+Mục~\ref{subsec:ma-hoa} dưới tên gọi \textit{mã hóa dựa trên cấu
+trúc}. Khác biệt cốt lõi so với GA mã hóa số thực hay hoán vị là: thay
+vì tiến hóa một chuỗi giá trị có độ dài cố định trong một khuôn dạng
+lời giải cho trước, GP tiến hóa trực tiếp \textbf{cấu trúc} của một
+biểu thức hoặc chương trình, cho phép thuật toán tự khám phá đồng thời
+cả hình dạng lẫn tham số của lời giải.
+
+\subsection*{Mã hóa dạng cây biểu thức}
+
+Mỗi cá thể trong GP là một cây biểu thức (expression tree): nút trong
+(internal node) là một toán tử lấy từ một \textit{tập hàm} (function
+set) cho trước — ví dụ các phép toán số học $\{+,-,\times,\div\}$ hay
+hàm lượng giác $\{\sin,\cos\}$ — còn nút lá (terminal node) là một
+biến đầu vào hoặc một hằng số, lấy từ một \textit{tập đầu cuối}
+(terminal set). Duyệt cây theo đúng cấu trúc phân cấp của nó cho ra
+một biểu thức toán học tường minh, tính được giá trị trên bất kỳ bộ
+dữ liệu đầu vào nào — nhờ đó, một quần thể các cây khác nhau về cả
+hình dạng lẫn nội dung có thể được đánh giá và so sánh với nhau như
+trong GA thông thường.
+
+\subsection*{Hàm độ thích nghi}
+
+Bài toán tiêu biểu nhất mà GP được áp dụng là \textbf{hồi quy ký hiệu}
+(symbolic regression): tự động tìm một biểu thức toán học mô tả tốt
+một tập dữ liệu quan sát $(X, y)$ mà không giả định trước dạng hàm cụ
+thể — khác hẳn hồi quy tuyến tính hay hồi quy đa thức, nơi dạng hàm
+đã được ấn định sẵn và chỉ các hệ số được tối ưu. Độ thích nghi của
+một cây trong bài toán này thường được xây dựng từ sai số dự đoán, ví
+dụ sai số bình phương trung bình (MSE) giữa giá trị cây tính ra và giá
+trị $y$ thực tế, cộng thêm một số hạng phạt tỉ lệ với kích thước cây
+(\textit{parsimony pressure}) nhằm hạn chế hiện tượng cây ``phình to''
+không kiểm soát (bloat) mà không mang lại cải thiện tương xứng về độ
+chính xác.
+
+\subsection*{Toán tử tiến hóa}
+
+Lai ghép và đột biến trong GP thao tác trực tiếp trên cấu trúc cây
+thay vì trên một chuỗi có độ dài cố định:
+\begin{itemize}
+    \item \textbf{Lai ghép trao đổi cây con (Subtree Crossover):} chọn
+    ngẫu nhiên một nút trên mỗi cây bố mẹ, rồi hoán đổi hai cây con bắt
+    rễ tại các nút đó với nhau để tạo ra hai cây con.
+    \item \textbf{Đột biến thay cây con (Subtree Mutation):} chọn ngẫu
+    nhiên một nút trên cây, rồi thay toàn bộ cây con bắt rễ tại nút đó
+    bằng một cây con mới được sinh ngẫu nhiên.
+\end{itemize}
+Các thành phần còn lại của chu trình tiến hóa — khởi tạo quần thể,
+chọn lọc, elitism, điều kiện dừng — về bản chất giống hệt GA đã trình
+bày ở các mục trước, chỉ khác đối tượng thao tác là một \textbf{cây}
+thay vì một \textbf{vector} số hay hoán vị.
+
 Trên cơ sở các thành phần và quy trình đã trình bày ở chương này, Chương
-2 sẽ trình bày cụ thể việc cài đặt một GA mã hóa số thực cho bài toán
-tối ưu có ràng buộc, đồng thời so sánh thực nghiệm với phương pháp
-SciPy SLSQP. Độc giả quan tâm đến các hướng phát triển và ứng dụng khác
-của GA có thể tham khảo thêm tổng quan của Katoch và cộng sự (2020)
-[5], cũng như một ứng dụng kinh điển kết hợp GA với huấn luyện mạng
-nơ-ron của Whitley và cộng sự (1990) [6].
+2 sẽ trình bày cụ thể việc áp dụng GA (và GP) cho bốn nhóm bài toán —
+tối ưu không ràng buộc, tối ưu có ràng buộc, bài toán người du lịch, và
+hồi quy ký hiệu — đồng thời so sánh thực nghiệm với các phương pháp có
+sẵn tương ứng (PyGAD, SciPy SLSQP, nghiệm tối ưu công bố, hồi quy tuyến
+tính). Độc giả quan tâm đến các hướng phát triển và ứng dụng khác của
+GA có thể tham khảo thêm tổng quan của Katoch và cộng sự (2020) [5],
+cũng như một ứng dụng kinh điển kết hợp GA với huấn luyện mạng nơ-ron
+của Whitley và cộng sự (1990) [6].
