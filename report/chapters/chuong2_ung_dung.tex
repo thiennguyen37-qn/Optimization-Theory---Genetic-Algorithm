@@ -16,13 +16,19 @@ biểu thức theo nguyên lý Lập trình Di truyền
 toán học đầy đủ được trình bày trước, sau đó là phương pháp so sánh
 được sử dụng và bảng kết quả thực nghiệm.
 
-\section{Tối ưu không ràng buộc: So sánh GA với PyGAD}
+\section{Tối ưu không ràng buộc}
 \label{sec:ud-khong-rang-buoc}
 
-Năm hàm benchmark kinh điển của tối ưu không ràng buộc được sử
-dụng để đánh giá khả năng tìm cực trị toàn cục của GA. Cả năm hàm đều
-có hai biến $x, y$ và một cực tiểu toàn cục đã biết trước, cho phép so
-sánh trực tiếp giá trị GA tìm được với giá trị đúng.
+Năm hàm benchmark kinh điển của tối ưu không ràng buộc được sử dụng để
+đánh giá khả năng tìm cực trị toàn cục của GA. Cả năm hàm đều có hai
+biến $x, y$ và một cực tiểu toàn cục đã biết trước, cho phép so sánh
+trực tiếp giá trị GA tìm được với giá trị đúng. Việc chọn đúng năm hàm
+này không ngẫu nhiên: mỗi hàm đại diện cho một kiểu địa hình gây khó
+khăn khác nhau, nhờ đó bộ năm hàm bao quát được các tình huống mà một
+thuật toán tối ưu toàn cục phải đối mặt. Với mỗi hàm, đồ thị hàm trong không
+gian ba chiều và đường hội tụ thực nghiệm của GA được đặt lần lượt
+trong cùng một hình, để đối chiếu giữa đặc điểm địa hình và hành vi
+hội tụ tương ứng.
 
 \textbf{Hàm Easom} có công thức
 \begin{equation}
@@ -30,12 +36,38 @@ f(x,y) = -\cos(x)\cos(y)\exp\!\left(-(x-\pi)^2-(y-\pi)^2\right),
 \qquad x, y \in [-100,\, 100],
 \label{eq:easom}
 \end{equation}
-với cực tiểu toàn cục $f(\pi,\pi) = -1$. Giá trị hàm gần như bằng $0$
-trên toàn bộ miền tìm kiếm, ngoại trừ một hố hẹp duy nhất chứa cực
-tiểu toàn cục — vì miền tìm kiếm rộng ($[-100,100]^2$) so với kích
-thước hố cực tiểu, phần lớn không gian tìm kiếm không cung cấp thông
-tin nào để dẫn đường, nên hàm này kiểm tra khả năng \textit{tìm ra}
-đúng vùng chứa nghiệm của một thuật toán tìm kiếm toàn cục.
+với cực tiểu toàn cục $f(\pi,\pi) = -1$. Khó khăn của hàm này nằm ở
+chỗ thừa số $\exp(-(x-\pi)^2-(y-\pi)^2)$ tắt cực nhanh khi rời khỏi
+điểm $(\pi,\pi)$: chỉ cần cách tâm khoảng ba đơn vị, giá trị hàm đã
+nhỏ hơn $10^{-4}$ và coi như bằng $0$. Vùng thực sự mang thông tin
+dẫn đường vì thế chiếm chưa tới $0{,}1\%$ diện tích miền tìm kiếm
+$[-100,100]^2$, toàn bộ phần còn lại là một mặt phẳng gần như tuyệt
+đối. Đây là tình huống bất lợi nhất cho mọi phương pháp dựa trên
+gradient: đứng ở vùng phẳng thì đạo hàm xấp xỉ $0$ theo mọi hướng, nên
+không có thông tin cục bộ nào chỉ ra nên đi về đâu. Hàm này vì vậy
+kiểm tra thuần túy khả năng \textit{tìm ra} đúng vùng chứa nghiệm bằng
+cách rải điểm, chứ không phải khả năng tinh chỉnh.
+
+\begin{figure}[htbp]
+\centering
+\begin{subfigure}[b]{0.72\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{figures/easom.png}
+    \caption{Hàm Easom trong không gian ba chiều}
+\end{subfigure}
+
+\vspace{0.8em}
+
+\begin{subfigure}[b]{0.72\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{figures/hoitu_easom.png}
+    \caption{Đường hội tụ của GA}
+\end{subfigure}
+\caption{Hàm Easom: đồ thị trong không gian ba chiều và diễn biến giá trị
+tốt nhất qua các thế hệ. Đường nét đứt đánh dấu thế hệ mà GA chốt được
+nghiệm tốt nhất.}
+\label{fig:easom}
+\end{figure}
 
 \textbf{Hàm Rastrigin} có công thức
 \begin{equation}
@@ -43,10 +75,37 @@ f(x,y) = 20 + x^2 + y^2 - 10\cos(2\pi x) - 10\cos(2\pi y),
 \qquad x, y \in [-5.12,\, 5.12],
 \label{eq:rastrigin}
 \end{equation}
-với cực tiểu toàn cục $f(0,0) = 0$. Hai số hạng cosin tạo ra rất nhiều
-cực tiểu cục bộ phân bố đều và dày đặc xung quanh cực tiểu toàn cục,
-nên hàm này kiểm tra khả năng không bị mắc kẹt tại một trong các cực
-tiểu cục bộ đó.
+với cực tiểu toàn cục $f(0,0) = 0$. Hai số hạng cosin có chu kỳ bằng
+$1$ nên tạo ra một mạng lưới cực tiểu cục bộ nằm xấp xỉ tại các điểm
+có tọa độ nguyên; trong miền $[-5.12,\, 5.12]^2$ có khoảng $121$ cực
+tiểu cục bộ như vậy, bao quanh dày đặc cực tiểu toàn cục tại gốc tọa
+độ. Khó khăn ở đây là bài toán \textit{đa cực trị} điển hình: một
+phương pháp cục bộ xuất phát từ điểm ngẫu nhiên gần như chắc chắn rơi
+vào giếng gần nhất rồi dừng lại, và giếng đó hầu như không bao giờ là
+giếng ở gốc tọa độ. Cái cứu GA ở đây là biên độ đột biến: với
+$\sigma = 0{,}08 \times 10{,}24 \approx 0{,}82$, một bước đột biến đủ
+lớn để nhảy qua vài ô lưới cực tiểu cục bộ (khoảng cách giữa hai giếng
+liền kề là $1$), nên cá thể không bị giam trong một giếng duy nhất.
+
+\begin{figure}[htbp]
+\centering
+\begin{subfigure}[b]{0.72\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{figures/rastrigin.png}
+    \caption{Hàm Rastrigin trong không gian ba chiều}
+\end{subfigure}
+
+\vspace{0.8em}
+
+\begin{subfigure}[b]{0.72\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{figures/hoitu_rastrigin.png}
+    \caption{Đường hội tụ của GA}
+\end{subfigure}
+\caption{Hàm Rastrigin: mạng lưới cực tiểu cục bộ dày đặc quanh cực
+tiểu toàn cục, và diễn biến giá trị tốt nhất qua các thế hệ.}
+\label{fig:rastrigin}
+\end{figure}
 
 \textbf{Hàm Rosenbrock} có công thức
 \begin{equation}
@@ -54,10 +113,44 @@ f(x,y) = (1-x)^2 + 100(y-x^2)^2,
 \qquad x \in [-5,\, 10],\ y \in [-5,\, 10],
 \label{eq:rosenbrock}
 \end{equation}
-với cực tiểu toàn cục $f(1,1) = 0$. Hàm chỉ có một cực tiểu duy nhất,
-nhưng cực tiểu đó nằm trong một thung lũng cong hẹp hình quả chuối:
-khó khăn ở đây không phải là \textit{tìm ra} vùng chứa nghiệm mà là
-\textit{dò theo} chính xác đáy của thung lũng cong này.
+với cực tiểu toàn cục $f(1,1) = 0$. Khác hẳn bốn hàm còn lại, hàm này
+\textit{không} đa cực trị: trên miền hai biến nó chỉ có duy nhất một
+cực tiểu, nên không tồn tại bẫy cục bộ nào để thuật toán mắc vào. Khó
+khăn nằm ở hình dạng của đáy hàm. Số hạng $100(y-x^2)^2$ phạt rất nặng
+mọi sai lệch khỏi đường cong $y = x^2$, tạo thành một thung lũng hẹp
+hình quả chuối với vách hai bên dựng đứng, trong khi dọc theo lòng
+thung lũng giá trị hàm lại thay đổi rất chậm. Muốn tiến về $(1,1)$,
+thuật toán phải thay đổi $x$ và $y$ một cách \textit{phối hợp} sao cho
+$y$ luôn bám theo $x^2$; đi lệch nhịp là lập tức đâm vào vách. Cụ thể,
+để đạt được $f < 10^{-3}$ thì đồng thời phải có $|1-x| < 0{,}032$ và
+$|y-x^2| < 0{,}0032$ --- một dải rất mỏng và cong. Cả hai toán tử của
+GA đều không phù hợp với yêu cầu này: lai ghép trộn nội suy theo
+\textit{đường thẳng} nối hai cha mẹ, còn đột biến Gauss xê dịch từng
+tọa độ một cách \textit{độc lập}, nên không toán tử nào bám được theo
+một đường cong. Nói cách khác, với Rosenbrock cái khó không phải là
+\textit{tìm ra} vùng chứa nghiệm mà là \textit{dò theo} đáy thung lũng
+sau khi đã vào được trong đó.
+
+\begin{figure}[htbp]
+\centering
+\begin{subfigure}[b]{0.72\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{figures/rosenbrock.png}
+    \caption{Hàm Rosenbrock trong không gian ba chiều}
+\end{subfigure}
+
+\vspace{0.8em}
+
+\begin{subfigure}[b]{0.72\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{figures/hoitu_rosenbrock.png}
+    \caption{Đường hội tụ của GA}
+\end{subfigure}
+\caption{Hàm Rosenbrock: thung lũng cong hẹp hình quả chuối, và diễn
+biến giá trị tốt nhất qua các thế hệ --- GA chốt kỷ lục ngay ở thế hệ
+$11$ rồi không cải thiện thêm trong $89$ thế hệ còn lại.}
+\label{fig:rosenbrock}
+\end{figure}
 
 \textbf{Hàm Ackley} có công thức
 \begin{equation}
@@ -68,9 +161,36 @@ f(x,y) = {} & -20\exp\!\left(-0.2\sqrt{0.5(x^2+y^2)}\right) \\
 \label{eq:ackley}
 \end{equation}
 với $x, y \in [-32.768,\, 32.768]$ và cực tiểu toàn cục $f(0,0) = 0$.
-Về tổng thể hàm có dạng một hố lớn
-duy nhất, nhưng số hạng cosin tạo thêm vô số gợn sóng cực tiểu cục bộ
-nhỏ phủ lên bề mặt hố đó.
+Hàm này kết hợp hai cấu trúc chồng lên nhau ở hai thang độ khác nhau:
+số hạng mũ thứ nhất tạo một cái phễu lớn dốc dần về gốc tọa độ, còn số
+hạng cosin phủ lên bề mặt phễu đó vô số gợn sóng cực tiểu cục bộ nhỏ.
+Cấu trúc phễu ở thang lớn là thông tin có ích --- nó chỉ đúng hướng
+về nghiệm; các gợn sóng ở thang nhỏ mới là bẫy. Do đó Ackley kiểm tra
+khả năng \textit{đọc được xu thế toàn cục mà không bị nhiễu cục bộ
+đánh lạc hướng}. Với GA, biên độ đột biến
+$\sigma = 0{,}08 \times 65{,}536 \approx 5{,}24$ lớn hơn nhiều so với
+bước sóng của gợn nhiễu (bằng $1$), nên các gợn sóng gần như trong
+suốt đối với quá trình tìm kiếm.
+
+\begin{figure}[htbp]
+\centering
+\begin{subfigure}[b]{0.72\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{figures/ackley.png}
+    \caption{Hàm Ackley trong không gian ba chiều}
+\end{subfigure}
+
+\vspace{0.8em}
+
+\begin{subfigure}[b]{0.72\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{figures/hoitu_ackley.png}
+    \caption{Đường hội tụ của GA}
+\end{subfigure}
+\caption{Hàm Ackley: phễu lớn ở thang toàn cục phủ gợn sóng cực tiểu
+cục bộ ở thang nhỏ, và diễn biến giá trị tốt nhất qua các thế hệ.}
+\label{fig:ackley}
+\end{figure}
 
 \textbf{Hàm Schwefel} có công thức
 \begin{equation}
@@ -79,53 +199,105 @@ f(x,y) = 837.9658 - x\sin\sqrt{|x|} - y\sin\sqrt{|y|},
 \label{eq:schwefel}
 \end{equation}
 với cực tiểu toàn cục $f(420.9687,\, 420.9687) \approx 0$. Đây là hàm
-được thiết kế để đánh lừa các thuật toán: vùng lân cận gốc tọa độ có
-giá trị hàm nhỏ và trông giống một cực tiểu, nhưng cực tiểu toàn cục
-thực sự lại nằm cách xa gốc tọa độ, gần biên của miền tìm kiếm.
+được thiết kế để \textit{đánh lừa}: các cực tiểu cục bộ của nó phân bố
+không đều, và điều nguy hiểm là cực tiểu cục bộ tốt thứ nhì lại nằm
+rất xa cực tiểu toàn cục trong không gian tìm kiếm. Hệ quả là thông
+tin cục bộ dẫn đường sai --- một thuật toán càng khai thác sớm và
+càng mạnh vùng đang có vẻ tốt thì càng bị kéo ra xa nghiệm đúng. Thêm
+vào đó, cực tiểu toàn cục nằm ở $420{,}97$, tức sát biên $500$ của
+miền tìm kiếm, nên những cài đặt cắt hoặc co cá thể về phía tâm miền
+sẽ bỏ sót nó. Hàm này vì vậy kiểm tra khả năng duy trì thăm dò trên
+diện rộng và không cam kết quá sớm vào một vùng.
 
-Với mỗi hàm, GA mã hóa số thực (lai ghép trộn BLX-$\alpha$, đột biến
-Gauss, theo Mục~\ref{sec:toan-tu-cot-loi}) được chạy độc lập ba lần
-với quần thể $500$ cá thể trong tối đa $50$ thế
-hệ. Đối trọng so sánh là PyGAD, một thư viện GA có sẵn, được chạy trên
-cùng bài toán, cùng tham số quần thể/thế hệ, và được cấu hình dùng
-đúng công thức lai ghép trộn và đột biến Gauss của GA tự cài — nhờ đó
-phần chênh lệch kết quả (nếu có) phản ánh đúng sự khác biệt về kiến
-trúc vòng lặp tiến hóa giữa hai cách cài đặt, chứ không phải khác biệt
-về công thức toán học của từng toán tử. Kết quả tốt nhất trong ba lần
-chạy của mỗi phương pháp được trình bày ở Bảng~\ref{tab:kq-khong-rang-buoc}.
+\begin{figure}[htbp]
+\centering
+\begin{subfigure}[b]{0.72\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{figures/schwefel.png}
+    \caption{Hàm Schwefel trong không gian ba chiều}
+\end{subfigure}
+
+\vspace{0.8em}
+
+\begin{subfigure}[b]{0.72\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{figures/hoitu_schwefel.png}
+    \caption{Đường hội tụ của GA}
+\end{subfigure}
+\caption{Hàm Schwefel: cực tiểu toàn cục nằm gần biên miền tìm kiếm,
+xa vùng trông có vẻ tốt quanh gốc tọa độ, và diễn biến giá trị tốt
+nhất qua các thế hệ.}
+\label{fig:schwefel}
+\end{figure}
+
+Với mỗi hàm, GA mã hóa số thực (lai ghép trộn BLX-$\alpha$ với
+$\alpha \in [-0{,}25;\, 1{,}25]$, đột biến Gauss với xác suất $0{,}15$
+trên mỗi gene và $\sigma$ bằng $0{,}08$ lần bề rộng miền, chọn lọc
+giải đấu theo thứ hạng với $k = 3$, giữ lại $2$ cá thể tinh hoa mỗi
+thế hệ --- theo Mục~\ref{sec:toan-tu-cot-loi}) được chạy một lần với
+quần thể $500$ cá thể trong $100$ thế hệ, hạt giống ngẫu nhiên cố định
+bằng $42$ để kết quả tái lập được. Cá thể được cắt về miền tìm kiếm
+sau mỗi phép lai ghép và đột biến, vì ở đây miền đóng vai trò miền xác
+định của bài toán. Thuật toán không có tiêu chí dừng sớm: vòng lặp
+luôn chạy đủ $100$ thế hệ. Cột \textit{số thế hệ thỏa mãn} trong
+Bảng~\ref{tab:kq-khong-rang-buoc} vì vậy không phải thế hệ mà thuật
+toán dừng lại, mà là thế hệ sớm nhất đạt được giá trị $f^{*}$ cuối
+cùng --- tức lần cuối cùng kỷ lục được cải thiện.
 
 \begin{table}[htbp]
 \centering
-\caption{Kết quả GA và PyGAD trên năm hàm benchmark không ràng buộc}
+\caption{Kết quả GA trên năm hàm benchmark không ràng buộc}
 \label{tab:kq-khong-rang-buoc}
-\begin{tabular}{lccc}
+\small
+\setlength{\tabcolsep}{5pt}
+\begin{tabular}{lccccc}
 \toprule
-\textbf{Hàm} & \textbf{Nghiệm đúng} & \textbf{GA ($f^{*}$)} & \textbf{PyGAD ($f^{*}$)} \\
+\textbf{Hàm} & \textbf{Thời gian} & \textbf{Số thế hệ}
+& \textbf{$f^{*}$} & \textbf{$x^{*}$} & \textbf{$y^{*}$} \\
+& \textbf{(s)} & \textbf{thỏa mãn} & & & \\
 \midrule
-Easom      & $-1$              & $-1.0000000000$          & $-1.0000000000$          \\
-Rastrigin  & $0$               & $0.0000000000$           & $0.0000000000$           \\
-Rosenbrock & $0$               & $0.0001641030$           & $0.0006899893$           \\
-Ackley     & $0$               & $5.9089\times10^{-11}$   & $2.9921\times10^{-11}$   \\
-Schwefel   & $\approx 0$       & $2.5455\times10^{-5}$    & $2.5455\times10^{-5}$    \\
+Easom      & $1.3619$ & $51$ & $-1.0000000000$      & $3.141593$              & $3.141593$               \\
+Rastrigin  & $1.3876$ & $45$ & $0.0000000000$       & $8.00\times10^{-10}$    & $-2.11\times10^{-9}$     \\
+Rosenbrock & $1.4194$ & $11$ & $0.0009051359$       & $1.008839$              & $1.014881$               \\
+Ackley     & $1.5411$ & $76$ & $0.0000000000$       & $-9.22\times10^{-17}$   & $-2.99\times10^{-16}$    \\
+Schwefel   & $1.4160$ & $52$ & $2.5455\times10^{-5}$ & $420.968746$           & $420.968746$             \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-Cả hai phương pháp đều tìm đúng, hoặc gần đúng đến sai số không đáng
-kể, cực tiểu toàn cục trên cả năm hàm — kể cả Easom và Schwefel, hai
-hàm được thiết kế riêng để đánh lừa các thuật toán chỉ khai thác thông
-tin cục bộ quanh điểm hiện tại. Kết quả này minh chứng trực tiếp cho ưu
-điểm cốt lõi của tìm kiếm dựa trên quần thể đã trình bày ở
-Mục~\ref{subsec:ho-thuat-toan-tien-hoa}: vì GA và PyGAD duy trì nhiều
-cá thể trải rộng trên không gian tìm kiếm thay vì một điểm duy nhất,
-cả hai đều không phụ thuộc vào việc điểm khởi tạo có nằm gần cực tiểu
-toàn cục hay không, khác với các phương pháp gradient cổ điển. Riêng
-sai số ở Rosenbrock lớn hơn hẳn bốn hàm còn lại ở cả hai phương pháp;
-điều này phù hợp với đặc điểm địa hình đã nêu ở trên, vì một khi quần
-thể đã lọt được vào đúng thung lũng, tốc độ hội tụ tiếp theo phụ thuộc
-vào khả năng dò theo một đường cong hẹp — một việc mà toán tử lai
-ghép/đột biến ngẫu nhiên đẳng hướng không làm tốt bằng việc định vị
-một vùng rộng ban đầu.
+GA tìm đúng, hoặc gần đúng đến sai số không đáng kể, cực tiểu toàn cục
+trên cả năm hàm --- kể cả Easom và Schwefel, hai hàm được thiết kế
+riêng để đánh lừa các thuật toán chỉ khai thác thông tin cục bộ quanh
+điểm hiện tại. Kết quả này minh chứng trực tiếp cho ưu điểm cốt lõi
+của tìm kiếm dựa trên quần thể đã trình bày ở
+Mục~\ref{subsec:ho-thuat-toan-tien-hoa}: vì GA duy trì $500$ cá thể
+trải rộng trên không gian tìm kiếm thay vì một điểm duy nhất, nó không
+phụ thuộc vào việc điểm khởi tạo có nằm gần cực tiểu toàn cục hay
+không, khác với các phương pháp gradient cổ điển. Với Rastrigin và
+Ackley, GA về đúng $0$ trong giới hạn biểu diễn số thực dấu phẩy động.
+
+Rosenbrock là ngoại lệ duy nhất, và cách nó khác biệt lại soi sáng
+đúng điểm mạnh cũng như điểm yếu của GA. Sai số $9{,}05\times10^{-4}$
+của nó lớn hơn bốn hàm còn lại nhiều bậc độ lớn, mặc dù đây là hàm
+\textit{duy nhất} trong năm hàm không hề có bẫy cực tiểu cục bộ.
+Đường hội tụ ở Hình~\ref{fig:rosenbrock} cho thấy rõ cơ chế: giá trị
+tốt nhất tụt rất nhanh trong mười thế hệ đầu rồi chốt lại ở thế hệ
+$11$ và đứng yên suốt $89$ thế hệ còn lại. Nghĩa là GA lọt vào đúng
+thung lũng gần như tức thì, nhưng sau đó không nhích thêm được nữa.
+Đối chiếu với Ackley --- hàm mà GA cải thiện kỷ lục rải rác cho tới
+tận thế hệ $76$ --- có thể thấy hai kiểu khó khăn hoàn toàn khác nhau:
+Rastrigin, Ackley, Easom và Schwefel khó ở chỗ \textit{tìm ra} đúng
+vùng chứa nghiệm, còn Rosenbrock khó ở chỗ \textit{dò theo} một cấu
+trúc cong sau khi đã tìm ra vùng đó.
+
+Sự phân đôi này phản ánh bản chất của các toán tử tiến hóa ngẫu nhiên
+đẳng hướng: chúng rất mạnh trong việc định vị một vùng rộng trên không
+gian tìm kiếm, nhưng yếu trong việc tinh chỉnh dọc theo một hướng ưu
+tiên hẹp. Đây chính là lý do các thuật toán lai ghép GA với tìm kiếm
+cục bộ (memetic algorithm) tồn tại --- và cũng là cách tiếp cận được
+áp dụng cho bài toán người du lịch ở Mục~\ref{sec:ud-tsp}, nơi GA
+thuần túy được bổ sung thêm bước tối ưu cục bộ 2-opt để xử lý đúng
+phần việc mà lai ghép và đột biến ngẫu nhiên làm không tốt.
 
 \section{Tối ưu có ràng buộc: So sánh GA với SciPy SLSQP}
 \label{sec:ud-co-rang-buoc}
