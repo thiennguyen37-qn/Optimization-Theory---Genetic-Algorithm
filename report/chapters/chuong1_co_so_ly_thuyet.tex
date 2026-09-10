@@ -300,10 +300,11 @@ thể chuyển sang thế hệ sau còn bao gồm cơ chế giữ lại cá th�
 \label{subsec:lai-ghep}
 
 Toán tử lai ghép kết hợp vật chất di truyền của hai cá thể cha mẹ để
-tạo ra cá thể con mới. Tần suất lai ghép $p_c$ thường được đặt trong
-khoảng từ $0.6$ đến $0.95$, nghĩa là phần lớn các cặp cha mẹ được chọn
-sẽ thực sự tham gia lai ghép, trong khi phần còn lại được sao chép
-nguyên vẹn sang thế hệ con.
+tạo ra cá thể con mới. Tần suất lai ghép $p_c$ là xác suất một cặp cha
+mẹ đã chọn thực sự tham gia lai ghép; phần còn lại được sao chép
+nguyên vẹn sang thế hệ con. $p_c$ thường được đặt ở mức cao để đa số
+cặp cha mẹ tham gia lai ghép, giá trị cụ thể tùy vào bài toán và được
+xác định bằng thực nghiệm.
 
 Đối với mã hóa nhị phân và số thực, ba toán tử lai ghép phổ biến nhất
 là:
@@ -360,8 +361,9 @@ vậy, các toán tử lai ghép chuyên biệt cần được sử dụng:
 \label{subsec:dot-bien}
 
 Toán tử đột biến tạo ra biến dị ngẫu nhiên trên một cá thể. Tần suất
-đột biến $p_m$ trên mỗi gen thường nhỏ, rơi vào khoảng từ $0.001$ đến
-$0.05$ đối với GA nhị phân cổ điển. Vai trò chính của đột biến là duy
+đột biến $p_m$ trên mỗi gen quyết định mức độ biến dị đưa vào quần
+thể ở mỗi thế hệ; giá trị cụ thể phụ thuộc vào cách mã hóa và bài toán,
+được xác định bằng thực nghiệm. Vai trò chính của đột biến là duy
 trì đa dạng di truyền cho quần thể, đồng thời giúp thuật toán thoát ra
 khỏi những vùng mà toán tử lai ghép một mình không thể tiếp cận được.
 Một số dạng đột biến tiêu biểu bao gồm:
