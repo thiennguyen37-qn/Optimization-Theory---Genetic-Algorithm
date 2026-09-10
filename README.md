@@ -1,13 +1,13 @@
 # Optimization Theory — Genetic Algorithm
 
-Dự án học phần **Lý thuyết Tối ưu**: cài đặt Thuật toán Di truyền (Genetic Algorithm — GA) cho bài toán tối ưu có/không ràng buộc, đối chiếu kết quả với các phương pháp có sẵn (**SciPy SLSQP**, nghiệm tối ưu công bố, hồi quy tuyến tính) làm mốc so sánh.
+Dự án học phần **Lý thuyết Tối ưu**: cài đặt Thuật toán Di truyền (Genetic Algorithm — GA) cho bài toán tối ưu có/không ràng buộc, đối chiếu kết quả với mốc so sánh của từng nhóm bài toán (nghiệm tối ưu đã biết của các hàm benchmark, nghiệm công bố của **CEC 2006** và **TSPLIB95**, hồi quy tuyến tính).
 
 ## Cấu trúc thư mục
 
 ```
 .
 ├── 01_unconstrained_optimization.ipynb  # GA trên 5 hàm benchmark cố định: Easom, Rastrigin, Rosenbrock, Ackley, Schwefel
-├── 02_constrained_optimization.ipynb    # GA vs SciPy SLSQP — các bài toán mẫu cố định: Entropy tối đa, điểm gần nhất, LP, QP, tối ưu lồi...
+├── 02_constrained_optimization.ipynb    # GA trên 5 bài chuẩn CEC 2006 (g01, g06, g08, g11, g15), đối chiếu nghiệm công bố
 ├── 03_TSP.ipynb                         # GA mã hóa hoán vị cho bài toán người du lịch, đối chiếu nghiệm tối ưu TSPLIB95 (2-opt memetic algorithm)
 ├── 04_symbolic_regression.ipynb         # Genetic Programming (cây biểu thức) cho Symbolic Regression trên dữ liệu plasma NASA (WIND), đối chiếu Linear Regression
 ├── scrape_NASA_data.py              # Tải dữ liệu WIND từ NASA CDAWeb HAPI về data/data_NASA/
@@ -16,6 +16,7 @@ Dự án học phần **Lý thuyết Tối ưu**: cài đặt Thuật toán Di t
 │   │   └── NASA_WIND_solar_wind.csv # Dữ liệu plasma/từ trường vệ tinh WIND (đã scrape sẵn)
 │   └── data_TSPLIB/                 # 3 bộ chuẩn TSPLIB95 (berlin52, rd100, ch150): .tsp + .opt.tour
 ├── requirements.txt                 # Thư viện Python cần cài
+├── CEC2006_TechnicalReport.pdf       # Định nghĩa bộ chuẩn CEC 2006 + nghiệm công bố (dùng cho notebook 02)
 ├── TieuLuan.pdf
 ├── report/                          # Mã nguồn LaTeX của báo cáo
 │   ├── REPORT.tex
