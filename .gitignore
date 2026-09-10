@@ -15,6 +15,17 @@ report/*.toc
 report/*.synctex.gz
 report/chapters/*.aux
 
+# tmp.tex: file xem trước nội dung report trước khi ghép vào chính thức,
+# không phải một phần của repo -- xem tmp_wrapper.tex để biết cách build
+tmp.tex
+tmp.pdf
+tmp.aux
+tmp.log
+tmp.out
+tmp.toc
+tmp.synctex.gz
+tmp_wrapper.tex
+
 # OS
 .DS_Store
 Thumbs.db
