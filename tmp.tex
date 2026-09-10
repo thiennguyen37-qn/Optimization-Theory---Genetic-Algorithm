@@ -1,0 +1,478 @@
+\section{Lập trình Di truyền}
+\label{sec:gp}
+
+Lập trình Di truyền do John Koza phát triển
+từ cuối thập niên 1980 và được hệ thống hóa trong công trình năm 1992
+[8]. GP là một mở rộng trực tiếp của GA, tương ứng với dạng \textit{mã
+hóa dựa trên cấu trúc} đã được giới thiệu trong
+Mục~\ref{subsec:ma-hoa}. Khác biệt cốt lõi so với GA dùng mã hóa số
+thực hay hoán vị là: thay vì tiến hóa một chuỗi giá trị có độ dài cố
+định trong khuôn dạng nghiệm đã cho trước, GP tiến hóa trực tiếp
+\textbf{cấu trúc} của một biểu thức hoặc chương trình. Nhờ đó, thuật
+toán có khả năng tự khám phá đồng thời cả hình dạng lẫn tham số của
+nghiệm -- đây chính là lý do GP được xem là bước chuyển từ ``tối ưu
+tham số'' sang ``tự động tổng hợp chương trình''. Một tính chất đáng
+chú ý của GP là nghiệm cuối cùng có dạng \textit{biểu thức tường minh},
+có thể đọc, phân tích và giải thích được bởi con người, khác biệt căn
+bản với các mô hình hộp đen như mạng nơ-ron.
+
+\subsection*{Mã hóa dạng cây biểu thức}
+
+Mỗi cá thể trong GP là một cây biểu thức. Mỗi nút trong của cây là một
+toán tử được chọn từ một \textit{tập toán tử} cho trước, chẳng hạn các
+phép toán số học $\{+,-,\times,\div\}$ hoặc hàm lượng giác
+$\{\sin,\cos\}$; mỗi nút lá là một biến đầu vào hoặc hằng số được chọn
+từ một \textit{tập biến và hằng số} cho trước. Khi duyệt cây theo đúng
+cấu trúc phân cấp của nó, ta thu được một biểu thức toán học tường
+minh, có thể tính giá trị trên bất kỳ bộ dữ liệu đầu vào nào. Điều này
+cho phép toàn bộ quần thể các cây với hình dạng và nội dung khác nhau
+được đánh giá, so sánh một cách thống nhất như trong GA thông thường.
+
+Việc thiết kế hai tập hợp này cần thỏa mãn hai tính chất cơ bản:
+\begin{itemize}
+    \item \textbf{Tính khép kín} (closure): mọi toán tử phải chấp
+    nhận bất kỳ giá trị nào do một toán tử khác hoặc một nút lá trả
+    về, và luôn cho ra một kết quả hợp lệ. Ràng buộc này nảy sinh vì
+    lai ghép và đột biến ghép các toán tử với nhau một cách ngẫu
+    nhiên, không theo trật tự cố định nào. Chẳng hạn, nếu $\div$ xuất
+    hiện tại một nút mà cây con ở vị trí mẫu số vừa tính ra $0$ --
+    một tình huống hoàn toàn có thể xảy ra -- phép chia thông thường
+    không xác định, khiến cả cây không tính được giá trị và cá thể
+    đó trở nên vô nghĩa. Để tránh điều này, $\div$ thường được thay
+    bằng \textit{phép chia bảo vệ}: trả về $0$ (hoặc một hằng số
+    lớn) khi mẫu số bằng $0$, thay vì để phép tính thất bại. Các hàm
+    có miền xác định hẹp hơn tập số thực như $\log$ hay $\sqrt{\cdot}$
+    cũng cần phiên bản bảo vệ tương tự, chẳng hạn $\log(|x|)$ thay
+    cho $\log(x)$, để luôn nhận được mọi giá trị đầu vào có thể xuất
+    hiện trong cây.
+    \item \textbf{Tính đủ} (sufficiency): hai tập hợp này phải chứa
+    đủ các thành phần để biểu diễn được (ít nhất xấp xỉ) nghiệm của
+    bài toán. Nếu dữ liệu thực sự mang quan hệ lượng giác mà tập toán
+    tử chỉ gồm bốn phép tính số học, GP sẽ phải xấp xỉ hàm đích bằng
+    đa thức với độ chính xác thấp.
+\end{itemize}
+
+Độ sâu tối đa của cây cũng là một tham số thiết kế quan trọng: giới hạn
+quá chặt sẽ thu hẹp không gian khám phá, trong khi không giới hạn đủ
+mức dễ dẫn đến các cây có kích thước rất lớn, tốn kém khi đánh giá và
+khó diễn giải.
+
+\textbf{Khởi tạo quần thể.} Khác với GA nơi quần thể ban đầu chỉ là các
+chuỗi ngẫu nhiên, việc sinh cây ngẫu nhiên trong GP có ba chiến lược
+kinh điển, tất cả đều giới hạn độ sâu tối đa $d_{\max}$:
+\begin{itemize}
+    \item \textbf{Full}: mọi nhánh của cây đều có
+    độ sâu đúng bằng $d_{\max}$, tạo ra các cây cân đối, dày đặc;
+    \item \textbf{Grow}: mỗi nhánh có thể kết thúc ở
+    độ sâu bất kỳ không vượt quá $d_{\max}$, tạo ra các cây không đồng
+    nhất về hình dạng;
+    \item \textbf{Ramped half-and-half}:
+    kết hợp hai phương pháp trên theo tỷ lệ $1:1$, đồng thời phân bố
+    độ sâu tối đa của từng cây đều trên khoảng
+    $[2, d_{\max}]$. Đây là chiến lược được khuyến nghị và sử dụng
+    phổ biến nhất, vì nó tạo ra quần thể ban đầu đa dạng cả về kích
+    thước lẫn hình dạng, giảm nguy cơ quần thể bị chi phối bởi một
+    kiểu cấu trúc duy nhất ngay từ đầu.
+\end{itemize}
+
+\subsection*{Hàm độ thích nghi}
+
+Ứng dụng tiêu biểu nhất của GP là bài toán \textbf{hồi quy ký hiệu}
+(symbolic regression): tự động tìm một biểu thức toán học mô tả tốt
+mối quan hệ giữa tập dữ liệu quan sát $(X, y)$ mà không giả định trước
+dạng hàm. Bài toán này khác biệt căn bản so với hồi quy tuyến tính hay
+hồi quy đa thức, nơi dạng hàm đã được ấn định sẵn và công việc còn lại
+chỉ là tối ưu các hệ số. Trong GP, độ thích nghi của một cây thường
+được xây dựng từ sai số dự đoán, tiêu biểu là sai số bình phương trung
+bình giữa giá trị cây tính được và giá trị $y$ thực tế. Một số
+công trình còn dùng RMSE, MAE, hoặc hệ số xác định $R^2$; lựa chọn
+này ảnh hưởng trực tiếp đến độ nhạy của chọn lọc đối với các ngoại lai
+trong dữ liệu.
+
+Một vấn đề đặc trưng của GP là hiện tượng \textbf{bloat}: kích thước
+cây có xu hướng tăng trưởng liên tục qua các thế hệ mà không mang lại
+cải thiện tương xứng về độ chính xác. Nguyên nhân được lý giải ở mức
+lý thuyết là các cây con trung tính (ví dụ đoạn $+0$, $\times 1$) tích
+lũy dần vì chúng không làm giảm độ thích nghi nhưng lại được bảo vệ
+khỏi đột biến có hại. Bloat làm tăng chi phí đánh giá, giảm khả năng
+diễn giải nghiệm, và có thể dẫn đến quá khớp. Để đối phó, người ta
+thường cộng thêm vào hàm thích nghi một \textbf{số hạng phạt} tỉ lệ với kích thước cây:
+\begin{equation}
+    \mathrm{fitness}(T) = \mathrm{MSE}(T) + \lambda \cdot |T|,
+    \label{eq:parsimony}
+\end{equation}
+trong đó $|T|$ là số nút của cây $T$ và $\lambda > 0$ điều chỉnh mức
+độ ưu tiên sự gọn nhẹ so với độ chính xác. Các biện pháp bổ sung gồm
+giới hạn độ sâu/số nút tuyệt đối, loại bỏ cá thể vi phạm ngay sau khi
+sinh, và các toán tử đột biến có chủ đích rút gọn cây.
+
+\subsection*{Toán tử tiến hóa}
+
+Các toán tử lai ghép và đột biến trong GP thao tác trực tiếp trên cấu
+trúc cây thay vì trên chuỗi có độ dài cố định:
+\begin{itemize}
+    \item \textbf{Lai ghép trao đổi cây con}: chọn
+    ngẫu nhiên một nút trên mỗi cây cha mẹ, sau đó hoán đổi hai cây con
+    bắt rễ tại các nút đó cho nhau để tạo ra hai cây con mới. Các biến
+    thể gồm lai ghép bất đối xứng (cây con thứ nhất lấy từ nút trong,
+    cây con thứ hai từ nút lá) và lai ghép tự thân (cắt và dán trên
+    cùng một cây), nhằm cân bằng giữa khám phá và khai thác;
+    \item \textbf{Đột biến thay thế cây con}: chọn
+    ngẫu nhiên một nút trên cây, rồi thay toàn bộ cây con bắt rễ tại nút
+    đó bằng một cây con mới được sinh ngẫu nhiên;
+    \item \textbf{Đột biến điểm} (point mutation): thay một nút hàm bằng
+    một hàm khác cùng số ngôi, hoặc thay một nút lá bằng biến/hằng số
+    khác, giữ nguyên cấu trúc cây;
+    \item \textbf{Đột biến rút gọn} (hoist mutation): thay toàn bộ cây
+    bằng một cây con ngẫu nhiên bên trong nó, qua đó thu nhỏ cây một
+    cách có kiểm soát -- biến thể này thường được dùng kết hợp với số
+    hạng phạt \eqref{eq:parsimony} để chống bloat.
+\end{itemize}
+
+Xác suất áp dụng của các toán tử cũng là tham số cần hiệu chỉnh: tỷ lệ
+dành cho lai ghép, đột biến và sao chép trực tiếp (reproduction) cộng
+lại bằng một, trong đó tỷ lệ lai ghép thường được đặt cao hơn hẳn tỷ
+lệ đột biến; giá trị cụ thể tùy vào bài toán và được xác định bằng
+thực nghiệm.
+
+Các thành phần còn lại của chu trình tiến hóa, bao gồm khởi tạo quần
+thể, chọn lọc, elitism và điều kiện dừng, về bản chất tương tự như GA
+đã trình bày trong các mục trước; khác biệt duy nhất nằm ở đối tượng
+thao tác là \textbf{cây} thay vì \textbf{vector} số hoặc hoán vị.
+Chọn lọc giải đấu với kích thước giải đấu
+$3$--$7$ được ưa chuộng trong GP vì đơn giản, ít nhạy với thang đo của
+hàm thích nghi và dễ song song hóa khi kích thước quần thể lớn. Điều
+kiện dừng thường là số thế hệ tối đa kết hợp với ngưỡng sai số chấp
+nhận được; một số hệ thống còn theo dõi độ đa dạng của quần thể để kết
+thúc sớm khi quần thể đã hội tụ.
+
+\subsection*{Ví dụ minh họa}
+
+Xét hai cây cha mẹ với tập toán tử $\{+,-,\times\}$. Cha mẹ thứ nhất
+là cây $(x+1)^2$; do tập toán tử không có phép lũy thừa, cây này được
+biểu diễn dưới dạng $\times[\,+[x,1],\ +[x,1]\,]$. Cha mẹ thứ hai là
+cây $(x-1)x$, biểu diễn $\times[\,-[x,1],\ x\,]$, mang sẵn một
+\textit{khối xây dựng} (building block) là nhân tử $(x-1)$.
+
+Hình~\ref{fig:gp-crossover} minh họa phép lai ghép trao đổi cây con
+giữa hai cha mẹ này. Nút cắt được chọn là nhánh $+[x,1]$ của cha mẹ
+thứ nhất và nhánh $-[x,1]$ của cha mẹ thứ hai -- hai nhánh này được tô
+màu cam trong hình. Hoán đổi hai nhánh cho nhau sinh ra hai cá thể
+con: $(x-1)(x+1) = x^2 - 1$ và $(x+1)x = x^2 + x$, với phần vừa được
+ghép sang từ cha mẹ kia tô màu xanh lá. Cả hai cá thể con đều tổ hợp
+đúng nhân tử tuyến tính của cha mẹ này với phần còn lại của cha mẹ
+kia, minh họa trực tiếp cách lai ghép cây con kết hợp các khối xây
+dựng hữu ích từ nhiều cha mẹ -- cơ chế tương tự giả thuyết khối xây
+dựng của GA nhưng vận hành trên cấu trúc phân cấp thay vì trên chuỗi
+tuyến tính.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+    op/.style={circle, draw, minimum size=7mm, inner sep=0pt, font=\small},
+    leaf/.style={rectangle, draw, minimum size=6mm, inner sep=0pt, font=\small},
+    cut/.style={fill=orange!25, draw=orange!70!black, thick},
+    graft/.style={fill=green!20, draw=green!50!black, thick},
+    level 1/.style={sibling distance=20mm, level distance=9mm},
+    level 2/.style={sibling distance=9mm, level distance=9mm},
+    edge from parent/.style={draw, -}
+]
+
+\begin{scope}
+\node[op] {$\times$}
+  child { node[op,cut] {$+$}
+    child { node[leaf] {$x$} }
+    child { node[leaf] {$1$} } }
+  child { node[op] {$+$}
+    child { node[leaf] {$x$} }
+    child { node[leaf] {$1$} } };
+\node[align=center, anchor=north] at (0,-2.3) {\small (a) Cha mẹ 1\\$(x+1)^2$};
+\end{scope}
+
+\begin{scope}[xshift=6cm]
+\node[op] {$\times$}
+  child { node[op,cut] {$-$}
+    child { node[leaf] {$x$} }
+    child { node[leaf] {$1$} } }
+  child { node[leaf] {$x$} };
+\node[align=center, anchor=north] at (0,-2.3) {\small (b) Cha mẹ 2\\$(x-1)x$};
+\end{scope}
+
+\node[align=center, font=\small] at (3,-3.9)
+    {$\big\Downarrow$ Lai ghép trao đổi cây con};
+
+\begin{scope}[yshift=-5.3cm]
+\node[op] {$\times$}
+  child { node[op,graft] {$-$}
+    child { node[leaf] {$x$} }
+    child { node[leaf] {$1$} } }
+  child { node[op] {$+$}
+    child { node[leaf] {$x$} }
+    child { node[leaf] {$1$} } };
+\node[align=center, anchor=north] at (0,-2.3) {\small (c) Con 1\\$(x-1)(x+1) = x^2-1$};
+\end{scope}
+
+\begin{scope}[xshift=6cm, yshift=-5.3cm]
+\node[op] {$\times$}
+  child { node[op,graft] {$+$}
+    child { node[leaf] {$x$} }
+    child { node[leaf] {$1$} } }
+  child { node[leaf] {$x$} };
+\node[align=center, anchor=north] at (0,-2.3) {\small (d) Con 2\\$(x+1)x = x^2+x$};
+\end{scope}
+
+\end{tikzpicture}
+\caption{Lai ghép trao đổi cây con giữa hai cây cha mẹ (a)--(b), tạo
+ra hai cây con (c)--(d). Nút cắt tô cam; phần vừa nhận từ cha mẹ kia
+ở mỗi cây con tô xanh lá.}
+\label{fig:gp-crossover}
+\end{figure}
+
+Ba toán tử đột biến cũng minh họa được trên một cây đơn giản, chẳng
+hạn cây $x+3$, như trong Hình~\ref{fig:gp-mutation}. Đột biến thay thế
+cây con chọn một nhánh -- ví dụ nhánh $3$ -- và thay bằng một cây con
+mới sinh ngẫu nhiên, chẳng hạn $2x$, được cá thể $x+2x$. Đột biến điểm
+giữ nguyên cấu trúc cây, chỉ đổi một nút hàm sang hàm khác cùng số
+ngôi: đổi $+$ thành $-$, được cây $x-3$. Đột biến rút gọn thao tác
+trên một cây lớn hơn, chẳng hạn $(x+3)\times x$: chọn cây con $x+3$
+bên trong nó rồi thay thế toàn bộ cá thể bằng đúng cây con đó, được cá
+thể mới chỉ còn $x+3$, nhỏ hơn hẳn cây gốc.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+    op/.style={circle, draw, minimum size=7mm, inner sep=0pt, font=\small},
+    leaf/.style={rectangle, draw, minimum size=6mm, inner sep=0pt, font=\small},
+    cut/.style={fill=orange!25, draw=orange!70!black, thick},
+    graft/.style={fill=green!20, draw=green!50!black, thick},
+    level 1/.style={sibling distance=16mm, level distance=9mm},
+    level 2/.style={sibling distance=9mm, level distance=9mm},
+    edge from parent/.style={draw, -}
+]
+
+\begin{scope}
+\node[op] {$+$}
+  child { node[leaf] {$x$} }
+  child { node[leaf,cut] {$3$} };
+\node[align=center, anchor=north] at (0,-1.6) {\small (a) Trước\\$x+3$};
+\end{scope}
+
+\node[align=center, font=\footnotesize] at (2.6,-0.9)
+    {$\Rightarrow$\\[1mm] thay $3$\\ bằng $2x$};
+
+\begin{scope}[xshift=5.2cm]
+\node[op] {$+$}
+  child { node[leaf] {$x$} }
+  child { node[op,graft] {$\times$}
+    child { node[leaf] {$2$} }
+    child { node[leaf] {$x$} } };
+\node[align=center, anchor=north] at (0,-2.3) {\small (b) Sau\\$x+2x$};
+\end{scope}
+
+\node[align=center, font=\small\itshape] at (2.6,0.9) {Đột biến thay thế cây con};
+
+\begin{scope}[yshift=-4.4cm]
+\node[op,cut] {$+$}
+  child { node[leaf] {$x$} }
+  child { node[leaf] {$3$} };
+\node[align=center, anchor=north] at (0,-1.6) {\small (c) Trước\\$x+3$};
+\end{scope}
+
+\node[align=center, font=\footnotesize] at (2.6,-5.3)
+    {$\Rightarrow$\\[1mm] đổi $+$\\ thành $-$};
+
+\begin{scope}[xshift=5.2cm, yshift=-4.4cm]
+\node[op,graft] {$-$}
+  child { node[leaf] {$x$} }
+  child { node[leaf] {$3$} };
+\node[align=center, anchor=north] at (0,-1.6) {\small (d) Sau\\$x-3$};
+\end{scope}
+
+\node[align=center, font=\small\itshape] at (2.6,-3.5) {Đột biến điểm};
+
+\begin{scope}[yshift=-8.8cm]
+\node[op] {$\times$}
+  child { node[op,cut] {$+$}
+    child { node[leaf] {$x$} }
+    child { node[leaf] {$3$} } }
+  child { node[leaf] {$x$} };
+\node[align=center, anchor=north] at (0,-2.3) {\small (e) Trước\\$(x+3)\times x$};
+\end{scope}
+
+\node[align=center, font=\footnotesize] at (2.6,-9.7)
+    {$\Rightarrow$\\[1mm] giữ lại\\ $x+3$};
+
+\begin{scope}[xshift=5.2cm, yshift=-8.8cm]
+\node[op,graft] {$+$}
+  child { node[leaf] {$x$} }
+  child { node[leaf] {$3$} };
+\node[align=center, anchor=north] at (0,-1.6) {\small (f) Sau\\$x+3$};
+\end{scope}
+
+\node[align=center, font=\small\itshape] at (2.6,-7.9) {Đột biến rút gọn};
+
+\end{tikzpicture}
+\caption{Ba toán tử đột biến minh họa trên cây $x+3$ (đột biến rút
+gọn minh họa trên cây lớn hơn $(x+3)\times x$). Nút hoặc nhánh bị thay
+đổi tô cam trên cây trước đột biến (a, c, e); nút hoặc nhánh kết quả
+tô xanh lá trên cây sau đột biến (b, d, f).}
+\label{fig:gp-mutation}
+\end{figure}
+
+\newpage
+\textbf{Minh họa bổ sung cho GA} (dành cho Mục~\ref{subsec:lai-ghep} và
+Mục~\ref{subsec:dot-bien} của report chính -- xem trước ở đây trước khi
+ghép vào đúng chỗ).
+
+Hình~\ref{fig:ga-crossover} minh họa lai ghép đơn điểm trên mã hóa nhị
+phân và lai ghép trộn trên mã hóa số thực -- hai cách mã hóa được nhắc
+đến nhiều nhất trong report, lần lượt là cách mã hóa cổ điển của GA và
+cách mã hóa dùng trong phần cài đặt thực nghiệm của tiểu luận. Với mã
+hóa nhị phân, vị trí cắt được chọn ngẫu nhiên sau gen thứ $4$; đoạn từ
+vị trí $5$ đến $8$ (tô cam) được hoán đổi giữa hai cha mẹ để tạo ra hai
+cá thể con, với đoạn vừa nhận tô xanh lá. Với mã hóa số thực, hai cá
+thể con được tính trực tiếp theo công thức lai ghép trộn
+\eqref{eq:blend-crossover} với $\alpha = 0{,}75$.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    gene/.style={rectangle, draw, minimum width=7mm, minimum height=7mm, inner sep=0pt, font=\small},
+    cut/.style={fill=orange!25, draw=orange!70!black, thick},
+    graft/.style={fill=green!20, draw=green!50!black, thick}
+]
+
+\node[font=\small\itshape] at (2.8,1.0) {Mã hóa nhị phân -- lai ghép đơn điểm};
+
+\node[gene] at (0.0,0) {1};
+\node[gene] at (0.8,0) {0};
+\node[gene] at (1.6,0) {1};
+\node[gene] at (2.4,0) {1};
+\node[gene,cut] at (3.2,0) {0};
+\node[gene,cut] at (4.0,0) {0};
+\node[gene,cut] at (4.8,0) {1};
+\node[gene,cut] at (5.6,0) {0};
+\node[anchor=east, font=\small] at (-0.5,0) {Cha mẹ 1};
+
+\node[gene] at (0.0,-0.9) {0};
+\node[gene] at (0.8,-0.9) {1};
+\node[gene] at (1.6,-0.9) {1};
+\node[gene] at (2.4,-0.9) {0};
+\node[gene,cut] at (3.2,-0.9) {1};
+\node[gene,cut] at (4.0,-0.9) {0};
+\node[gene,cut] at (4.8,-0.9) {1};
+\node[gene,cut] at (5.6,-0.9) {1};
+\node[anchor=east, font=\small] at (-0.5,-0.9) {Cha mẹ 2};
+
+\draw[dashed] (2.8,0.5) -- (2.8,-1.4);
+
+\node[align=center, font=\small] at (2.8,-1.9) {$\Downarrow$ hoán đổi đoạn sau vị trí cắt};
+
+\node[gene] at (0.0,-2.8) {1};
+\node[gene] at (0.8,-2.8) {0};
+\node[gene] at (1.6,-2.8) {1};
+\node[gene] at (2.4,-2.8) {1};
+\node[gene,graft] at (3.2,-2.8) {1};
+\node[gene,graft] at (4.0,-2.8) {0};
+\node[gene,graft] at (4.8,-2.8) {1};
+\node[gene,graft] at (5.6,-2.8) {1};
+\node[anchor=east, font=\small] at (-0.5,-2.8) {Con 1};
+
+\node[gene] at (0.0,-3.7) {0};
+\node[gene] at (0.8,-3.7) {1};
+\node[gene] at (1.6,-3.7) {1};
+\node[gene] at (2.4,-3.7) {0};
+\node[gene,graft] at (3.2,-3.7) {0};
+\node[gene,graft] at (4.0,-3.7) {0};
+\node[gene,graft] at (4.8,-3.7) {1};
+\node[gene,graft] at (5.6,-3.7) {0};
+\node[anchor=east, font=\small] at (-0.5,-3.7) {Con 2};
+
+\node[font=\small\itshape] at (2.8,-5.0) {Mã hóa số thực -- lai ghép trộn ($\alpha = 0{,}75$)};
+
+\node[gene, minimum width=13mm] at (0.5,-5.9) {$3{,}0$};
+\node[gene, minimum width=13mm] at (2.15,-5.9) {$-1{,}0$};
+\node[anchor=east, font=\small] at (-0.9,-5.9) {Cha mẹ 1};
+
+\node[gene, minimum width=13mm] at (0.5,-6.8) {$1{,}0$};
+\node[gene, minimum width=13mm] at (2.15,-6.8) {$2{,}0$};
+\node[anchor=east, font=\small] at (-0.9,-6.8) {Cha mẹ 2};
+
+\node[align=center, font=\small] at (1.3,-7.3) {$\Downarrow$ \eqref{eq:blend-crossover}};
+
+\node[gene, minimum width=13mm] at (0.5,-8.2) {$2{,}5$};
+\node[gene, minimum width=13mm] at (2.15,-8.2) {$-0{,}25$};
+\node[anchor=east, font=\small] at (-0.9,-8.2) {Con 1};
+
+\node[gene, minimum width=13mm] at (0.5,-9.1) {$1{,}5$};
+\node[gene, minimum width=13mm] at (2.15,-9.1) {$1{,}25$};
+\node[anchor=east, font=\small] at (-0.9,-9.1) {Con 2};
+
+\end{tikzpicture}
+\caption{Ví dụ lai ghép trong GA trên hai cách mã hóa. Trên: mã hóa
+nhị phân với lai ghép đơn điểm -- đoạn sắp hoán đổi tô cam trên cha
+mẹ, đoạn vừa nhận được ở cá thể con tô xanh lá. Dưới: mã hóa số thực
+với lai ghép trộn theo \eqref{eq:blend-crossover}, $\alpha = 0{,}75$.}
+\label{fig:ga-crossover}
+\end{figure}
+
+Tương tự, Hình~\ref{fig:ga-mutation} minh họa đột biến đảo bit trên mã
+hóa nhị phân và đột biến Gauss trên mã hóa số thực. Với mã hóa nhị
+phân, gen tại vị trí $3$ (tô cam) được đảo giá trị từ $1$ thành $0$.
+Với mã hóa số thực, giá trị tại vị trí $2$ (tô cam) được cộng thêm một
+nhiễu Gauss theo \eqref{eq:dot-bien-gauss}, ở đây lấy mẫu được
+$\mathcal{N}(0,\sigma^2) = -0{,}4$, cho ra giá trị mới $-1{,}4$ (tô
+xanh lá).
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    gene/.style={rectangle, draw, minimum width=7mm, minimum height=7mm, inner sep=0pt, font=\small},
+    cut/.style={fill=orange!25, draw=orange!70!black, thick},
+    graft/.style={fill=green!20, draw=green!50!black, thick}
+]
+
+\node[font=\small\itshape] at (2.8,1.0) {Mã hóa nhị phân -- đột biến đảo bit};
+
+\node[gene] at (0.0,0) {1};
+\node[gene] at (0.8,0) {0};
+\node[gene,cut] at (1.6,0) {1};
+\node[gene] at (2.4,0) {1};
+\node[gene] at (3.2,0) {0};
+\node[gene] at (4.0,0) {0};
+\node[gene] at (4.8,0) {1};
+\node[gene] at (5.6,0) {0};
+\node[anchor=east, font=\small] at (-0.5,0) {Trước};
+
+\node[align=center, font=\small] at (2.8,-0.7) {$\Downarrow$ đảo bit tại vị trí 3};
+
+\node[gene] at (0.0,-1.6) {1};
+\node[gene] at (0.8,-1.6) {0};
+\node[gene,graft] at (1.6,-1.6) {0};
+\node[gene] at (2.4,-1.6) {1};
+\node[gene] at (3.2,-1.6) {0};
+\node[gene] at (4.0,-1.6) {0};
+\node[gene] at (4.8,-1.6) {1};
+\node[gene] at (5.6,-1.6) {0};
+\node[anchor=east, font=\small] at (-0.5,-1.6) {Sau};
+
+\node[font=\small\itshape] at (2.8,-2.8) {Mã hóa số thực -- đột biến Gauss};
+
+\node[gene, minimum width=13mm] at (0.5,-3.7) {$3{,}0$};
+\node[gene, cut, minimum width=13mm] at (2.15,-3.7) {$-1{,}0$};
+\node[anchor=east, font=\small] at (-0.9,-3.7) {Trước};
+
+\node[align=center, font=\small] at (1.3,-4.4) {$\Downarrow$ cộng nhiễu $\mathcal{N}(0,\sigma^2)$ vào vị trí 2};
+
+\node[gene, minimum width=13mm] at (0.5,-5.3) {$3{,}0$};
+\node[gene, graft, minimum width=13mm] at (2.15,-5.3) {$-1{,}4$};
+\node[anchor=east, font=\small] at (-0.9,-5.3) {Sau};
+
+\end{tikzpicture}
+\caption{Ví dụ đột biến trong GA trên hai cách mã hóa. Trên: mã hóa
+nhị phân với đột biến đảo bit tại vị trí thứ $3$. Dưới: mã hóa số
+thực với đột biến Gauss, cộng nhiễu ngẫu nhiên vào vị trí thứ $2$
+theo \eqref{eq:dot-bien-gauss}. Vị trí bị thay đổi tô cam trước đột
+biến; giá trị kết quả tô xanh lá sau đột biến.}
+\label{fig:ga-mutation}
+\end{figure}

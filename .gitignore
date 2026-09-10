@@ -15,10 +15,7 @@ report/*.toc
 report/*.synctex.gz
 report/chapters/*.aux
 
-# tmp.tex: file xem trước nội dung report trước khi ghép vào chính thức,
-# không phải một phần của repo -- xem tmp_wrapper.tex để biết cách build
-tmp.tex
-tmp.pdf
+# tmp.tex / tmp.pdf: giữ track cho đến khi hoàn thiện nội dung
 tmp.aux
 tmp.log
 tmp.out
