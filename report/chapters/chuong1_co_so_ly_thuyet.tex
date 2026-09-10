@@ -409,7 +409,7 @@ sớm về một vùng hẹp của không gian tìm kiếm.
 \section{Quy trình Thuật toán và Điều kiện Dừng}
 \label{sec:quy-trinh}
 
-\subsection*{Sơ đồ khối và Giả mã}
+\subsection*{Sơ đồ khối và Mã giả}
 \label{subsec:so-do-gia-ma}
 
 Phối hợp các thành phần đã trình bày trong
@@ -431,11 +431,11 @@ này được minh họa tổng quát trong Hình~\ref{fig:ga-cycle}.
 
 \node[box] (init) {Khởi tạo quần thể $P(0)$};
 \node[box, below=of init] (eval0) {Đánh giá độ thích nghi};
-\node[box, below=of eval0] (select) {Chọn lọc (Selection)};
-\node[box, below=of select] (cross) {Lai ghép (Crossover)};
-\node[box, below=of cross] (mut) {Đột biến (Mutation)};
-\node[box, below=of mut] (evalc) {Đánh giá quần thể con};
-\node[box, below=of evalc] (update) {Cập nhật quần thể (Elitism)};
+\node[box, below=of eval0] (select) {Chọn lọc};
+\node[box, below=of select] (cross) {Lai ghép};
+\node[box, below=of cross] (mut) {Đột biến};
+\node[box, below=of mut] (evalc) {Đánh giá độ thích nghi của quần thể con};
+\node[box, below=of evalc] (update) {Cập nhật quần thể $P(t+1)$ + Elitism};
 \node[decision, below=of update] (stop) {Đạt điều kiện dừng?};
 \node[box, below=of stop] (ret) {Trả về cá thể tốt nhất};
 
@@ -448,9 +448,8 @@ này được minh họa tổng quát trong Hình~\ref{fig:ga-cycle}.
 \draw[arrow] (update) -- (stop);
 \draw[arrow] (stop) -- node[right]{Đúng} (ret);
 
-\draw[arrow] (stop.west) -- ++(-2.3cm,0) coordinate (loopcorner) |-
-(select.west);
-\node[left] at (loopcorner) {\small Sai, $t = t+1$};
+\draw[arrow] (stop.west) -- node[above]{\small Sai} ++(-2.3cm,0)
+coordinate (loopcorner) |- node[left]{\small $t = t+1$} (select.west);
 
 \end{tikzpicture}
 \caption{Chu trình tiến hóa của Thuật toán Di truyền}
@@ -458,10 +457,10 @@ này được minh họa tổng quát trong Hình~\ref{fig:ga-cycle}.
 \end{figure}
 
 Để mô tả chính xác hơn, Thuật toán~\ref{alg:ga-pseudocode} trình bày
-chu trình tiến hóa trên dưới dạng giả mã.
+chu trình tiến hóa trên dưới dạng mã giả (pseudocode).
 
 \begin{algorithm}[htbp]
-\caption{Giả mã tổng quát của Thuật toán Di truyền}
+\caption{Mã giả tổng quát của Thuật toán Di truyền}
 \label{alg:ga-pseudocode}
 \begin{algorithmic}[1]
 \State $t \gets 0$
@@ -470,8 +469,8 @@ chu trình tiến hóa trên dưới dạng giả mã.
 \While{điều kiện dừng chưa thỏa mãn}
     \State $t \gets t + 1$
     \State Chọn lọc tập cha mẹ $S(t)$ từ $P(t-1)$
-    \State Thực hiện lai ghép (crossover) trên $S(t)$, tạo tập con $C(t)$
-    \State Thực hiện đột biến (mutation) trên $C(t)$
+    \State Thực hiện lai ghép trên $S(t)$, tạo tập con $C(t)$
+    \State Thực hiện đột biến trên $C(t)$
     \State Đánh giá độ thích nghi của $C(t)$
     \State $P(t) \gets$ cập nhật quần thể mới (áp dụng elitism)
 \EndWhile
