@@ -49,6 +49,14 @@
 \usepackage{booktabs}
 \usepackage{longtable}
 \usepackage{multirow}
+% Nới tham số float: hình ở Mục 2.1 gồm hai ảnh xếp dọc nên khá cao,
+% để mặc định thì LaTeX không đặt được ở đầu trang và đẩy hình trôi ra
+% xa phần văn bản tương ứng.
+\renewcommand{\topfraction}{0.85}
+\renewcommand{\bottomfraction}{0.5}
+\renewcommand{\textfraction}{0.15}
+\renewcommand{\floatpagefraction}{0.7}
+
 \renewcommand{\figurename}{Hình}
 \renewcommand{\tablename}{Bảng}
 
