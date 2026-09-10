@@ -790,12 +790,6 @@ trúc cây thay vì trên chuỗi có độ dài cố định:
     hạng phạt \eqref{eq:parsimony} để chống bloat.
 \end{itemize}
 
-Xác suất áp dụng của các toán tử cũng là tham số cần hiệu chỉnh: tỷ lệ
-dành cho lai ghép, đột biến và sao chép trực tiếp (reproduction) cộng
-lại bằng một, trong đó tỷ lệ lai ghép thường được đặt cao hơn hẳn tỷ
-lệ đột biến; giá trị cụ thể tùy vào bài toán và được xác định bằng
-thực nghiệm.
-
 Các thành phần còn lại của chu trình tiến hóa, bao gồm khởi tạo quần
 thể, chọn lọc, elitism và điều kiện dừng, về bản chất tương tự như GA
 đã trình bày trong các mục trước; khác biệt duy nhất nằm ở đối tượng
@@ -807,13 +801,11 @@ bằng thực nghiệm. Điều kiện dừng thường là số thế hệ tố
 với ngưỡng sai số chấp nhận được; một số hệ thống còn theo dõi độ đa
 dạng của quần thể để kết thúc sớm khi quần thể đã hội tụ.
 
-\subsection*{Ví dụ minh họa}
-
-Xét hai cây cha mẹ với tập toán tử $\{+,-,\times\}$. Cha mẹ thứ nhất
+Để minh họa cụ thể cách các toán tử trên vận hành trên cây biểu thức,
+xét hai cây cha mẹ với tập toán tử $\{+,-,\times\}$. Cha mẹ thứ nhất
 là cây $(x+1)^2$; do tập toán tử không có phép lũy thừa, cây này được
 biểu diễn dưới dạng $\times[\,+[x,1],\ +[x,1]\,]$. Cha mẹ thứ hai là
-cây $(x-1)x$, biểu diễn $\times[\,-[x,1],\ x\,]$, mang sẵn một
-\textit{khối xây dựng} (building block) là nhân tử $(x-1)$.
+cây $(x-1)x$, biểu diễn $\times[\,-[x,1],\ x\,]$.
 
 Hình~\ref{fig:gp-crossover} minh họa phép lai ghép trao đổi cây con
 giữa hai cha mẹ này. Nút cắt được chọn là nhánh $+[x,1]$ của cha mẹ
