@@ -10,7 +10,7 @@ nhóm sử dụng một cách mã hóa khác nhau: tối ưu không ràng buộc
 hóa số thực (Mục~\ref{sec:ud-khong-rang-buoc}), tối ưu có ràng buộc
 cũng dùng mã hóa số thực nhưng kết hợp thêm cơ chế xử lý ràng buộc
 (Mục~\ref{sec:ud-co-rang-buoc}), bài toán người du lịch dùng mã hóa
-hoán vị (Mục~\ref{sec:ud-tsp}), và hồi quy ký hiệu dùng mã hóa dạng cây
+hoán vị (Mục~\ref{sec:ud-tsp}), và hồi quy symbolic dùng mã hóa dạng cây
 biểu thức theo nguyên lý Lập trình Di truyền
 (Mục~\ref{sec:ud-symbolic-regression}). Với mỗi bài toán, phát biểu
 toán học đầy đủ được trình bày trước, sau đó là phương pháp so sánh
@@ -786,11 +786,11 @@ thấy các tham số của một chiến lược lai giữa GA và tìm kiếm 
 không thể được chọn độc lập với nhau, mà phải cân chỉnh tương thích
 với quy mô quần thể.
 
-\section{Hồi quy Ký hiệu bằng Lập trình Di truyền}
+\section{Hồi quy Symbolic bằng Lập trình Di truyền}
 \label{sec:ud-symbolic-regression}
 
 Ứng dụng cuối cùng minh họa Lập trình Di truyền (Mục~\ref{sec:gp}) cho
-bài toán hồi quy ký hiệu trên dữ liệu vật lý thực: các phép đo mật độ
+bài toán hồi quy symbolic trên dữ liệu vật lý thực: các phép đo mật độ
 hạt, vận tốc, và từ trường của gió mặt trời do vệ tinh WIND của NASA
 ghi nhận. Ba thành phần từ trường đo được là $B_X, B_Y, B_Z$, và mật độ
 hạt đo được là $n$. Từ bốn đại lượng này, hai đại lượng vật lý phái
@@ -834,11 +834,11 @@ Bảng~\ref{tab:kq-symbolic-regression}.
 \midrule
 \multirow{2}{*}{$|B|^2$}
     & Hồi quy Tuyến tính & 15.1284 & 19.9825 & 0.4784 \\
-    & GP (hồi quy ký hiệu) & 4.1820 & 6.0779 & 0.9517 \\
+    & GP (hồi quy symbolic) & 4.1820 & 6.0779 & 0.9517 \\
 \addlinespace
 \multirow{2}{*}{$V_A^2$}
     & Hồi quy Tuyến tính & 2.7376 & 3.6804 & 0.4629 \\
-    & GP (hồi quy ký hiệu) & 1.0554 & 1.5486 & 0.9049 \\
+    & GP (hồi quy symbolic) & 1.0554 & 1.5486 & 0.9049 \\
 \bottomrule
 \end{tabular}
 \end{table}
