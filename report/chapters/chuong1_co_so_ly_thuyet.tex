@@ -165,10 +165,10 @@ này được tóm tắt trong Bảng~\ref{tab:doi-chieu-thuat-ngu}.
 \textbf{Sinh học} & \textbf{Thuật ngữ tiếng Anh}
 & \textbf{Thuật toán Di truyền} \\
 \midrule
-Nhiễm sắc thể & Chromosome & Mã hóa giải pháp \\
-Gen           & Gene       & Một biến thành phần trong giải pháp \\
-Cá thể        & Individual & Một giải pháp ứng viên \\
-Quần thể      & Population & Tập hợp các giải pháp tại một thế hệ \\
+Nhiễm sắc thể & Chromosome & Mã hóa nghiệm \\
+Gen           & Gene       & Một biến thành phần trong nghiệm \\
+Cá thể        & Individual & Một nghiệm ứng viên \\
+Quần thể      & Population & Tập hợp các nghiệm tại một thế hệ \\
 Độ thích nghi & Fitness    & Giá trị hàm độ thích nghi \\
 Thế hệ        & Generation & Một vòng lặp tiến hóa \\
 \bottomrule
@@ -177,40 +177,40 @@ Thế hệ        & Generation & Một vòng lặp tiến hóa \\
 
 Nhờ phép tương ứng này, một bài toán tối ưu bất kỳ có thể được diễn
 dịch thành một quá trình ``tiến hóa nhân tạo''. Cụ thể, thuật toán xuất
-phát từ một quần thể các giải pháp ngẫu nhiên; trong suốt quá trình tiến
-hóa, các giải pháp có chất lượng tốt hơn sẽ có nhiều cơ hội được chọn
+phát từ một quần thể các nghiệm ngẫu nhiên; trong suốt quá trình tiến
+hóa, các nghiệm có chất lượng tốt hơn sẽ có nhiều cơ hội được chọn
 làm cha mẹ hơn. Qua nhiều thế hệ, quần thể dần dịch chuyển về phía
 những vùng của không gian tìm kiếm có giá trị hàm mục tiêu tốt.
 
-\subsection*{Phương pháp Mã hóa Giải pháp}
+\subsection*{Phương pháp Mã hóa Nghiệm}
 \label{subsec:ma-hoa}
 
 Việc áp dụng GA cho một bài toán cụ thể bắt đầu bằng bước mã hóa: mỗi
-giải pháp cần được biểu diễn dưới dạng một ``nhiễm sắc thể'' mà các
+nghiệm cần được biểu diễn dưới dạng một ``nhiễm sắc thể'' mà các
 toán tử di truyền có thể thao tác trực tiếp. Bốn cách mã hóa phổ biến
 nhất được trình bày như sau.
 
 \begin{itemize}
-    \item \textbf{Mã hóa nhị phân}: giải pháp được
+    \item \textbf{Mã hóa nhị phân}: nghiệm được
     biểu diễn bằng một chuỗi bit gồm $0$ và $1$, chẳng hạn
     \texttt{10110010}. Đây là cách mã hóa nguyên thủy nhất của GA cổ
     điển do Holland đề xuất, phù hợp với các bài toán rời rạc hoặc
     logic. Tuy nhiên, khi áp dụng cho biến số thực, cách mã hóa này
     đòi hỏi một bước rời rạc hóa, làm giảm độ chính xác của nghiệm.
-    \item \textbf{Mã hóa số thực}: giải pháp là
+    \item \textbf{Mã hóa số thực}: nghiệm là
     một dãy số thực, chẳng hạn $[3.14,\, -0.05,\, 12.8]$, trong đó mỗi
     phần tử tương ứng trực tiếp với một biến quyết định. Cách mã hóa
     này phù hợp một cách tự nhiên với các bài toán tối ưu liên tục
     nhiều biến và loại trừ được sai số lượng tử hóa của mã hóa nhị
     phân. Đây cũng là cách mã hóa được sử dụng trong phần cài đặt thực
     nghiệm của tiểu luận tại Chương~\ref{chap:ung-dung}.
-    \item \textbf{Mã hóa hoán vị}: giải pháp là
+    \item \textbf{Mã hóa hoán vị}: nghiệm là
     một thứ tự sắp xếp của một tập hợp phần tử, chẳng hạn
     $[3, 1, 4, 2, 5]$. Đây là cách mã hóa tự nhiên cho các bài toán
     định tuyến và lập lịch như TSP hay bài toán phân công công việc,
-    nơi lời giải về bản chất là một hoán vị.
+    nơi nghiệm về bản chất là một hoán vị.
     \item \textbf{Mã hóa dựa trên cấu trúc}:
-    giải pháp được biểu diễn dưới dạng cây biểu thức hoặc đồ thị, chủ
+    nghiệm được biểu diễn dưới dạng cây biểu thức hoặc đồ thị, chủ
     yếu được sử dụng trong Lập trình Di truyền nhằm tiến hóa các công
     thức hoặc chương trình.
 \end{itemize}
@@ -514,10 +514,10 @@ từ cuối thập niên 1980 và được hệ thống hóa trong công trình 
 hóa dựa trên cấu trúc} đã được giới thiệu trong
 Mục~\ref{subsec:ma-hoa}. Khác biệt cốt lõi so với GA dùng mã hóa số
 thực hay hoán vị là: thay vì tiến hóa một chuỗi giá trị có độ dài cố
-định trong khuôn dạng lời giải đã cho trước, GP tiến hóa trực tiếp
+định trong khuôn dạng nghiệm đã cho trước, GP tiến hóa trực tiếp
 \textbf{cấu trúc} của một biểu thức hoặc chương trình. Nhờ đó, thuật
 toán có khả năng tự khám phá đồng thời cả hình dạng lẫn tham số của
-lời giải.
+nghiệm.
 
 \subsection*{Mã hóa dạng cây biểu thức}
 
