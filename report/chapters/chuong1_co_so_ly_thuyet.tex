@@ -1,8 +1,18 @@
 % ============================================================
-% CHƯƠNG 1: CƠ SỞ LÝ THUYẾT VỀ THUẬT TOÁN DI TRUYỀN
+% CHUONG 1: CO SO LY THUYET VE THUAT TOAN DI TRUYEN
+% (Da chinh sua van phong hoc thuat)
 % ============================================================
 \chapter{Cơ sở lý thuyết về Thuật toán Di truyền}
 \label{chap:co-so-ly-thuyet}
+
+Chương này trình bày các nền tảng lý thuyết cần thiết của Thuật toán Di
+truyền (Genetic Algorithm -- GA). Nội dung chương được tổ chức thành bốn
+phần chính: mục đầu tiên phát biểu bài toán tối ưu hóa tổng quát và giới
+thiệu họ thuật toán tiến hóa; mục thứ hai trình bày cơ sở sinh học cũng
+như nguyên lý hoạt động của GA; mục thứ ba phân tích chi tiết các thành
+phần và toán tử cốt lõi; mục cuối cùng tổng hợp quy trình tổng thể của
+thuật toán và giới thiệu Lập trình Di truyền như một mở rộng trực tiếp
+của GA.
 
 \section{Tổng quan về Bài toán Tối ưu và Họ Thuật toán Tiến hóa}
 \label{sec:tong-quan}
@@ -10,88 +20,111 @@
 \subsection*{Bài toán Tối ưu hóa và Không gian Tìm kiếm}
 \label{subsec:bai-toan-toi-uu}
 
-Một bài toán tối ưu hóa tổng quát yêu cầu tìm một vector biến quyết định
-$x = (x_1, x_2, \ldots, x_n)$ sao cho một hàm mục tiêu
-$f(x)$ đạt giá trị cực tiểu hoặc cực đại, trong khi $x$ vẫn thoả mãn một
-tập ràng buộc xác định miền khả thi $\Omega$:
+Bài toán tối ưu hóa tổng quát có thể được phát biểu như sau: tìm một
+vector biến quyết định $x = (x_1, x_2, \ldots, x_n)$ sao cho hàm mục
+tiêu $f(x)$ đạt giá trị cực tiểu hoặc cực đại, trong khi $x$ vẫn thỏa
+mãn một tập ràng buộc xác định miền khả thi $\Omega$:
 \begin{equation}
 \min_{x \in \Omega} f(x) \quad \text{hoặc} \quad \max_{x \in \Omega} f(x).
 \label{eq:bai-toan-toi-uu}
 \end{equation}
-Miền $\Omega \subseteq \mathbb{R}^n$, còn gọi là không gian tìm kiếm,
-thường được xác định bởi một hệ ràng buộc đẳng thức và
-bất đẳng thức trên các biến quyết định. Bài toán được coi là \textbf{có
-ràng buộc} khi $\Omega$ là một tập con thực sự của không
-gian biến, và \textbf{không ràng buộc} khi $\Omega$
-trùng với toàn bộ không gian biến.
 
-Hai thách thức lớn khiến tối ưu hóa trở thành một bài toán khó nói chung
-là:
+Miền $\Omega \subseteq \mathbb{R}^n$, còn được gọi là không gian tìm
+kiếm, thường được xác định bởi một hệ ràng buộc đẳng thức và bất đẳng
+thức trên các biến quyết định. Bài toán được phân loại là \textbf{có
+ràng buộc} khi $\Omega$ là một tập con thực sự của không gian biến, và
+\textbf{không ràng buộc} khi $\Omega$ trùng với toàn bộ không gian biến.
+
+Trong thực tiễn, tối ưu hóa thường đối mặt với hai thách thức chủ yếu
+như sau.
+
 \begin{itemize}
-    \item \textbf{Cực trị cục bộ và cực trị toàn cục.} Khi hàm mục tiêu
-    không lồi hoặc đa cực trị, một thuật toán
-    chỉ dựa vào thông tin cục bộ quanh điểm hiện tại — ví dụ đạo hàm —
-    có xu hướng hội tụ về cực trị cục bộ gần điểm khởi
-    tạo nhất, thay vì cực trị toàn cục của toàn miền
-    $\Omega$. Đây chính là hạn chế cốt lõi của các phương pháp tối ưu
-    dựa trên gradient khi áp dụng cho bài toán không lồi.
-    \item \textbf{Bài toán NP-hard và sự bùng nổ tổ hợp.} Với nhiều lớp
-    bài toán tối ưu tổ hợp như bài toán người bán hàng TSP hay bài
-    toán lập lịch, số lượng phương án khả thi tăng theo hàm mũ hoặc
-    giai thừa của kích thước bài toán, khiến việc duyệt toàn bộ không
-    gian tìm kiếm trở nên bất khả thi về mặt tính toán ngay cả với các
-    bài toán kích thước vừa phải.
+    \item \textbf{Vấn đề cực trị cục bộ.} Khi hàm mục tiêu không lồi hoặc
+    đa cực trị, các thuật toán chỉ khai thác thông tin cục bộ quanh điểm
+    hiện tại, chẳng hạn đạo hàm, có xu hướng hội tụ về cực trị cục bộ gần
+    với điểm khởi tạo thay vì cực trị toàn cục trên toàn miền $\Omega$.
+    Đây chính là hạn chế cốt lõi của các phương pháp tối ưu dựa trên
+    gradient khi áp dụng cho bài toán không lồi.
+    \item \textbf{Độ phức tạp tổ hợp của bài toán NP-hard.} Đối với
+    nhiều lớp bài toán tối ưu tổ hợp, tiêu biểu như bài toán người bán
+    hàng (Travelling Salesman Problem -- TSP) hay bài toán lập lịch, số
+    lượng phương án khả thi tăng theo hàm mũ hoặc giai thừa của kích
+    thước bài toán. Kết quả là, việc duyệt toàn bộ không gian tìm kiếm
+    trở nên bất khả thi về mặt tính toán ngay cả với các bài toán có
+    kích thước vừa phải.
 \end{itemize}
-Hai thách thức trên là động lực chính cho sự phát triển của các phương
-pháp tìm kiếm không dựa trên đạo hàm, có khả năng khám phá đồng thời
-nhiều vùng của không gian tìm kiếm — trong đó có họ thuật toán tiến hóa
-được trình bày ở mục tiếp theo.
 
-\subsection*{Họ Thuật toán Tiến hóa (Evolutionary Computation)}
+Hai thách thức nêu trên chính là động lực thúc đẩy sự phát triển của
+các phương pháp tìm kiếm không dựa trên đạo hàm, đồng thời có khả năng
+khám phá nhiều vùng khác nhau của không gian tìm kiếm. Một trong những
+hướng tiếp cận tiêu biểu của nhóm phương pháp này là họ thuật toán tiến
+hóa, được giới thiệu trong mục tiếp theo.
+
+\subsection*{Họ Thuật toán Tiến hóa}
 \label{subsec:ho-thuat-toan-tien-hoa}
 
-Khác với các phương pháp tối ưu cổ điển dựa trên đạo hàm như Gradient
-Descent hay phương pháp Newton, vốn chỉ xử lý một điểm duy nhất tại
-mỗi bước lặp, \textbf{metaheuristic} là các chiến lược tìm kiếm ở mức tổng quát,
-không đảm bảo tìm được nghiệm tối ưu toàn cục tuyệt đối nhưng thường tìm
-được nghiệm đủ tốt trong thời gian chấp nhận được. Metaheuristic đặc
-biệt hữu ích khi hàm mục tiêu không khả vi, có nhiễu, không lồi, hoặc
-thậm chí không có biểu thức giải tích tường minh.
+Các phương pháp tối ưu cổ điển dựa trên đạo hàm như Gradient Descent hay
+phương pháp Newton vận hành trên một điểm duy nhất: ở mỗi bước lặp, điểm
+hiện tại được dịch chuyển theo hướng mà đạo hàm chỉ ra. Cách làm này hội
+tụ nhanh và có cơ sở lý thuyết chặt chẽ, nhưng đòi hỏi hàm mục tiêu phải
+khả vi và chỉ bảo đảm tìm được cực trị cục bộ nằm gần điểm khởi tạo.
 
-Một nhánh quan trọng của metaheuristic là các \textbf{thuật toán tìm
-kiếm dựa trên quần thể}: thay vì duy trì một
-điểm duy nhất, thuật toán duy trì cả một tập hợp điểm và
-để chúng cùng tiến hóa qua các thế hệ, nhờ đó khảo sát đồng thời nhiều
-vùng của không gian tìm kiếm và giảm nguy cơ mắc kẹt tại một cực trị cục
-bộ duy nhất. \textbf{Họ Thuật toán Tiến hóa} (Evolutionary Algorithms —
-EA) là đại diện tiêu biểu nhất của nhóm này, mô phỏng nguyên lý chọn lọc
-tự nhiên của Darwin để dẫn dắt quá trình tìm kiếm. Họ EA bao gồm bốn
-nhánh chính, phân biệt nhau chủ yếu ở cách biểu diễn giải pháp và toán
-tử tiến hóa được nhấn mạnh:
+Ở một hướng tiếp cận khác, \textbf{metaheuristic} là các chiến lược tìm
+kiếm ở mức tổng quát, được xây dựng để làm việc trong chính những điều
+kiện mà phương pháp cổ điển không áp dụng được: hàm mục tiêu không khả
+vi, có nhiễu, không lồi, hoặc thậm chí không tồn tại biểu thức giải tích
+tường minh. Sự đánh đổi ở đây là rõ ràng. Metaheuristic từ bỏ bảo đảm
+về tính tối ưu tuyệt đối để nhận lại phạm vi áp dụng rộng hơn nhiều, và
+mục tiêu thực tế của nó là đạt được một nghiệm đủ tốt trong khoảng thời
+gian chấp nhận được.
+
+Trong số các metaheuristic, nhóm \textbf{tìm kiếm dựa trên quần thể}
+duy trì đồng thời nhiều nghiệm ứng viên thay vì một nghiệm duy nhất, rồi
+để cả tập hợp đó cùng tiến hóa qua các thế hệ. Việc khảo sát nhiều vùng
+của không gian tìm kiếm cùng lúc làm giảm đáng kể nguy cơ hội tụ sớm về
+một cực trị cục bộ. Quan trọng hơn, các nghiệm trong quần thể có thể
+trao đổi thông tin với nhau để tạo ra nghiệm mới, điều mà một thuật toán
+chỉ theo dõi một điểm không thể thực hiện được. \textbf{Họ Thuật toán
+Tiến hóa} (Evolutionary Algorithms -- EA) là đại diện tiêu biểu nhất của
+nhóm này, với quá trình tìm kiếm được dẫn dắt bởi nguyên lý chọn lọc tự
+nhiên của Darwin.
+
+Mọi thuật toán thuộc họ EA đều vận hành theo một khung chung gồm năm
+bước: khởi tạo ngẫu nhiên một quần thể nghiệm, đánh giá chất lượng của
+từng nghiệm, ưu tiên những nghiệm tốt hơn khi chọn cá thể sinh sản, sinh
+nghiệm mới bằng các toán tử biến đổi ngẫu nhiên, và lặp lại chu trình
+cho tới khi thỏa mãn điều kiện dừng. Bốn nhánh chính của họ này khác
+nhau chủ yếu ở cách biểu diễn nghiệm và ở toán tử biến đổi được đặt làm
+trọng tâm:
 
 \begin{itemize}
-    \item \textbf{Thuật toán Di truyền (Genetic Algorithm — GA):} nhấn
-    mạnh vai trò của lai ghép như toán tử tìm kiếm chính,
-    kết hợp thông tin từ nhiều cá thể cha mẹ để tạo ra cá thể con; đây
-    là đối tượng nghiên cứu chính của chương này.
-    \item \textbf{Chiến lược Tiến hóa (Evolution Strategies — ES):} do
-    Rechenberg và Schwefel phát triển, tập trung vào tối ưu tham số
-    thực với đột biến Gauss là toán tử chính và có cơ chế tự thích nghi
-    các tham số đột biến trong quá trình tiến hóa.
-    \item \textbf{Lập trình Tiến hóa (Evolutionary Programming — EP):}
-    do Fogel đề xuất, tiến hóa chủ yếu thông qua đột biến trên biểu
-    diễn hành vi của cá thể, gần như không sử dụng lai
-    ghép.
-    \item \textbf{Lập trình Di truyền (Genetic Programming — GP):} do
-    Koza phát triển, mở rộng GA để tiến hóa trực tiếp các cấu trúc cây
-    biểu thức hoặc chương trình máy tính, thường dùng để tự động khám
-    phá công thức toán học hoặc chương trình giải quyết một tác vụ cho
-    trước.
+    \item \textbf{Thuật toán Di truyền} (Genetic Algorithm -- GA): đặt
+    lai ghép làm toán tử tìm kiếm chính, kết hợp thông tin di truyền từ
+    hai cá thể cha mẹ để tạo ra cá thể con. Đây là đối tượng nghiên cứu
+    chính của tiểu luận.
+    \item \textbf{Chiến lược Tiến hóa} (Evolution Strategies -- ES): do
+    Rechenberg và Schwefel phát triển cho bài toán tối ưu tham số thực,
+    lấy đột biến Gauss làm toán tử chính và bổ sung cơ chế tự thích nghi
+    biên độ đột biến trong quá trình tiến hóa.
+    \item \textbf{Lập trình Tiến hóa} (Evolutionary Programming -- EP):
+    do Fogel đề xuất, tiến hóa chủ yếu bằng đột biến trên biểu diễn hành
+    vi của cá thể và hầu như không sử dụng lai ghép.
+    \item \textbf{Lập trình Di truyền} (Genetic Programming -- GP): do
+    Koza phát triển, mở rộng GA để tiến hóa trực tiếp các cấu trúc dạng
+    cây biểu thức hoặc chương trình máy tính, thường dùng để tự động
+    khám phá công thức toán học hoặc chương trình cho một tác vụ đặt ra
+    từ trước.
 \end{itemize}
 
-Trong phạm vi tiểu luận này, trọng tâm là Thuật toán Di truyền áp dụng
-cho bài toán tối ưu số thực có ràng buộc, với cách mã hóa và các toán tử
-cụ thể được trình bày trong các mục tiếp theo.
+Trong phạm vi tiểu luận này, Thuật toán Di truyền được khảo sát trên cả
+ba cách mã hóa nghiệm. Mã hóa số thực được dùng cho bài toán tối ưu
+không ràng buộc và bài toán tối ưu có ràng buộc, mã hóa hoán vị cho bài
+toán người du lịch, còn mã hóa dạng cây biểu thức theo nguyên lý Lập
+trình Di truyền được dùng cho bài toán hồi quy ký hiệu. Khung vận hành
+năm bước vừa nêu sẽ được cụ thể hóa dần ở các mục tiếp theo, lần lượt
+qua cách mã hóa nghiệm, hàm độ thích nghi, và ba nhóm toán tử chọn lọc,
+lai ghép và đột biến; riêng nhánh Lập trình Di truyền được trình bày
+tách riêng ở Mục~\ref{sec:gp}.
 
 
 \section{Cơ sở Khoa học và Nguyên lý Hoạt động của GA}
@@ -100,27 +133,29 @@ cụ thể được trình bày trong các mục tiếp theo.
 \subsection*{Nguồn gốc Lịch sử và Nguyên lý Sinh học}
 \label{subsec:nguon-goc-lich-su}
 
-Thuật toán Di truyền được John Holland giới thiệu năm 1975 tại Đại học
+Thuật toán Di truyền do John Holland đề xuất năm 1975 tại Đại học
 Michigan trong công trình \textit{Adaptation in Natural and Artificial
-Systems} [1], và sau đó được David Goldberg hệ thống hoá, phổ biến rộng
-rãi hơn qua cuốn sách kinh điển năm 1989 \textit{Genetic Algorithms in
-Search, Optimization, and Machine Learning} [2]. Ý tưởng nền tảng của GA
-là mô phỏng ba nguyên lý cốt lõi trong học thuyết tiến hóa của Darwin:
+Systems} [1], và sau đó được David Goldberg hệ thống hóa cũng như phổ
+biến rộng rãi hơn thông qua cuốn sách năm 1989 \textit{Genetic
+Algorithms in Search, Optimization, and Machine Learning} [2].
+
+Ý tưởng nền tảng của GA là mô phỏng ba nguyên lý cốt lõi trong học
+thuyết tiến hóa của Darwin:
 
 \begin{itemize}
     \item \textbf{Chọn lọc tự nhiên} (\textit{``Survival of the
-    Fittest''}): cá thể thích nghi tốt hơn với môi trường có xác suất
-    sống sót và sinh sản cao hơn.
-    \item \textbf{Di truyền}: đặc điểm của cá thể cha mẹ
-    được truyền lại cho thế hệ con thông qua vật chất di truyền.
-    \item \textbf{Biến dị}: các sai khác ngẫu nhiên xuất
-    hiện giữa các cá thể — do lai ghép và đột biến — là nguồn tạo ra
-    tính đa dạng cần thiết để quá trình chọn lọc có tác dụng.
+    Fittest''}): những cá thể có khả năng thích nghi tốt hơn với môi
+    trường sẽ có xác suất sống sót và sinh sản cao hơn.
+    \item \textbf{Di truyền}: các đặc điểm của cá thể cha mẹ được truyền
+    lại cho thế hệ con thông qua vật chất di truyền.
+    \item \textbf{Biến dị}: các sai khác ngẫu nhiên giữa các cá thể,
+    hình thành thông qua lai ghép và đột biến, tạo nên tính đa dạng
+    di truyền -- điều kiện tiên quyết để quá trình chọn lọc có tác dụng.
 \end{itemize}
 
-GA chuyển ba nguyên lý sinh học trên thành một quy trình tính toán bằng
-cách xây dựng một phép tương ứng giữa các khái niệm sinh học và các
-thành phần thuật toán, được tóm tắt trong Bảng~\ref{tab:doi-chieu-thuat-ngu}.
+Dựa trên ba nguyên lý nêu trên, GA thiết lập một phép tương ứng giữa
+các khái niệm sinh học và các thành phần thuật toán. Phép tương ứng
+này được tóm tắt trong Bảng~\ref{tab:doi-chieu-thuat-ngu}.
 
 \begin{table}[htbp]
 \centering
@@ -141,48 +176,49 @@ Thế hệ        & Generation & Một vòng lặp tiến hóa \\
 \end{tabular}
 \end{table}
 
-Nhờ phép tương ứng này, một bài toán tối ưu bất kỳ có thể được diễn dịch
-lại thành một quá trình ``tiến hóa nhân tạo'': xuất phát từ một quần
-thể giải pháp ngẫu nhiên, để các giải pháp tốt hơn có nhiều cơ hội
-``sinh sản'' hơn qua nhiều thế hệ, quần thể dần dịch chuyển về phía
-các vùng có
-giá trị hàm mục tiêu tốt của không gian tìm kiếm.
+Nhờ phép tương ứng này, một bài toán tối ưu bất kỳ có thể được diễn
+dịch thành một quá trình ``tiến hóa nhân tạo''. Cụ thể, thuật toán xuất
+phát từ một quần thể các giải pháp ngẫu nhiên; trong suốt quá trình tiến
+hóa, các giải pháp có chất lượng tốt hơn sẽ có nhiều cơ hội được chọn
+làm cha mẹ hơn. Qua nhiều thế hệ, quần thể dần dịch chuyển về phía
+những vùng của không gian tìm kiếm có giá trị hàm mục tiêu tốt.
 
 \subsection*{Phương pháp Mã hóa Giải pháp}
 \label{subsec:ma-hoa}
 
-Bước đầu tiên khi áp dụng GA cho một bài toán cụ thể là chọn cách mã hóa
-một giải pháp dưới dạng ``nhiễm sắc thể'' mà các toán tử di
-truyền có thể thao tác được. Bốn cách mã hóa phổ biến nhất là:
+Việc áp dụng GA cho một bài toán cụ thể bắt đầu bằng bước mã hóa: mỗi
+giải pháp cần được biểu diễn dưới dạng một ``nhiễm sắc thể'' mà các
+toán tử di truyền có thể thao tác trực tiếp. Bốn cách mã hóa phổ biến
+nhất được trình bày như sau.
 
 \begin{itemize}
-    \item[] \textbf{Mã hóa Nhị phân (Binary Encoding):} giải pháp được
-    biểu diễn bằng một chuỗi bit $0$ và $1$, ví dụ \texttt{10110010}.
-    Đây là cách mã hóa nguyên thuỷ nhất trong GA cổ điển của Holland,
-    phù hợp với các bài toán rời rạc hoặc logic, nhưng khi áp dụng cho
-    biến số thực cần một bước rời rạc hóa làm giảm độ
-    chính xác.
-    \item[] \textbf{Mã hóa Số thực (Real-value Encoding):} giải pháp là
-    một dãy số thực, ví dụ $[3.14,\, -0.05,\, 12.8]$, mỗi phần tử tương
-    ứng trực tiếp với một biến quyết định. Cách mã hóa này phù hợp tự
-    nhiên với các bài toán tối ưu hóa liên tục nhiều biến, tránh được
-    sai số lượng tử hóa của mã hóa nhị phân, và là cách mã hóa được sử
-    dụng trong phần cài đặt thực nghiệm của tiểu luận ở
-    Chương~\ref{chap:ung-dung}.
-    \item[] \textbf{Mã hóa Hoán vị (Permutation Encoding):} giải pháp
-    là một thứ tự sắp xếp của một tập hợp phần tử, ví dụ $[3, 1, 4, 2,
-    5]$. Đây là cách mã hóa tự nhiên cho các bài toán định tuyến/lập
-    lịch như bài toán người bán hàng (TSP) hay bài toán phân công công
-    việc, nơi lời giải về bản chất là một hoán vị.
-    \item[] \textbf{Mã hóa Dựa trên Cấu trúc (Tree/Graph Encoding):}
-    giải pháp được biểu diễn dưới dạng cây biểu thức hoặc đồ thị, sử
-    dụng chủ yếu trong Lập trình Di truyền để tiến
-    hóa các công thức hoặc chương trình.
+    \item \textbf{Mã hóa nhị phân} (Binary Encoding): giải pháp được
+    biểu diễn bằng một chuỗi bit gồm $0$ và $1$, chẳng hạn
+    \texttt{10110010}. Đây là cách mã hóa nguyên thủy nhất của GA cổ
+    điển do Holland đề xuất, phù hợp với các bài toán rời rạc hoặc
+    logic. Tuy nhiên, khi áp dụng cho biến số thực, cách mã hóa này
+    đòi hỏi một bước rời rạc hóa, làm giảm độ chính xác của nghiệm.
+    \item \textbf{Mã hóa số thực} (Real-value Encoding): giải pháp là
+    một dãy số thực, chẳng hạn $[3.14,\, -0.05,\, 12.8]$, trong đó mỗi
+    phần tử tương ứng trực tiếp với một biến quyết định. Cách mã hóa
+    này phù hợp một cách tự nhiên với các bài toán tối ưu liên tục
+    nhiều biến và loại trừ được sai số lượng tử hóa của mã hóa nhị
+    phân. Đây cũng là cách mã hóa được sử dụng trong phần cài đặt thực
+    nghiệm của tiểu luận tại Chương~\ref{chap:ung-dung}.
+    \item \textbf{Mã hóa hoán vị} (Permutation Encoding): giải pháp là
+    một thứ tự sắp xếp của một tập hợp phần tử, chẳng hạn
+    $[3, 1, 4, 2, 5]$. Đây là cách mã hóa tự nhiên cho các bài toán
+    định tuyến và lập lịch như TSP hay bài toán phân công công việc,
+    nơi lời giải về bản chất là một hoán vị.
+    \item \textbf{Mã hóa dựa trên cấu trúc} (Tree/Graph Encoding):
+    giải pháp được biểu diễn dưới dạng cây biểu thức hoặc đồ thị, chủ
+    yếu được sử dụng trong Lập trình Di truyền nhằm tiến hóa các công
+    thức hoặc chương trình.
 \end{itemize}
 
-Việc lựa chọn cách mã hóa quyết định trực tiếp các toán tử lai ghép và
-đột biến nào có thể áp dụng được, như sẽ trình bày ở
-Mục~\ref{sec:toan-tu-cot-loi}.
+Cần lưu ý rằng việc lựa chọn cách mã hóa quyết định trực tiếp đến loại
+toán tử lai ghép và đột biến có thể áp dụng. Vấn đề này sẽ được phân
+tích chi tiết trong Mục~\ref{sec:toan-tu-cot-loi}.
 
 
 \section{Các Thành phần và Phép toán Cốt lõi}
@@ -191,177 +227,183 @@ Mục~\ref{sec:toan-tu-cot-loi}.
 \subsection*{Hàm độ thích nghi và Ràng buộc}
 \label{subsec:ham-thich-nghi}
 
-Hàm độ thích nghi đóng vai trò đánh giá chất lượng
-của từng cá thể trong quần thể, làm cơ sở cho phép chọn lọc. Với bài
-toán tối ưu không ràng buộc, hàm thích nghi thường được xây dựng trực
-tiếp từ hàm mục tiêu, ví dụ đảo dấu hàm mục tiêu
-khi bài toán gốc là bài toán cực tiểu hóa nhưng GA nguyên thuỷ được phát
-biểu dưới dạng cực đại hóa độ thích nghi.
+Hàm độ thích nghi đóng vai trò đánh giá chất lượng của từng cá thể
+trong quần thể, và là cơ sở cho toàn bộ quá trình chọn lọc. Đối với bài
+toán không ràng buộc, hàm thích nghi thường được xây dựng trực tiếp từ
+hàm mục tiêu; chẳng hạn, đối với bài toán cực tiểu hóa, ta có thể đảo
+dấu hàm mục tiêu do GA nguyên thủy được phát biểu dưới dạng cực đại
+hóa độ thích nghi.
 
-Đối với bài toán \textbf{có ràng buộc} — trọng tâm của tiểu luận này —
-cách tiếp cận kinh điển là chuyển ràng buộc thành một số hạng phạt cộng
-vào hàm mục tiêu, tạo thành hàm thích nghi đã phạt:
+Đối với bài toán \textbf{có ràng buộc}, trọng tâm của tiểu luận này,
+cách tiếp cận kinh điển là đưa ràng buộc vào hàm mục tiêu thông qua một
+số hạng phạt, tạo thành hàm thích nghi đã phạt:
 \begin{equation}
 F(x) = f(x) \pm \sum_{i} \lambda_i \cdot g_i(x),
 \label{eq:ham-phat}
 \end{equation}
-trong đó $g_i(x)$ đo mức độ vi phạm ràng buộc thứ $i$ (bằng $0$ nếu
-ràng buộc được thỏa mãn), còn $\lambda_i > 0$ là hệ số phạt tương ứng;
-dấu $+$ hay $-$ và độ lớn của $\lambda_i$ được chọn tùy theo bài toán là
-cực tiểu hay cực đại hóa, sao cho cá thể vi phạm ràng buộc luôn bị đánh
-giá kém hơn cá thể khả thi có cùng giá trị hàm mục tiêu.
+trong đó $g_i(x)$ đo mức độ vi phạm ràng buộc thứ $i$ (nhận giá trị $0$
+nếu ràng buộc được thỏa mãn), và $\lambda_i > 0$ là hệ số phạt tương
+ứng. Dấu của số hạng phạt cũng như độ lớn của $\lambda_i$ được chọn
+tùy theo bài toán là cực tiểu hay cực đại hóa, sao cho một cá thể vi
+phạm ràng buộc luôn bị đánh giá thấp hơn một cá thể khả thi có cùng
+giá trị hàm mục tiêu.
 
-Hạn chế cố hữu của hàm phạt tĩnh là hệ số $\lambda_i$
-phải được chọn thủ công và cố định trong suốt quá trình tiến hóa: chọn
-$\lambda_i$ quá nhỏ khiến quần thể ``phớt lờ'' ràng buộc, trong khi chọn
-quá lớn khiến số hạng phạt lấn át hoàn toàn hàm mục tiêu, làm quần thể
-chỉ tập trung thỏa mãn ràng buộc mà mất khả năng phân biệt các nghiệm
-khả thi tốt và xấu. Nhiều phương pháp xử lý ràng buộc nâng cao hơn đã
-được đề xuất để khắc phục hạn chế này — ví dụ quy tắc khả thi của Deb hay
-các ngưỡng $\varepsilon$ giảm dần theo thời gian do
-Takahama và Sato đề xuất — và sẽ được trình bày cụ thể cùng phần cài đặt thực
-nghiệm ở Chương 2.
+Hàm phạt tĩnh tồn tại một hạn chế cố hữu: hệ số $\lambda_i$ phải được
+xác định thủ công và giữ cố định trong suốt quá trình tiến hóa. Nếu
+chọn $\lambda_i$ quá nhỏ, quần thể có xu hướng bỏ qua các ràng buộc;
+ngược lại, nếu chọn $\lambda_i$ quá lớn, số hạng phạt sẽ lấn át hoàn
+toàn hàm mục tiêu, khiến quần thể chỉ tập trung thỏa mãn ràng buộc mà
+không còn khả năng phân biệt giữa các nghiệm khả thi tốt và kém. Để
+khắc phục hạn chế này, nhiều kỹ thuật xử lý ràng buộc nâng cao đã được
+đề xuất, tiêu biểu như quy tắc khả thi của Deb hoặc ngưỡng
+$\varepsilon$ giảm dần theo thời gian do Takahama và Sato đề xuất. Các
+kỹ thuật này sẽ được trình bày cụ thể cùng với phần cài đặt thực nghiệm
+trong Chương 2.
 
 \subsection*{Các Phép chọn lọc}
 \label{subsec:chon-loc}
 
-Phép chọn lọc quyết định cá thể nào trong quần thể hiện tại được chọn
-làm ``bố mẹ'' để sinh ra thế hệ tiếp theo, thiên vị có chủ đích về phía
-các cá thể có độ thích nghi cao hơn.
+Toán tử chọn lọc quyết định những cá thể nào của quần thể hiện tại sẽ
+được chọn làm cha mẹ để sinh ra thế hệ tiếp theo. Nguyên tắc chung của
+toán tử này là thiên vị có hướng về phía các cá thể có độ thích nghi
+cao. Ba phương pháp chọn lọc phổ biến nhất được trình bày dưới đây.
 
 \begin{itemize}
-    \item[] \textbf{Vòng quay Roulette (Roulette Wheel Selection):} xác
-    suất chọn cá thể $i$ tỉ lệ thuận với độ thích nghi $f_i$ của nó so
-    với tổng độ thích nghi toàn quần thể:
+    \item \textbf{Vòng quay Roulette} (Roulette Wheel Selection): xác
+    suất chọn cá thể $i$ tỉ lệ thuận với độ thích nghi của nó so với tổng
+    độ thích nghi của toàn quần thể:
     \begin{equation}
     P_i = \frac{f_i}{\sum_{j=1}^{N} f_j}.
     \label{eq:roulette}
     \end{equation}
     Hạn chế của phương pháp này là khi một cá thể có độ thích nghi vượt
-    trội hẳn phần còn lại, nó sẽ chiếm phần lớn xác
-    suất được chọn, khiến quần thể nhanh chóng mất đa dạng.
-    \item[] \textbf{Thách đấu (Tournament Selection):} chọn ngẫu nhiên
-    $k$ cá thể từ quần thể, sau đó cá thể tốt nhất trong nhóm $k$ cá
-    thể này được chọn làm bố/mẹ. Tham số $k$, tức kích thước thách đấu,
-    điều khiển trực tiếp áp lực chọn lọc: $k$ càng lớn, áp lực chọn lọc
-    càng cao và quần thể hội tụ càng nhanh, nhưng cũng dễ mất đa dạng
-    hơn.
-    \item[] \textbf{Xếp hạng (Rank-based Selection):} cá thể được chọn
-    dựa trên thứ hạng của nó trong quần thể đã sắp xếp theo
-    độ thích nghi, thay vì giá trị thích nghi tuyệt đối, giúp tránh hiện
-    tượng một cá thể siêu việt áp đảo toàn bộ xác suất chọn như ở
-    Roulette Wheel.
+    trội hẳn so với phần còn lại, cá thể đó sẽ chiếm phần lớn xác suất
+    được chọn, từ đó làm quần thể nhanh chóng mất đi tính đa dạng.
+    \item \textbf{Thách đấu} (Tournament Selection): chọn ngẫu nhiên $k$
+    cá thể từ quần thể, sau đó chọn cá thể tốt nhất trong nhóm làm cha
+    mẹ. Tham số $k$, gọi là kích thước thách đấu, kiểm soát trực tiếp
+    áp lực chọn lọc: $k$ càng lớn thì áp lực chọn lọc càng cao, quần
+    thể hội tụ càng nhanh, nhưng đổi lại rủi ro mất đa dạng cũng tăng
+    theo.
+    \item \textbf{Chọn lọc theo thứ hạng} (Rank-based Selection): cá thể
+    được chọn dựa trên thứ hạng của nó trong quần thể đã được sắp xếp
+    theo độ thích nghi, thay vì dựa trên giá trị thích nghi tuyệt đối.
+    Cách tiếp cận này khắc phục được hiện tượng một cá thể vượt trội áp
+    đảo toàn bộ xác suất chọn như trong phương pháp vòng quay Roulette.
 \end{itemize}
 
-Bên cạnh các toán tử chọn lọc bố mẹ nêu trên, một chiến lược lựa chọn
-cá thể sang thế hệ sau đặc biệt quan trọng là \textbf{giữ lại cá thể ưu
-tú}, được trình bày riêng ở phần dưới đây do vai trò và cách
-áp dụng của nó khác với chọn lọc bố mẹ thông thường.
+Bên cạnh các toán tử chọn lọc cha mẹ nêu trên, chiến lược lựa chọn cá
+thể chuyển sang thế hệ sau còn bao gồm cơ chế giữ lại cá thể ưu tú,
+được trình bày riêng trong Mục~\ref{subsec:elitism} do vai trò và cách
+áp dụng của nó khác biệt so với chọn lọc cha mẹ thông thường.
 
 \subsection*{Các Phép lai ghép}
 \label{subsec:lai-ghep}
 
-Lai ghép kết hợp vật chất di truyền của hai cá thể bố mẹ để
-tạo ra cá thể con, với tần suất lai ghép $p_c$ thường
-nằm trong khoảng $0.6$ đến $0.95$ — nghĩa là phần lớn, nhưng không phải
-toàn bộ, các cặp bố mẹ được chọn sẽ thực sự lai ghép; phần còn lại được
-sao chép nguyên vẹn sang thế hệ con.
+Toán tử lai ghép kết hợp vật chất di truyền của hai cá thể cha mẹ để
+tạo ra cá thể con mới. Tần suất lai ghép $p_c$ thường được đặt trong
+khoảng từ $0.6$ đến $0.95$, nghĩa là phần lớn các cặp cha mẹ được chọn
+sẽ thực sự tham gia lai ghép, trong khi phần còn lại được sao chép
+nguyên vẹn sang thế hệ con.
 
-\textbf{Đối với mã hóa nhị phân và số thực,} ba toán tử phổ biến nhất
+Đối với mã hóa nhị phân và số thực, ba toán tử lai ghép phổ biến nhất
 là:
 \begin{itemize}
-    \item \textbf{Lai ghép đơn điểm (Single-point Crossover):} chọn
-    ngẫu nhiên một vị trí cắt trên chuỗi nhiễm sắc thể, hai cá thể con
-    được tạo bằng cách hoán đổi các đoạn nằm sau vị trí cắt giữa hai bố
-    mẹ.
-    \item \textbf{Lai ghép đa điểm (Multi-point Crossover):} tổng quát
-    hóa lai ghép đơn điểm với nhiều vị trí cắt, các đoạn xen kẽ giữa hai
-    bố mẹ được hoán đổi.
-    \item \textbf{Lai ghép đồng nhất (Uniform Crossover):} mỗi vị trí
-    gen được quyết định độc lập, ngẫu nhiên xem sẽ lấy từ bố hay mẹ,
-    không phụ thuộc vào vị trí trong chuỗi.
+    \item \textbf{Lai ghép đơn điểm} (Single-point Crossover): chọn
+    ngẫu nhiên một vị trí cắt trên chuỗi nhiễm sắc thể. Hai cá thể con
+    được tạo ra bằng cách hoán đổi các đoạn nằm sau vị trí cắt giữa hai
+    cha mẹ.
+    \item \textbf{Lai ghép đa điểm} (Multi-point Crossover): là dạng
+    tổng quát của lai ghép đơn điểm với nhiều vị trí cắt; các đoạn xen
+    kẽ giữa hai cha mẹ được hoán đổi cho nhau.
+    \item \textbf{Lai ghép đồng nhất} (Uniform Crossover): giá trị của
+    mỗi gen tại vị trí con được quyết định độc lập và ngẫu nhiên, lấy
+    từ cha hoặc mẹ, không phụ thuộc vào vị trí của gen trong chuỗi.
 \end{itemize}
 
-Với mã hóa số thực, một họ toán tử quan trọng khác là lai ghép trộn
-(blend crossover, BLX-$\alpha$) — cách tiếp cận được sử dụng trong phần
-cài đặt của tiểu luận. Với hai cá thể bố mẹ $p_1, p_2 \in \mathbb{R}^n$
-và một hệ số trộn $\alpha$ được lấy mẫu ngẫu nhiên và
-có thể nhận cả giá trị ngoài khoảng $[0,1]$, hai cá thể con được tạo theo tổ hợp tuyến tính:
+Đối với mã hóa số thực, một họ toán tử quan trọng khác là lai ghép
+trộn (Blend Crossover, BLX-$\alpha$), cũng chính là toán tử được sử
+dụng trong phần cài đặt của tiểu luận. Xét hai cá thể cha mẹ
+$p_1, p_2 \in \mathbb{R}^n$ và hệ số trộn $\alpha$ được lấy mẫu ngẫu
+nhiên, có thể nhận giá trị nằm ngoài khoảng $[0, 1]$, hai cá thể con
+được tạo ra theo tổ hợp tuyến tính:
 \begin{equation}
 c_1 = \alpha \cdot p_1 + (1-\alpha) \cdot p_2,
 \qquad
 c_2 = \alpha \cdot p_2 + (1-\alpha) \cdot p_1.
 \label{eq:blend-crossover}
 \end{equation}
-Khi $\alpha$ được lấy mẫu từ một khoảng mở rộng ra ngoài $[0,1]$ (ví dụ
-$\alpha \sim \mathcal{U}(-0.25,\, 1.25)$) thay vì giới hạn trong đoạn
-nối hai bố mẹ, cá thể con có thể nằm ngoài đoạn thẳng nối $p_1$ và
-$p_2$, giúp toán tử này vừa có khả năng khai thác vùng
-lân cận bố mẹ, vừa giữ được khả năng khám phá ra ngoài
-đoạn đó thay vì chỉ co dần khoảng tìm kiếm qua các thế hệ.
+Khi $\alpha$ được lấy mẫu từ một khoảng mở rộng ra ngoài $[0, 1]$,
+chẳng hạn $\alpha \sim \mathcal{U}(-0.25,\, 1.25)$, cá thể con có thể
+nằm ngoài đoạn thẳng nối $p_1$ và $p_2$. Nhờ vậy, toán tử này cân bằng
+được giữa khả năng khai thác (khai thác vùng lân cận cha mẹ) và khả
+năng khám phá (tiếp cận các vùng nằm ngoài đoạn nối hai cha mẹ), thay
+vì chỉ co dần khoảng tìm kiếm qua các thế hệ.
 
-\textbf{Đối với mã hóa hoán vị} trong các bài toán định tuyến và lập
-lịch, việc
-hoán đổi trực tiếp từng đoạn như trên có thể tạo ra cá thể con vi phạm
-tính hoán vị vì có phần tử xuất hiện nhiều lần hoặc bị thiếu, nên cần
-các toán tử chuyên biệt:
+Đối với mã hóa hoán vị trong các bài toán định tuyến và lập lịch, việc
+hoán đổi trực tiếp từng đoạn như các toán tử trên có thể tạo ra cá thể
+con vi phạm tính hoán vị do có phần tử bị lặp lại hoặc thiếu sót. Vì
+vậy, các toán tử lai ghép chuyên biệt cần được sử dụng:
 \begin{itemize}
-    \item \textbf{PMX (Partially Matched Crossover):} hoán đổi một
-    đoạn con giữa hai bố mẹ như lai ghép đơn điểm, sau đó sửa các vị trí
-    còn lại theo một ánh xạ tương ứng từng phần để đảm bảo tính hoán vị.
-    \item \textbf{OX (Order Crossover):} giữ nguyên một đoạn con từ bố
-    mẹ thứ nhất, các phần tử còn lại được điền theo đúng thứ tự xuất
-    hiện của chúng ở bố mẹ thứ hai.
-    \item \textbf{CX (Cycle Crossover):} xác định các ``chu trình'' giữa
-    vị trí phần tử ở hai bố mẹ, mỗi cá thể con được tạo
-    bằng cách giữ nguyên các chu trình xen kẽ từ mỗi bố mẹ.
+    \item \textbf{PMX} (Partially Matched Crossover): hoán đổi một đoạn
+    con giữa hai cha mẹ theo cách tương tự lai ghép đơn điểm, sau đó
+    điều chỉnh các vị trí còn lại dựa trên ánh xạ tương ứng từng phần
+    nhằm đảm bảo tính hoán vị của cá thể con.
+    \item \textbf{OX} (Order Crossover): giữ nguyên một đoạn con từ cha
+    mẹ thứ nhất, các phần tử còn lại được điền vào theo đúng thứ tự xuất
+    hiện của chúng trong cha mẹ thứ hai.
+    \item \textbf{CX} (Cycle Crossover): xác định các ``chu trình'' giữa
+    vị trí phần tử của hai cha mẹ; mỗi cá thể con được tạo ra bằng cách
+    giữ nguyên các chu trình xen kẽ lấy từ mỗi cha mẹ.
 \end{itemize}
 
 \subsection*{Các Phép đột biến}
 \label{subsec:dot-bien}
 
-Đột biến tạo ra biến dị ngẫu nhiên trên một cá thể, với tần
-suất đột biến $p_m$ trên mỗi gen thường nhỏ, nằm trong
-khoảng $0.001$ đến $0.05$ đối với GA nhị phân cổ điển; vai trò chính của
-đột biến là duy trì đa dạng di truyền và giúp thuật toán thoát khỏi các
-vùng mà lai ghép một mình không thể tiếp cận được.
-
+Toán tử đột biến tạo ra biến dị ngẫu nhiên trên một cá thể. Tần suất
+đột biến $p_m$ trên mỗi gen thường nhỏ, rơi vào khoảng từ $0.001$ đến
+$0.05$ đối với GA nhị phân cổ điển. Vai trò chính của đột biến là duy
+trì đa dạng di truyền cho quần thể, đồng thời giúp thuật toán thoát ra
+khỏi những vùng mà toán tử lai ghép một mình không thể tiếp cận được.
+Một số dạng đột biến tiêu biểu bao gồm:
 \begin{itemize}
-    \item \textbf{Đột biến đảo bit (Bit-flip Mutation):} với mã hóa nhị
-    phân, mỗi bit được đảo giá trị ($0 \leftrightarrow 1$) độc lập với
-    xác suất $p_m$.
-    \item \textbf{Đột biến Gauss / Uniform:} với mã hóa số thực, mỗi
-    biến $x_i$ được cộng thêm một nhiễu ngẫu nhiên, phổ biến nhất là
-    nhiễu Gauss:
+    \item \textbf{Đột biến đảo bit} (Bit-flip Mutation): áp dụng cho mã
+    hóa nhị phân; mỗi bit được đảo giá trị ($0 \leftrightarrow 1$) độc
+    lập với xác suất $p_m$.
+    \item \textbf{Đột biến Gauss} (Gaussian Mutation): áp dụng cho mã
+    hóa số thực; mỗi biến $x_i$ được cộng thêm một nhiễu ngẫu nhiên, phổ
+    biến nhất là nhiễu Gauss:
     \begin{equation}
     x_i' = x_i + \mathcal{N}(0,\, \sigma_i^2),
     \label{eq:dot-bien-gauss}
     \end{equation}
     trong đó độ lệch chuẩn $\sigma_i$ thường được đặt tỉ lệ với độ rộng
-    miền giá trị của biến $x_i$, sao cho bước đột biến có ý nghĩa tương
-    đối giống nhau giữa các biến có thang đo khác nhau.
-    \item \textbf{Đột biến hoán đổi, đảo ngược, chèn} (Swap, Inversion,
-    Insertion): dành cho mã hóa hoán vị — lần lượt là hoán đổi vị trí
-    hai phần tử, đảo ngược thứ tự một đoạn con, và di chuyển một phần
-    tử sang vị trí khác trong chuỗi — mỗi thao tác đều bảo toàn tính
-    hoán vị của cá thể.
+    miền giá trị của biến $x_i$, nhằm đảm bảo bước đột biến có ý nghĩa
+    tương đương giữa các biến có thang đo khác nhau.
+    \item \textbf{Đột biến hoán đổi, đảo ngược và chèn} (Swap,
+    Inversion, Insertion): áp dụng cho mã hóa hoán vị; lần lượt là hoán
+    đổi vị trí hai phần tử, đảo ngược thứ tự một đoạn con, và di chuyển
+    một phần tử sang vị trí khác trong chuỗi. Cả ba thao tác đều bảo
+    toàn tính hoán vị của cá thể.
 \end{itemize}
 
 \subsection*{Chiến lược giữ lại Cá thể Ưu tú (Elitism)}
 \label{subsec:elitism}
 
-Vì chọn lọc, lai ghép và đột biến đều mang tính ngẫu nhiên, không có gì
-đảm bảo cá thể tốt nhất của thế hệ hiện tại sẽ xuất hiện lại ở thế hệ
-kế tiếp — trên lý thuyết, độ thích nghi tốt nhất toàn quần thể hoàn toàn
-có thể giảm đi giữa hai thế hệ liên tiếp. \textbf{Elitism} khắc phục vấn
-đề này bằng cách bắt buộc giữ lại nguyên vẹn $k$ cá thể tốt nhất của thế
-hệ hiện tại, chuyển thẳng sang thế hệ sau mà không qua lai ghép hay đột
-biến. Nhờ đó, độ thích nghi tốt nhất từng tìm được không bao giờ giảm
-qua các thế hệ. Việc chọn kích thước elitism $k$
-là một sự đánh đổi: $k$ quá nhỏ có nguy cơ đánh mất cá thể tốt vào tay
-các toán tử ngẫu nhiên, còn $k$ quá lớn làm giảm áp lực khám phá của
-quần thể, có thể góp phần làm giảm đa dạng của quần thể và khiến quá
-trình tìm kiếm hội tụ sớm về một vùng hẹp của không gian tìm kiếm.
+Do các toán tử chọn lọc, lai ghép và đột biến đều mang tính ngẫu nhiên,
+không có cơ chế nào đảm bảo cá thể tốt nhất của thế hệ hiện tại sẽ được
+duy trì sang thế hệ kế tiếp. Trên lý thuyết, độ thích nghi tốt nhất của
+toàn quần thể hoàn toàn có thể giảm đi giữa hai thế hệ liên tiếp. Chiến
+lược \textbf{Elitism} ra đời nhằm khắc phục vấn đề này: $k$ cá thể tốt
+nhất của thế hệ hiện tại được giữ nguyên vẹn và chuyển trực tiếp sang
+thế hệ sau mà không trải qua lai ghép hay đột biến. Nhờ đó, độ thích
+nghi tốt nhất từng đạt được sẽ không bao giờ giảm qua các thế hệ.
+
+Việc lựa chọn kích thước elitism $k$ đòi hỏi một sự cân nhắc. Nếu $k$
+quá nhỏ, các cá thể tốt vẫn có thể bị mất do tác động của các toán tử
+ngẫu nhiên. Ngược lại, nếu $k$ quá lớn, áp lực khám phá của quần thể sẽ
+giảm sút, làm suy giảm tính đa dạng và khiến quá trình tìm kiếm hội tụ
+sớm về một vùng hẹp của không gian tìm kiếm.
 
 
 \section{Quy trình Thuật toán và Điều kiện Dừng}
@@ -370,10 +412,11 @@ trình tìm kiếm hội tụ sớm về một vùng hẹp của không gian tì
 \subsection*{Sơ đồ khối và Giả mã}
 \label{subsec:so-do-gia-ma}
 
-Kết hợp các thành phần đã trình bày ở Mục~\ref{sec:toan-tu-cot-loi}, một
-thế hệ GA điển hình lặp lại chu trình: chọn lọc bố mẹ, lai ghép, đột
-biến, đánh giá quần thể con, rồi cập nhật quần thể mới có áp dụng
-elitism — như minh họa ở Hình~\ref{fig:ga-cycle}.
+Phối hợp các thành phần đã trình bày trong
+Mục~\ref{sec:toan-tu-cot-loi}, một thế hệ của GA điển hình bao gồm
+chu trình lặp lại sau: chọn lọc cha mẹ, lai ghép, đột biến, đánh giá
+quần thể con, rồi cập nhật quần thể mới với cơ chế elitism. Chu trình
+này được minh họa tổng quát trong Hình~\ref{fig:ga-cycle}.
 
 \begin{figure}[htbp]
 \centering
@@ -414,11 +457,11 @@ elitism — như minh họa ở Hình~\ref{fig:ga-cycle}.
 \label{fig:ga-cycle}
 \end{figure}
 
-Thuật toán~\ref{alg:ga-pseudocode} trình bày lại chu trình này dưới dạng
-giả mã.
+Để mô tả chính xác hơn, Thuật toán~\ref{alg:ga-pseudocode} trình bày
+chu trình tiến hóa trên dưới dạng giả mã.
 
 \begin{algorithm}[htbp]
-\caption{Giải mã tổng quát của Thuật toán Di truyền}
+\caption{Giả mã tổng quát của Thuật toán Di truyền}
 \label{alg:ga-pseudocode}
 \begin{algorithmic}[1]
 \State $t \gets 0$
@@ -426,7 +469,7 @@ giả mã.
 \State Đánh giá độ thích nghi của $P(0)$
 \While{điều kiện dừng chưa thỏa mãn}
     \State $t \gets t + 1$
-    \State Chọn lọc tập bố mẹ $S(t)$ từ $P(t-1)$
+    \State Chọn lọc tập cha mẹ $S(t)$ từ $P(t-1)$
     \State Thực hiện lai ghép (crossover) trên $S(t)$, tạo tập con $C(t)$
     \State Thực hiện đột biến (mutation) trên $C(t)$
     \State Đánh giá độ thích nghi của $C(t)$
@@ -439,89 +482,97 @@ giả mã.
 \subsection*{Tiêu chuẩn Dừng và Đánh giá sự Hội tụ}
 \label{subsec:tieu-chuan-dung}
 
-Vòng lặp tiến hóa cần một điều kiện dừng tường
-minh; ba tiêu chuẩn phổ biến, có thể kết hợp với nhau, là:
+Một thuật toán tiến hóa cần được trang bị một điều kiện dừng tường
+minh để kết thúc quá trình lặp. Ba tiêu chuẩn dừng phổ biến, thường
+được kết hợp sử dụng với nhau, được trình bày như sau.
 
 \begin{itemize}
-    \item \textbf{Đạt số lượng thế hệ tối đa} $G_{max}$: đơn giản và dễ
-    kiểm soát ngân sách tính toán nhất, nhưng $G_{max}$ quá nhỏ có nguy
-    cơ dừng trước khi quần thể hội tụ, trong khi $G_{max}$ quá lớn gây
-    lãng phí tính toán không cần thiết sau khi quần thể đã hội tụ.
-    \item \textbf{Đạt giá trị fitness mục tiêu:} dừng ngay khi tìm được
-    một cá thể có độ thích nghi đạt hoặc vượt một ngưỡng đặt trước —
-    phù hợp khi đã biết hoặc ước lượng được giá trị tối ưu cần đạt.
-    \item \textbf{Quần thể hội tụ (stagnation):} dừng khi độ thích nghi
-    của cá thể tốt nhất không cải thiện sau $K$ thế hệ liên tiếp — dấu
-    hiệu cho thấy các toán tử di truyền không còn tạo ra tiến triển đáng
-    kể. Cần lưu ý tiêu chuẩn này có thể dừng thuật toán quá sớm nếu $K$
-    quá nhỏ, do quần thể có thể dừng cải thiện tạm thời trước khi tiếp
-    tục tiến triển ở các thế hệ sau.
+    \item \textbf{Số thế hệ tối đa} $G_{max}$: đây là tiêu chuẩn đơn
+    giản nhất, đồng thời giúp kiểm soát trực tiếp ngân sách tính toán.
+    Tuy nhiên, việc lựa chọn $G_{max}$ cần cân nhắc: nếu $G_{max}$ quá
+    nhỏ, thuật toán có thể dừng lại trước khi quần thể hội tụ; nếu
+    $G_{max}$ quá lớn, tài nguyên tính toán sẽ bị lãng phí sau khi quần
+    thể đã hội tụ.
+    \item \textbf{Ngưỡng độ thích nghi mục tiêu}: thuật toán dừng ngay
+    khi tìm được một cá thể có độ thích nghi đạt hoặc vượt ngưỡng đặt
+    trước. Tiêu chuẩn này phù hợp khi giá trị tối ưu cần đạt đã biết
+    trước hoặc có thể ước lượng được.
+    \item \textbf{Độ trễ hội tụ} (stagnation): thuật toán dừng khi độ
+    thích nghi của cá thể tốt nhất không cải thiện sau $K$ thế hệ liên
+    tiếp, được xem là dấu hiệu cho thấy các toán tử di truyền không còn
+    tạo ra tiến bộ đáng kể. Tuy vậy, cần lưu ý rằng tiêu chuẩn này có
+    thể khiến thuật toán dừng quá sớm nếu $K$ quá nhỏ, do quần thể hoàn
+    toàn có thể trải qua giai đoạn không cải thiện tạm thời trước khi
+    tiếp tục tiến triển ở các thế hệ sau.
 \end{itemize}
+
 
 \section{Lập trình Di truyền}
 \label{sec:gp}
 
-Lập trình Di truyền, do John Koza phát
-triển từ cuối thập niên 1980 và hệ thống hoá trong công trình kinh
-điển năm 1992 [8], là một mở rộng tự nhiên của GA đã giới thiệu ở
-Mục~\ref{subsec:ma-hoa} dưới tên gọi \textit{mã hóa dựa trên cấu
-trúc}. Khác biệt cốt lõi so với GA mã hóa số thực hay hoán vị là: thay
-vì tiến hóa một chuỗi giá trị có độ dài cố định trong một khuôn dạng
-lời giải cho trước, GP tiến hóa trực tiếp \textbf{cấu trúc} của một
-biểu thức hoặc chương trình, cho phép thuật toán tự khám phá đồng thời
-cả hình dạng lẫn tham số của lời giải.
+Lập trình Di truyền (Genetic Programming -- GP) do John Koza phát triển
+từ cuối thập niên 1980 và được hệ thống hóa trong công trình năm 1992
+[8]. GP là một mở rộng trực tiếp của GA, tương ứng với dạng \textit{mã
+hóa dựa trên cấu trúc} đã được giới thiệu trong
+Mục~\ref{subsec:ma-hoa}. Khác biệt cốt lõi so với GA dùng mã hóa số
+thực hay hoán vị là: thay vì tiến hóa một chuỗi giá trị có độ dài cố
+định trong khuôn dạng lời giải đã cho trước, GP tiến hóa trực tiếp
+\textbf{cấu trúc} của một biểu thức hoặc chương trình. Nhờ đó, thuật
+toán có khả năng tự khám phá đồng thời cả hình dạng lẫn tham số của
+lời giải.
 
 \subsection*{Mã hóa dạng cây biểu thức}
 
-Mỗi cá thể trong GP là một cây biểu thức: nút trong là một toán tử lấy từ
-một \textit{tập hàm} cho trước — ví dụ các phép toán số học $\{+,-,\times,\div\}$ hay
-hàm lượng giác $\{\sin,\cos\}$ — còn nút lá là một
-biến đầu vào hoặc một hằng số, lấy từ một \textit{tập đầu cuối}. Duyệt cây
-theo đúng cấu trúc phân cấp của nó cho ra
-một biểu thức toán học tường minh, tính được giá trị trên bất kỳ bộ
-dữ liệu đầu vào nào — nhờ đó, một quần thể các cây khác nhau về cả
-hình dạng lẫn nội dung có thể được đánh giá và so sánh với nhau như
-trong GA thông thường.
+Mỗi cá thể trong GP là một cây biểu thức. Các nút trong của cây là một
+toán tử lấy từ \textit{tập hàm} cho trước, chẳng hạn các phép toán số
+học $\{+,-,\times,\div\}$ hoặc hàm lượng giác $\{\sin,\cos\}$; các nút
+lá là biến đầu vào hoặc hằng số lấy từ \textit{tập đầu cuối}. Khi duyệt
+cây theo đúng cấu trúc phân cấp của nó, ta thu được một biểu thức toán
+học tường minh, có thể tính giá trị trên bất kỳ bộ dữ liệu đầu vào nào.
+Điều này cho phép toàn bộ quần thể các cây với hình dạng và nội dung
+khác nhau được đánh giá, so sánh một cách thống nhất như trong GA
+thông thường.
 
 \subsection*{Hàm độ thích nghi}
 
-Bài toán tiêu biểu nhất mà GP được áp dụng là \textbf{hồi quy ký hiệu}: tự
-động tìm một biểu thức toán học mô tả tốt
-một tập dữ liệu quan sát $(X, y)$ mà không giả định trước dạng hàm cụ
-thể — khác hẳn hồi quy tuyến tính hay hồi quy đa thức, nơi dạng hàm
-đã được ấn định sẵn và chỉ các hệ số được tối ưu. Độ thích nghi của
-một cây trong bài toán này thường được xây dựng từ sai số dự đoán, ví
-dụ sai số bình phương trung bình (MSE) giữa giá trị cây tính ra và giá
-trị $y$ thực tế, cộng thêm một số hạng phạt tỉ lệ với kích thước cây
-(\textit{parsimony pressure}) nhằm hạn chế hiện tượng cây ``phình to''
-không kiểm soát (bloat) mà không mang lại cải thiện tương xứng về độ
-chính xác.
+Ứng dụng tiêu biểu nhất của GP là bài toán \textbf{hồi quy ký hiệu}:
+tự động tìm một biểu thức toán học mô tả tốt mối quan hệ giữa tập dữ
+liệu quan sát $(X, y)$ mà không giả định trước dạng hàm. Bài toán này
+khác biệt căn bản so với hồi quy tuyến tính hay hồi quy đa thức, nơi
+dạng hàm đã được ấn định sẵn và công việc còn lại chỉ là tối ưu các hệ
+số. Trong GP, độ thích nghi của một cây thường được xây dựng từ sai số
+dự đoán, tiêu biểu là sai số bình phương trung bình (MSE) giữa giá trị
+cây tính được và giá trị $y$ thực tế. Ngoài ra, một số hạng phạt tỉ lệ
+với kích thước cây (\textit{parsimony pressure}) thường được cộng thêm,
+nhằm hạn chế hiện tượng cây phát triển không kiểm soát (\textit{bloat})
+mà không mang lại cải thiện tương xứng về độ chính xác.
 
 \subsection*{Toán tử tiến hóa}
 
-Lai ghép và đột biến trong GP thao tác trực tiếp trên cấu trúc cây
-thay vì trên một chuỗi có độ dài cố định:
+Các toán tử lai ghép và đột biến trong GP thao tác trực tiếp trên cấu
+trúc cây thay vì trên chuỗi có độ dài cố định:
 \begin{itemize}
-    \item \textbf{Lai ghép trao đổi cây con (Subtree Crossover):} chọn
-    ngẫu nhiên một nút trên mỗi cây bố mẹ, rồi hoán đổi hai cây con bắt
-    rễ tại các nút đó với nhau để tạo ra hai cây con.
-    \item \textbf{Đột biến thay cây con (Subtree Mutation):} chọn ngẫu
-    nhiên một nút trên cây, rồi thay toàn bộ cây con bắt rễ tại nút đó
-    bằng một cây con mới được sinh ngẫu nhiên.
+    \item \textbf{Lai ghép trao đổi cây con} (Subtree Crossover): chọn
+    ngẫu nhiên một nút trên mỗi cây cha mẹ, sau đó hoán đổi hai cây con
+    bắt rễ tại các nút đó cho nhau để tạo ra hai cây con mới.
+    \item \textbf{Đột biến thay thế cây con} (Subtree Mutation): chọn
+    ngẫu nhiên một nút trên cây, rồi thay toàn bộ cây con bắt rễ tại nút
+    đó bằng một cây con mới được sinh ngẫu nhiên.
 \end{itemize}
-Các thành phần còn lại của chu trình tiến hóa — khởi tạo quần thể,
-chọn lọc, elitism, điều kiện dừng — về bản chất giống hệt GA đã trình
-bày ở các mục trước, chỉ khác đối tượng thao tác là một \textbf{cây}
-thay vì một \textbf{vector} số hay hoán vị.
 
-Trên cơ sở các thành phần và quy trình đã trình bày ở chương này, Chương
-2 sẽ trình bày cụ thể việc áp dụng GA và GP cho bốn nhóm bài toán —
-tối ưu không ràng buộc, tối ưu có ràng buộc, bài toán người du lịch, và
-hồi quy ký hiệu — đồng thời đối chiếu kết quả thực nghiệm với mốc so
-sánh tương ứng của từng nhóm: giá trị cực tiểu toàn cục đã biết của các
-hàm benchmark, nghiệm tối ưu công bố của bộ chuẩn CEC 2006 và của
-TSPLIB95, cùng hồi quy tuyến tính. Độc giả quan tâm đến các hướng phát
-triển và ứng dụng khác của GA có thể tham khảo thêm tổng quan của
-Katoch và cộng sự năm 2020 [5],
-cũng như một ứng dụng kinh điển kết hợp GA với huấn luyện mạng nơ-ron
-của Whitley và cộng sự năm 1990 [6].
+Các thành phần còn lại của chu trình tiến hóa, bao gồm khởi tạo quần
+thể, chọn lọc, elitism và điều kiện dừng, về bản chất tương tự như GA
+đã trình bày trong các mục trước; khác biệt duy nhất nằm ở đối tượng
+thao tác là \textbf{cây} thay vì \textbf{vector} số hoặc hoán vị.
+
+Tóm lại, chương này đã trình bày đầy đủ các nền tảng lý thuyết của GA
+và GP. Trên cơ sở đó, Chương 2 sẽ trình bày việc áp dụng GA và GP cho
+bốn nhóm bài toán: tối ưu không ràng buộc, tối ưu có ràng buộc, bài
+toán người du lịch và hồi quy ký hiệu. Kết quả thực nghiệm sẽ được đối
+chiếu với các mốc so sánh tương ứng của từng nhóm, gồm giá trị cực tiểu
+toàn cục đã biết của các hàm benchmark, nghiệm tối ưu công bố của bộ
+chuẩn CEC 2006 và của TSPLIB95, cùng với phương pháp hồi quy tuyến
+tính. Độc giả quan tâm đến các hướng phát triển và ứng dụng khác của GA
+có thể tham khảo thêm tổng quan của Katoch và cộng sự năm 2020 [5], cũng
+như một ứng dụng kinh điển kết hợp GA với huấn luyện mạng nơ-ron của
+Whitley và cộng sự năm 1990 [6].
