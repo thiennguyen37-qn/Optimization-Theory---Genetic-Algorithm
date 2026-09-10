@@ -294,7 +294,7 @@ Sự phân đôi này phản ánh bản chất của các toán tử tiến hóa
 đẳng hướng: chúng rất mạnh trong việc định vị một vùng rộng trên không
 gian tìm kiếm, nhưng yếu trong việc tinh chỉnh dọc theo một hướng ưu
 tiên hẹp. Đây chính là lý do các thuật toán lai ghép GA với tìm kiếm
-cục bộ (memetic algorithm) tồn tại --- và cũng là cách tiếp cận được
+cục bộ tồn tại --- và cũng là cách tiếp cận được
 áp dụng cho bài toán người du lịch ở Mục~\ref{sec:ud-tsp}, nơi GA
 thuần túy được bổ sung thêm bước tối ưu cục bộ 2-opt để xử lý đúng
 phần việc mà lai ghép và đột biến ngẫu nhiên làm không tốt.
@@ -373,7 +373,7 @@ toán dò lần lượt theo từng trục tọa độ với một bước dịc
 tiêu nhỏ hơn; khi không còn hướng nào cải thiện được nữa thì bước dịch
 chuyển được giảm đi một nửa và quá trình lặp lại. Cách kết hợp một
 thuật toán tiến hóa với một thủ tục tìm kiếm cục bộ như vậy chính là
-mô hình thuật toán ghi nhớ (memetic algorithm), cũng là cách tiếp cận
+mô hình thuật toán ghi nhớ, cũng là cách tiếp cận
 được dùng cho bài toán người du lịch ở Mục~\ref{sec:ud-tsp}. Vai trò
 phân công giữa hai giai đoạn rất rõ: GA đảm nhiệm việc định vị vùng
 chứa nghiệm trên toàn miền tìm kiếm, còn bước tinh chỉnh đảm nhiệm
@@ -749,7 +749,7 @@ cắt chéo nhau trong lộ trình — một lộ trình càng có nhiều đị
 càng dễ chứa những đoạn cắt chéo như vậy, và OX/Swap chỉ có thể tạo ra
 một cấu hình mới ngẫu nhiên chứ không chủ động ``gỡ'' đoạn cắt chéo đó.
 Để khắc phục hạn chế này, một chiến lược lai giữa GA và tìm kiếm cục bộ
-(\textit{memetic algorithm}) được áp dụng: sau mỗi thế hệ, một tỉ lệ cá
+ được áp dụng: sau mỗi thế hệ, một tỉ lệ cá
 thể tốt nhất trong quần thể được tinh chỉnh thêm bằng phép tìm kiếm cục
 bộ \textbf{2-opt} — xét lần lượt từng cặp cạnh trong lộ trình, hoán đổi
 hai cạnh đó nếu việc hoán đổi làm giảm tổng độ dài — trước khi tiếp tục
@@ -845,8 +845,7 @@ Bảng~\ref{tab:kq-symbolic-regression}.
 Kết quả cho thấy chênh lệch rõ rệt và nhất quán trên cả hai đại lượng.
 Hồi quy Tuyến tính chỉ giải thích được khoảng $46\%$ đến $48\%$ phương
 sai của dữ liệu ($R^2 \approx 0.46$–$0.48$), trong khi GP đạt trên
-$90\%$ ($R^2 \approx 0.90$–$0.95$); đồng thời sai số dự đoán (MAE,
-RMSE) của GP chỉ còn chưa đến một phần ba so với Hồi quy Tuyến tính ở
+$90\%$ ($R^2 \approx 0.90$–$0.95$); đồng thời sai số dự đoán của GP chỉ còn chưa đến một phần ba so với Hồi quy Tuyến tính ở
 cả hai đại lượng. Đây là kết quả trái ngược hẳn với các bài toán hồi
 quy dạng lũy thừa từng được thử nghiệm trong quá trình thực hiện tiểu
 luận — ví dụ định luật Kepler III hay áp suất động của gió mặt trời —
