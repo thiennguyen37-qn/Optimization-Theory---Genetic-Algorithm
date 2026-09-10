@@ -256,11 +256,11 @@ cùng --- tức lần cuối cùng kỷ lục được cải thiện.
 & \textbf{$f^{*}$} & \textbf{$x^{*}$} & \textbf{$y^{*}$} \\
 & \textbf{(s)} & \textbf{thỏa mãn} & & & \\
 \midrule
-Easom      & $1.3619$ & $51$ & $-1.0000000000$      & $3.141593$              & $3.141593$               \\
-Rastrigin  & $1.3876$ & $45$ & $0.0000000000$       & $8.00\times10^{-10}$    & $-2.11\times10^{-9}$     \\
-Rosenbrock & $1.4194$ & $11$ & $0.0009051359$       & $1.008839$              & $1.014881$               \\
-Ackley     & $1.5411$ & $76$ & $0.0000000000$       & $-9.22\times10^{-17}$   & $-2.99\times10^{-16}$    \\
-Schwefel   & $1.4160$ & $52$ & $2.5455\times10^{-5}$ & $420.968746$           & $420.968746$             \\
+Easom      & $1{,}3619$ & $51$ & $-1{,}0000000000$      & $3{,}141593$              & $3{,}141593$               \\
+Rastrigin  & $1{,}3876$ & $45$ & $0{,}0000000000$       & $8{,}00\times10^{-10}$    & $-2{,}11\times10^{-9}$     \\
+Rosenbrock & $1{,}4194$ & $11$ & $0{,}0009051359$       & $1{,}008839$              & $1{,}014881$               \\
+Ackley     & $1{,}5411$ & $76$ & $0{,}0000000000$       & $-9{,}22\times10^{-17}$   & $-2{,}99\times10^{-16}$    \\
+Schwefel   & $1{,}4160$ & $52$ & $2{,}5455\times10^{-5}$ & $420{,}968746$           & $420{,}968746$             \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -299,127 +299,422 @@ cục bộ (memetic algorithm) tồn tại --- và cũng là cách tiếp cận 
 thuần túy được bổ sung thêm bước tối ưu cục bộ 2-opt để xử lý đúng
 phần việc mà lai ghép và đột biến ngẫu nhiên làm không tốt.
 
-\section{Tối ưu có ràng buộc: So sánh GA với SciPy SLSQP}
+\section{Tối ưu có ràng buộc: Bộ chuẩn CEC 2006}
 \label{sec:ud-co-rang-buoc}
 
-Năm bài toán tối ưu có ràng buộc được lựa chọn để bao quát các dạng
-ràng buộc và tính chất hàm mục tiêu khác nhau, từ tuyến tính tuyệt đối
-đến phi tuyến.
+Ở lớp bài toán không ràng buộc trình bày tại
+Mục~\ref{sec:ud-khong-rang-buoc}, mọi điểm thuộc miền tìm kiếm đều là
+một nghiệm hợp lệ, nên toàn bộ công sức của thuật toán dành cho việc
+cải thiện hàm mục tiêu. Khi có thêm ràng buộc, tình thế thay đổi về
+bản chất: phần lớn không gian tìm kiếm trở thành vùng không sử dụng
+được, và thuật toán phải xác định được miền khả thi trước khi có thể
+bàn tới chuyện tối ưu. Một giá trị hàm mục tiêu nhỏ đạt được tại điểm
+vi phạm ràng buộc không mang ý nghĩa gì, thậm chí còn gây hiểu nhầm vì
+nó thường nhỏ hơn giá trị tối ưu thực sự.
 
-\textbf{Bài toán 1 — Entropy tối đa.} Đây là bài toán ``con xúc xắc bị
-làm lệch'' của Jaynes: tìm phân phối xác suất $x_1,\ldots,x_6$ của một
-con xúc xắc sáu mặt có entropy lớn nhất, biết trước kỳ vọng
-$E[X]=4.5$. Sau khi đổi dấu để đưa về bài toán cực tiểu hóa (vì
-$\max H(x) \equiv \min -H(x)$), phát biểu toán học là
-\begin{equation}
-\min_{x \in \mathbb{R}^6} f(x) = \sum_{i=1}^{6} x_i \ln x_i
-\quad \text{s.t.} \quad
-\sum_{i=1}^{6} x_i = 1,\quad
-\sum_{i=1}^{6} i\, x_i = 4.5,\quad
-x_i \ge 0.
-\label{eq:entropy}
-\end{equation}
-Hai ràng buộc đẳng thức phải được thỏa mãn đồng thời, khiến miền khả
-thi chỉ còn là giao tuyến của hai siêu phẳng trong $\mathbb{R}^6$.
+Để đánh giá GA trên lớp bài toán này, thực nghiệm sử dụng bộ chuẩn
+CEC 2006 của Liang và cộng sự — tập hợp hai mươi bốn bài toán tối ưu
+có ràng buộc được công bố kèm nghiệm tối ưu, hiện là thước đo tham
+chiếu phổ biến trong lĩnh vực tính toán tiến hóa. So với các bài toán
+tự đặt, một bộ chuẩn đã công bố mang lại hai lợi thế. Thứ nhất, nghiệm
+đúng đã được xác lập nên sai lệch của GA đo được trực tiếp thay vì
+phải dựa vào một phương pháp đối chứng. Thứ hai, kết quả thu được có
+thể đặt cạnh các công trình khác cùng sử dụng bộ chuẩn này.
 
-\textbf{Bài toán 2 — Điểm gần nhất trong miền ràng buộc.} Cho một điểm
-$(5,\, 4,\, -2)$ nằm ngoài miền ràng buộc, tìm điểm $(x,y,z)$ trong
-miền ràng buộc gần điểm đó nhất theo khoảng cách Euclid bình phương —
-tức là bài toán chiếu một điểm lên một tập lồi:
-\begin{equation}
-\min_{x,y,z} f(x,y,z) = (x-5)^2+(y-4)^2+(z+2)^2
-\quad \text{s.t.} \quad
-x+2y+z=4,\quad
-x^2+y^2\le9,\quad
-z\ge0.
-\label{eq:nearest-point}
-\end{equation}
-Miền ràng buộc là giao của một mặt phẳng, một hình trụ, và một nửa
-không gian.
-
-\textbf{Bài toán 3 — Quy hoạch tuyến tính.} Hàm mục tiêu và mọi ràng
-buộc đều tuyến tính:
-\begin{equation}
-\max_{x,y,z} f(x,y,z) = 3x+5y-2z
-\quad \text{s.t.} \quad
-x+2y+z=10,\quad
-2x+y\le8,\quad
-x,y,z\ge0.
-\label{eq:lp}
-\end{equation}
-Vì là quy hoạch tuyến tính (LP) thuần túy, nghiệm tối ưu chắc chắn nằm
-tại một đỉnh của miền đa diện lồi xác định bởi các ràng buộc.
-
-\textbf{Bài toán 4 — Quy hoạch bình phương.} Hàm mục tiêu bậc hai lồi,
-ràng buộc tuyến tính:
-\begin{equation}
-\min_{x,y,z} f(x,y,z) = x^2+2y^2+z^2-4x-6y
-\quad \text{s.t.} \quad
-x+y+2z=5,\quad
-x+y\le3,\quad
-x,y,z\ge0.
-\label{eq:qp}
-\end{equation}
-Vì hàm mục tiêu lồi và miền ràng buộc lồi, bài toán này (quy hoạch
-bình phương — QP) có đúng một cực tiểu toàn cục.
-
-\textbf{Bài toán 5 — Tối ưu lồi phi tuyến.} Hàm mục tiêu là tổng hai
-hàm mũ, khác hẳn tính chất tuyến tính từng khúc của bốn bài toán trên:
-\begin{equation}
-\min_{x,y} f(x,y) = e^{-x}+e^{-2y}
-\quad \text{s.t.} \quad
-2x+3y=6,\quad
-x^2+y^2\le4,\quad
-x,y\ge0.
-\label{eq:convex-exp}
-\end{equation}
-Cả hàm mục tiêu lẫn miền ràng buộc đều lồi nên bài toán vẫn có đúng
-một cực tiểu toàn cục, dù không còn là dạng tuyến tính hay bình phương.
-
-GA cho cả năm bài toán này sử dụng chiến lược xử lý ràng buộc đã giới
-thiệu ở Mục~\ref{subsec:ham-thich-nghi} — kết hợp quy tắc khả thi Deb
-với ngưỡng $\varepsilon$ giảm dần theo thời gian, thay vì hàm phạt
-tĩnh — chạy với quần thể $1000$ cá thể trong tối đa $500$ thế hệ, lặp
-lại ba lần độc lập. Đối trọng so sánh là SciPy SLSQP, một phương pháp
-tối ưu dựa trên gradient giải theo điều kiện KKT, được chạy từ $30$
-điểm khởi tạo ngẫu nhiên khác nhau để giảm rủi ro hội tụ về một cực
-tiểu cục bộ thay vì cực tiểu toàn cục. Kết quả tốt nhất của mỗi phương
-pháp được trình bày ở Bảng~\ref{tab:kq-co-rang-buoc}.
+Năm bài toán được chọn là g01, g06, g08, g11 và g15. Tiêu chí lựa chọn
+là bao quát các dạng ràng buộc khác nhau, đồng thời trải rộng về mức
+độ chật hẹp của miền khả thi và về vị trí tương đối giữa nghiệm tối ưu
+và biên của miền đó. Bảng~\ref{tab:dac-diem-cec} tóm tắt đặc điểm của
+năm bài toán, trong đó $\rho$ là tỉ lệ ước lượng giữa thể tích miền
+khả thi và thể tích miền tìm kiếm, còn cột cuối cho biết số ràng buộc
+đạt đẳng thức tại nghiệm tối ưu.
 
 \begin{table}[htbp]
 \centering
-\caption{Kết quả GA và SciPy SLSQP trên năm bài toán tối ưu có ràng buộc}
-\label{tab:kq-co-rang-buoc}
-\begin{tabular}{lcc}
+\caption{Đặc điểm năm bài toán được chọn từ bộ chuẩn CEC 2006}
+\label{tab:dac-diem-cec}
+\footnotesize
+\setlength{\tabcolsep}{5pt}
+\begin{tabular}{lccccc}
 \toprule
-\textbf{Bài toán} & \textbf{GA ($f^{*}$)} & \textbf{SLSQP ($f^{*}$)} \\
+\textbf{Bài toán} & \textbf{Số biến} & \textbf{Dạng hàm} & $\boldsymbol{\rho}$
+& \textbf{Ràng buộc} & \textbf{Ràng buộc active} \\
 \midrule
-1. Entropy tối đa            & $-1.5985825694$  & $-1.6135810982$ \\
-2. Điểm gần nhất             & $20.3497958340$  & $20.2756044350$ \\
-3. Quy hoạch tuyến tính (LP) & $-25.9149581523$ & $-26.0000000000$ \\
-4. Quy hoạch bình phương (QP)& $-7.3329937494$  & $-7.3333333333$ \\
-5. Tối ưu lồi phi tuyến      & $0.3565975317$   & $0.3565154830$  \\
+g01 & $13$ & bậc hai   & $0{,}0111\%$ & 9 bất đẳng thức tuyến tính & $6$ \\
+g06 & $2$  & bậc ba    & $0{,}0066\%$ & 2 bất đẳng thức phi tuyến  & $2$ \\
+g08 & $2$  & phi tuyến & $0{,}8560\%$ & 2 bất đẳng thức phi tuyến  & $0$ \\
+g11 & $2$  & bậc hai   & $0{,}0000\%$ & 1 đẳng thức phi tuyến      & $1$ \\
+g15 & $3$  & bậc hai   & $0{,}0000\%$ & 2 đẳng thức, 1 tuyến tính  & $2$ \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-SLSQP đạt kết quả nhỉnh hơn GA một chút ở cả năm bài toán. Điều này
-đúng như kỳ vọng lý thuyết, vì cả năm bài toán đều lồi và có hàm mục
-tiêu khả vi — chính là điều kiện lý tưởng nhất cho một phương pháp dựa
-trên gradient và điều kiện KKT như SLSQP, trong khi GA không khai thác
-được thông tin đạo hàm này để tinh chỉnh nghiệm ở bước cuối. Tuy vậy,
-khoảng cách giữa hai phương pháp rất nhỏ: GA đạt trong khoảng
-$0.01\%$ đến $1\%$ so với SLSQP ở bốn trong năm bài toán; riêng bài
-toán 3 (LP) có sai số tương đối lớn hơn một chút, vì nghiệm tối ưu của
-LP luôn nằm đúng tại một đỉnh sắc cạnh của miền đa diện — một điểm mà
-các toán tử lai ghép/đột biến liên tục của GA khó tiệm cận chính xác
-tuyệt đối hơn so với việc dò theo một đường cong trơn. Nhìn chung, kết
-quả cho thấy GA vẫn xấp xỉ tốt cả năm bài toán dù không dùng đến đạo
-hàm. Điều này có ý nghĩa thực tiễn quan trọng: trong các bài toán mà
-hàm mục tiêu không khả vi hoặc không lồi — nơi SLSQP không còn đảm bảo
-hội tụ đúng — khả năng xấp xỉ tốt của GA mà không cần thông tin đạo
-hàm trở thành một lợi thế thực sự, như sẽ thấy rõ hơn ở hai bài toán
-tiếp theo.
+Bộ chuẩn quy định rõ thế nào là một nghiệm khả thi. Với ràng buộc bất
+đẳng thức, điều kiện là $g_i(x) \le 0$ được thỏa mãn tuyệt đối. Với
+ràng buộc đẳng thức, điều kiện được nới thành
+$\lvert h_j(x)\rvert - \varepsilon \le 0$ với $\varepsilon = 10^{-4}$.
+Sự phân biệt này là cần thiết chứ không tùy tiện: tập nghiệm của một
+phương trình $h_j(x) = 0$ có thể tích bằng không trong không gian tìm
+kiếm, nên không một thuật toán số nào chạm đúng vào nó được. Bản thân
+hai nghiệm tối ưu công bố của g11 và g15 cũng vi phạm ràng buộc đẳng
+thức đúng bằng $10^{-4}$, tức nằm sát ranh giới mà dung sai cho phép.
+Ngược lại, ràng buộc bất đẳng thức được thỏa mãn trên cả một vùng có
+thể tích dương nên việc đòi hỏi vi phạm bằng không là hợp lý. Toàn bộ
+kết quả báo cáo dưới đây đều có mức vi phạm bằng $0$ theo đúng định
+nghĩa này.
+
+Về phương pháp, GA mã hóa số thực xử lý ràng buộc bằng quy tắc khả thi
+của Deb kết hợp ngưỡng $\varepsilon$ giảm dần đã trình bày ở
+Mục~\ref{subsec:ham-thich-nghi}, với quần thể $1000$ cá thể chạy trong
+$500$ thế hệ. Tiếp sau GA là một bước tinh chỉnh cục bộ theo nguyên lý
+tìm kiếm trực tiếp: xuất phát từ nghiệm tốt nhất mà GA tìm được, thuật
+toán dò lần lượt theo từng trục tọa độ với một bước dịch chuyển ban
+đầu, chỉ chấp nhận những điểm vừa còn khả thi vừa có giá trị hàm mục
+tiêu nhỏ hơn; khi không còn hướng nào cải thiện được nữa thì bước dịch
+chuyển được giảm đi một nửa và quá trình lặp lại. Cách kết hợp một
+thuật toán tiến hóa với một thủ tục tìm kiếm cục bộ như vậy chính là
+mô hình thuật toán ghi nhớ (memetic algorithm), cũng là cách tiếp cận
+được dùng cho bài toán người du lịch ở Mục~\ref{sec:ud-tsp}. Vai trò
+phân công giữa hai giai đoạn rất rõ: GA đảm nhiệm việc định vị vùng
+chứa nghiệm trên toàn miền tìm kiếm, còn bước tinh chỉnh đảm nhiệm
+việc tiếp cận chính xác những nghiệm nằm sát biên của miền khả thi.
+Kết quả của cả hai giai đoạn đều được báo cáo để thấy rõ phần đóng góp
+của từng bước.
+
+\subsection{Bài toán g01}
+\label{subsec:g01}
+
+Bài toán g01 có hàm mục tiêu bậc hai trên mười ba biến, chịu chín ràng
+buộc bất đẳng thức đều tuyến tính:
+\begin{equation}
+\begin{aligned}
+\min_{x \in \mathbb{R}^{13}} \quad
+& f(x) = 5\sum_{i=1}^{4} x_i - 5\sum_{i=1}^{4} x_i^2 - \sum_{i=5}^{13} x_i \\
+\text{với điều kiện} \quad
+& 2x_1 + 2x_2 + x_{10} + x_{11} - 10 \le 0 \\
+& 2x_1 + 2x_3 + x_{10} + x_{12} - 10 \le 0 \\
+& 2x_2 + 2x_3 + x_{11} + x_{12} - 10 \le 0 \\
+& -8x_1 + x_{10} \le 0 \\
+& -8x_2 + x_{11} \le 0 \\
+& -8x_3 + x_{12} \le 0 \\
+& -2x_4 - x_5 + x_{10} \le 0 \\
+& -2x_6 - x_7 + x_{11} \le 0 \\
+& -2x_8 - x_9 + x_{12} \le 0
+\end{aligned}
+\label{eq:g01}
+\end{equation}
+với miền biến thiên $0 \le x_i \le 1$ cho $i = 1,\ldots,9$,
+$0 \le x_i \le 100$ cho $i = 10, 11, 12$ và $0 \le x_{13} \le 1$.
+Nghiệm tối ưu công bố là
+\[
+x^{*} = (1,1,1,1,1,1,1,1,1,3,3,3,1), \qquad f(x^{*}) = -15,
+\]
+tại đó sáu trong chín ràng buộc đạt đẳng thức.
+
+Đây là bài toán có số biến lớn nhất trong năm bài. Điểm thuận lợi nằm
+ở chỗ mọi ràng buộc đều tuyến tính, nên miền khả thi là một đa diện
+lồi và vùng lân cận nghiệm tối ưu vẫn còn thể tích đáng kể. Nhờ vậy
+quần thể di chuyển tương đối dễ dàng ngay cả khi đã tiến sát nghiệm.
+
+\begin{table}[htbp]
+\centering
+\caption{Kết quả trên bài toán g01}
+\label{tab:kq-g01}
+\small
+\begin{tabular}{ccccc}
+\toprule
+$f^{*}$ \textbf{công bố} & $f^{*}$ \textbf{(GA)}
+& $f^{*}$ \textbf{(GA + tinh chỉnh)} & \textbf{Sai lệch} & \textbf{Vi phạm} \\
+\midrule
+$-15{,}000000$ & $-14{,}999204$ & $-15{,}000000$ & $1{,}77\times10^{-12}$ & $0$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+GA đơn thuần đạt sai lệch tương đối $5{,}3\times10^{-5}$, một kết quả
+tốt đối với không gian mười ba chiều. Bước tinh chỉnh đưa sai lệch
+xuống $1{,}77\times10^{-12}$, tức trùng với nghiệm công bố trong giới
+hạn biểu diễn số thực dấu phẩy động.
+
+\subsection{Bài toán g06}
+\label{subsec:g06}
+
+Bài toán g06 chỉ có hai biến nhưng hàm mục tiêu bậc ba và cả hai ràng
+buộc đều phi tuyến:
+\begin{equation}
+\begin{aligned}
+\min_{x \in \mathbb{R}^{2}} \quad
+& f(x) = (x_1 - 10)^3 + (x_2 - 20)^3 \\
+\text{với điều kiện} \quad
+& -(x_1 - 5)^2 - (x_2 - 5)^2 + 100 \le 0 \\
+& (x_1 - 6)^2 + (x_2 - 5)^2 - 82{,}81 \le 0
+\end{aligned}
+\label{eq:g06}
+\end{equation}
+với $13 \le x_1 \le 100$ và $0 \le x_2 \le 100$. Nghiệm tối ưu công bố là
+\[
+x^{*} = (14{,}095000;\ 0{,}842961), \qquad f(x^{*}) = -6961{,}813876,
+\]
+tại đó cả hai ràng buộc đều đạt đẳng thức.
+
+Hai ràng buộc mô tả phần bên ngoài một đường tròn và phần bên trong
+một đường tròn khác, nên miền khả thi là một dải hình lưỡi liềm rất
+hẹp, chỉ chiếm $0{,}0066\%$ thể tích miền tìm kiếm. Nghiệm tối ưu nằm
+đúng tại giao điểm của hai đường tròn, tức một điểm không chiều. Bên
+cạnh đó, chuẩn của gradient hàm mục tiêu tại nghiệm xấp xỉ $1102$,
+lớn hơn hai bậc độ lớn so với các bài toán còn lại. Hệ quả là một sai
+lệch nhỏ về vị trí bị khuếch đại thành sai lệch lớn về giá trị hàm
+mục tiêu. Đây là bài toán duy nhất trong năm bài hội tụ đồng thời cả
+hai yếu tố bất lợi: miền khả thi cực hẹp quanh nghiệm và hàm mục tiêu
+rất dốc.
+
+\begin{table}[htbp]
+\centering
+\caption{Kết quả trên bài toán g06}
+\label{tab:kq-g06}
+\small
+\begin{tabular}{ccccc}
+\toprule
+$f^{*}$ \textbf{công bố} & $f^{*}$ \textbf{(GA)}
+& $f^{*}$ \textbf{(GA + tinh chỉnh)} & \textbf{Sai lệch} & \textbf{Vi phạm} \\
+\midrule
+$-6961{,}813876$ & $-6898{,}462524$ & $-6961{,}813876$
+& $2{,}64\times10^{-8}$ & $0$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+GA đơn thuần dừng lại ở $-6898{,}462524$, cách nghiệm công bố
+$63{,}35$ đơn vị, tương ứng sai lệch tương đối $9{,}1\times10^{-3}$.
+Cần lưu ý rằng con số này phản ánh độ dốc của hàm mục tiêu nhiều hơn
+là chất lượng định vị của GA: quy đổi qua chuẩn gradient, sai lệch đó
+tương ứng với sai số vị trí chỉ khoảng $0{,}06\%$ bề rộng miền tìm
+kiếm. Bước tinh chỉnh cục bộ đưa kết quả về $2{,}64\times10^{-8}$,
+cải thiện hơn chín bậc độ lớn. Đây là bài toán mà việc kết hợp tìm
+kiếm cục bộ phát huy tác dụng rõ rệt nhất.
+
+\subsection{Bài toán g08}
+\label{subsec:g08}
+
+Bài toán g08 có hàm mục tiêu chứa hàm lượng giác và phân thức:
+\begin{equation}
+\begin{aligned}
+\min_{x \in \mathbb{R}^{2}} \quad
+& f(x) = -\,\frac{\sin^3(2\pi x_1)\,\sin(2\pi x_2)}{x_1^3\,(x_1 + x_2)} \\
+\text{với điều kiện} \quad
+& x_1^2 - x_2 + 1 \le 0 \\
+& 1 - x_1 + (x_2 - 4)^2 \le 0
+\end{aligned}
+\label{eq:g08}
+\end{equation}
+với $0 \le x_1 \le 10$ và $0 \le x_2 \le 10$. Nghiệm tối ưu công bố là
+\[
+x^{*} = (1{,}227971;\ 4{,}245373), \qquad f(x^{*}) = -0{,}095825.
+\]
+
+Điểm khác biệt căn bản của bài toán này là nghiệm tối ưu nằm hẳn bên
+trong miền khả thi, không ràng buộc nào đạt đẳng thức. Do đó nghiệm là
+một điểm dừng của hàm mục tiêu và gradient tại đó bằng không, khiến
+sai lệch về vị trí hầu như không chuyển thành sai lệch về giá trị hàm.
+Miền khả thi cũng rộng rãi hơn hẳn bốn bài còn lại, chiếm $0{,}8560\%$
+miền tìm kiếm.
+
+\begin{table}[htbp]
+\centering
+\caption{Kết quả trên bài toán g08}
+\label{tab:kq-g08}
+\small
+\begin{tabular}{ccccc}
+\toprule
+$f^{*}$ \textbf{công bố} & $f^{*}$ \textbf{(GA)}
+& $f^{*}$ \textbf{(GA + tinh chỉnh)} & \textbf{Sai lệch} & \textbf{Vi phạm} \\
+\midrule
+$-0{,}095825$ & $-0{,}095825$ & $-0{,}095825$
+& $2{,}78\times10^{-17}$ & $0$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+GA đạt nghiệm công bố ngay ở giai đoạn đầu với sai lệch
+$2{,}78\times10^{-17}$, tức đã chạm ngưỡng chính xác của số thực dấu
+phẩy động, và bước tinh chỉnh không còn gì để cải thiện. Kết quả này
+minh họa rằng độ khó của một bài toán có ràng buộc không nằm ở tính
+phi tuyến của hàm mục tiêu mà nằm ở vị trí của nghiệm so với biên miền
+khả thi.
+
+\subsection{Bài toán g11}
+\label{subsec:g11}
+
+Bài toán g11 có dạng đơn giản nhất về hình thức nhưng chứa một ràng
+buộc đẳng thức phi tuyến:
+\begin{equation}
+\begin{aligned}
+\min_{x \in \mathbb{R}^{2}} \quad
+& f(x) = x_1^2 + (x_2 - 1)^2 \\
+\text{với điều kiện} \quad
+& x_2 - x_1^2 = 0
+\end{aligned}
+\label{eq:g11}
+\end{equation}
+với $-1 \le x_1 \le 1$ và $-1 \le x_2 \le 1$. Nghiệm tối ưu công bố là
+\[
+x^{*} = (-0{,}707036;\ 0{,}500000), \qquad f(x^{*}) = 0{,}7499.
+\]
+
+Miền khả thi ở đây là một đường cong parabol trong mặt phẳng, tức một
+tập có diện tích bằng không. Không một điểm sinh ngẫu nhiên nào rơi
+trúng miền này, nên toàn bộ việc tiếp cận miền khả thi phụ thuộc vào
+cơ chế nới lỏng ngưỡng $\varepsilon$ của thuật toán.
+
+Bài toán này cho phép kiểm chứng nghiệm bằng giải tích. Thế
+$x_2 = x_1^2$ vào hàm mục tiêu và đặt $u = x_1^2 \ge 0$, ta được
+$u + (u-1)^2 = u^2 - u + 1$, đạt cực tiểu tại $u = 1/2$ với giá trị
+đúng bằng $0{,}75$. Như vậy cực tiểu chính xác của bài toán là
+$0{,}75$, trong khi giá trị công bố $0{,}7499$ lại nhỏ hơn con số đó.
+Nguyên nhân là nghiệm công bố không nằm trên đường cong mà lệch khỏi
+nó đúng bằng dung sai $\varepsilon = 10^{-4}$, và độ lệch ấy được tận
+dụng theo hướng làm giảm hàm mục tiêu.
+
+\begin{table}[htbp]
+\centering
+\caption{Kết quả trên bài toán g11}
+\label{tab:kq-g11}
+\small
+\begin{tabular}{ccccc}
+\toprule
+$f^{*}$ \textbf{công bố} & $f^{*}$ \textbf{(GA)}
+& $f^{*}$ \textbf{(GA + tinh chỉnh)} & \textbf{Sai lệch} & \textbf{Vi phạm} \\
+\midrule
+$0{,}749900$ & $0{,}750268$ & $0{,}750259$ & $3{,}59\times10^{-4}$ & $0$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+GA hội tụ về $0{,}750259$, tức cách cực tiểu giải tích $0{,}75$ một
+khoảng $2{,}6\times10^{-4}$ và cách giá trị công bố $3{,}59\times
+10^{-4}$. Phần chênh lệch còn lại mang tính cấu trúc chứ không phải do
+thuật toán hội tụ kém: muốn đạt được đúng con số $0{,}7499$ thì nghiệm
+phải nằm ở rìa ngoài của dải dung sai, điều mà một thuật toán tìm
+nghiệm khả thi không hướng tới. Bước tinh chỉnh cải thiện không đáng
+kể vì miền khả thi là một dải cong rất hẹp, trong đó các bước dịch
+chuyển song song với trục tọa độ nhanh chóng đi ra ngoài miền và bị
+loại.
+
+\subsection{Bài toán g15}
+\label{subsec:g15}
+
+Bài toán g15 có ba biến cùng hai ràng buộc đẳng thức, một phi tuyến và
+một tuyến tính:
+\begin{equation}
+\begin{aligned}
+\min_{x \in \mathbb{R}^{3}} \quad
+& f(x) = 1000 - x_1^2 - 2x_2^2 - x_3^2 - x_1 x_2 - x_1 x_3 \\
+\text{với điều kiện} \quad
+& x_1^2 + x_2^2 + x_3^2 - 25 = 0 \\
+& 8x_1 + 14x_2 + 7x_3 - 56 = 0
+\end{aligned}
+\label{eq:g15}
+\end{equation}
+với $0 \le x_i \le 10$ cho $i = 1, 2, 3$. Nghiệm tối ưu công bố là
+\[
+x^{*} = (3{,}512128;\ 0{,}216988;\ 3{,}552179), \qquad
+f(x^{*}) = 961{,}715022.
+\]
+
+Hai ràng buộc đẳng thức mô tả một mặt cầu và một mặt phẳng, giao của
+chúng là một đường tròn trong không gian ba chiều. Xét về thể tích,
+đây là miền khả thi chật hẹp nhất trong năm bài toán. Bù lại, hàm mục
+tiêu khá thoải: chuẩn gradient tại nghiệm chỉ khoảng $15{,}8$, nên sai
+lệch về vị trí không bị khuếch đại mạnh như ở g06.
+
+\begin{table}[htbp]
+\centering
+\caption{Kết quả trên bài toán g15}
+\label{tab:kq-g15}
+\small
+\begin{tabular}{ccccc}
+\toprule
+$f^{*}$ \textbf{công bố} & $f^{*}$ \textbf{(GA)}
+& $f^{*}$ \textbf{(GA + tinh chỉnh)} & \textbf{Sai lệch} & \textbf{Vi phạm} \\
+\midrule
+$961{,}715022$ & $961{,}715374$ & $961{,}715308$
+& $2{,}86\times10^{-4}$ & $0$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Sai lệch tương đối chỉ $3{,}0\times10^{-7}$, thuộc nhóm kết quả tốt
+nhất trong năm bài toán mặc dù miền khả thi hẹp nhất. Điều đáng chú ý
+là kết quả này đạt được ngay từ giai đoạn GA; cũng như ở g11, bước
+tinh chỉnh cục bộ không phát huy nhiều tác dụng khi miền khả thi là
+một đường cong hẹp.
+
+\subsection{Nhận xét chung}
+\label{subsec:nhan-xet-cec}
+
+Bảng~\ref{tab:kq-co-rang-buoc} tổng hợp kết quả trên cả năm bài toán.
+Mọi nghiệm báo cáo đều khả thi tuyệt đối theo định nghĩa của bộ chuẩn,
+với mức vi phạm bằng $0$.
+
+\begin{table}[htbp]
+\centering
+\caption{Tổng hợp kết quả GA trên năm bài toán chuẩn CEC 2006}
+\label{tab:kq-co-rang-buoc}
+\footnotesize
+\setlength{\tabcolsep}{5pt}
+\begin{tabular}{lccccc}
+\toprule
+\textbf{Bài toán} & $f^{*}$ \textbf{công bố} & $f^{*}$ \textbf{(GA)}
+& \shortstack{$f^{*}$ \textbf{(GA)}\\\textbf{+ tinh chỉnh}}
+& \shortstack{\textbf{Sai lệch}\\\textbf{tương đối}}
+& \shortstack{\textbf{Thời gian}\\\textbf{(s)}} \\
+\midrule
+g01 & $-15{,}000000$   & $-14{,}999204$   & $-15{,}000000$   & $1{,}2\times10^{-13}$ & $38{,}8$ \\
+g06 & $-6961{,}813876$ & $-6898{,}462524$ & $-6961{,}813876$ & $3{,}8\times10^{-12}$ & $19{,}9$ \\
+g08 & $-0{,}095825$    & $-0{,}095825$    & $-0{,}095825$    & $2{,}9\times10^{-16}$ & $20{,}0$ \\
+g11 & $0{,}749900$     & $0{,}750268$     & $0{,}750259$     & $4{,}8\times10^{-4}$  & $17{,}3$ \\
+g15 & $961{,}715022$   & $961{,}715374$   & $961{,}715308$   & $3{,}0\times10^{-7}$  & $29{,}6$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Kết quả cho thấy độ khó của một bài toán tối ưu có ràng buộc đối với
+GA không được quyết định bởi số biến hay bậc của hàm mục tiêu, mà bởi
+hai yếu tố thuộc về hình học của bài toán tại lân cận nghiệm tối ưu.
+
+Yếu tố thứ nhất là thể tích miền khả thi quanh nghiệm. Khi nghiệm nằm
+sâu bên trong miền khả thi như ở g08, quần thể di chuyển tự do và GA
+đạt độ chính xác giới hạn của số thực ngay từ giai đoạn tiến hóa. Khi
+nghiệm nằm tại một đỉnh của đa diện lồi như ở g01, vùng lân cận vẫn
+còn thể tích đáng kể nên GA tiếp cận tốt. Ngược lại, khi nghiệm nằm
+tại giao điểm của hai mặt cong như ở g06, hoặc trên một đường cong có
+thể tích bằng không như ở g11 và g15, các phép lai ghép và đột biến
+ngẫu nhiên hầu như luôn sinh ra cá thể bất khả thi và bị loại bỏ,
+khiến quá trình cải thiện chững lại.
+
+Yếu tố thứ hai là độ dốc của hàm mục tiêu tại nghiệm, đại lượng quyết
+định một sai lệch về vị trí được khuếch đại bao nhiêu lần thành sai
+lệch về giá trị hàm. Chuẩn gradient tại nghiệm của g06 lớn gấp khoảng
+bảy mươi lần so với g15 và gấp một trăm lần so với g01, giải thích vì
+sao cùng một mức chính xác về vị trí lại cho ra sai lệch chênh nhau
+nhiều bậc độ lớn giữa các bài toán.
+
+Hai yếu tố này độc lập với nhau, và g06 là bài toán duy nhất mà cả hai
+cùng bất lợi. Đó cũng là bài toán mà giai đoạn tinh chỉnh cục bộ mang
+lại cải thiện lớn nhất, đưa sai lệch từ $63{,}35$ xuống
+$2{,}64\times10^{-8}$. Nhìn rộng hơn, sự phân công giữa hai giai đoạn
+đã được xác nhận qua thực nghiệm: GA giải quyết phần việc định vị vùng
+chứa nghiệm trên một không gian mà phần lớn là bất khả thi, còn tìm
+kiếm cục bộ giải quyết phần việc tiếp cận chính xác nghiệm nằm sát
+biên. Không giai đoạn nào thay thế được giai đoạn kia, và chi phí tính
+toán của giai đoạn tinh chỉnh không đáng kể so với giai đoạn tiến hóa.
+
+Riêng với g11 và g15, phần sai lệch còn lại chủ yếu bắt nguồn từ dung
+sai $\varepsilon = 10^{-4}$ dành cho ràng buộc đẳng thức chứ không
+phải từ năng lực hội tụ của thuật toán. Như đã phân tích ở
+Mục~\ref{subsec:g11}, giá trị công bố của g11 còn nhỏ hơn cực tiểu
+chính xác của bài toán, nên khoảng cách giữa kết quả thu được và giá
+trị công bố không phản ánh sai số của phương pháp.
 
 \section{Bài toán Người du lịch: GA hoán vị kết hợp Tìm kiếm Cục bộ}
 \label{sec:ud-tsp}
@@ -571,10 +866,13 @@ hóa khác nhau — số thực ở Mục~\ref{sec:ud-khong-rang-buoc}
 và~\ref{sec:ud-co-rang-buoc}, hoán vị ở Mục~\ref{sec:ud-tsp}, và cây
 biểu thức ở Mục~\ref{sec:ud-symbolic-regression}. Đổi lại tính linh
 hoạt đó là hiệu quả thấp hơn các phương pháp chuyên dụng khi bài toán
-có sẵn một cấu trúc mà phương pháp đó khai thác được: SLSQP khai thác
-tính khả vi và tính lồi của năm bài toán ở
-Mục~\ref{sec:ud-co-rang-buoc}. Ngược lại, ở những bài toán mà cấu trúc
-đó không có sẵn, hoặc phương pháp cổ điển tương ứng không còn đủ mạnh
+có sẵn một cấu trúc mà phương pháp đó khai thác được: ở năm bài toán
+chuẩn CEC 2006 tại Mục~\ref{sec:ud-co-rang-buoc}, GA phải bổ sung một
+bước tìm kiếm cục bộ mới tiếp cận được những nghiệm nằm sát biên miền
+khả thi, phần việc mà một phương pháp dựa trên gradient xử lý trực
+tiếp nhờ khai thác tính khả vi của hàm mục tiêu và ràng buộc. Ngược
+lại, ở những bài toán mà cấu trúc đó không có sẵn, hoặc phương pháp cổ
+điển tương ứng không còn đủ mạnh
 — bài toán người du lịch quy mô lớn cần bổ sung tìm kiếm cục bộ mới
 đạt được nghiệm tối ưu, hay quan hệ phi tuyến dạng tổng bình phương mà
 Hồi quy Tuyến tính không thể biểu diễn được — GA và GP thể hiện rõ giá
