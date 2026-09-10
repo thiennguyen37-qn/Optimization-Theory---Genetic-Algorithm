@@ -730,7 +730,8 @@ trình khép kín đi qua tất cả các địa điểm đúng một lần là 
 \end{equation}
 Bài toán này được mã hóa dưới dạng hoán vị đã giới thiệu ở
 Mục~\ref{subsec:ma-hoa}: mỗi cá thể của GA chính là một hoán vị $\pi$,
-dùng lai ghép Order Crossover (OX) và đột biến Swap (Mục~\ref{sec:toan-tu-cot-loi})
+dùng lai ghép theo thứ tự và đột biến hoán đổi
+(Mục~\ref{sec:toan-tu-cot-loi})
 thay cho các toán tử số thực ở hai mục trước.
 
 Để đánh giá khách quan trên dữ liệu thực thay vì các ví dụ tự tạo quy
@@ -741,12 +742,12 @@ theo lộ trình tối ưu đã được công bố, dùng làm mốc đối chi
 quan thay cho phương pháp vét cạn — vốn cần thử $(n-1)!$ hoán vị và
 trở nên bất khả thi về mặt tính toán ngay từ $n$ vài chục.
 
-Thử nghiệm ban đầu với GA hoán vị thuần túy (chỉ dùng OX và Swap) cho
+Thử nghiệm ban đầu với GA hoán vị thuần túy (chỉ dùng lai ghép theo thứ tự và
+đột biến hoán đổi) cho
 kết quả chênh lệch rất lớn so với nghiệm tối ưu đã công bố, từ $20\%$
-đến $84\%$ tùy bộ dữ liệu và tăng dần theo số địa điểm $n$. Nguyên
-nhân là hai toán tử OX và Swap không có cơ chế sửa các đoạn đường bị
+đến $84\%$ tùy bộ dữ liệu và tăng dần theo số địa điểm $n$. Nguyên nhân là hai toán tử này không có cơ chế sửa các đoạn đường bị
 cắt chéo nhau trong lộ trình — một lộ trình càng có nhiều địa điểm thì
-càng dễ chứa những đoạn cắt chéo như vậy, và OX/Swap chỉ có thể tạo ra
+càng dễ chứa những đoạn cắt chéo như vậy, và chúng chỉ có thể tạo ra
 một cấu hình mới ngẫu nhiên chứ không chủ động ``gỡ'' đoạn cắt chéo đó.
 Để khắc phục hạn chế này, một chiến lược lai giữa GA và tìm kiếm cục bộ
  được áp dụng: sau mỗi thế hệ, một tỉ lệ cá
