@@ -1,7 +1,7 @@
 % ============================================================
 % CHƯƠNG 2: ỨNG DỤNG — THỰC NGHIỆM TRÊN BỐN BÀI TOÁN
 % ============================================================
-\chapter{Ứng dụng: Thực nghiệm trên Bốn Bài toán}
+\chapter{Thực nghiệm}
 \label{chap:ung-dung}
 
 Chương này trình bày việc áp dụng các nguyên lý đã trình bày ở
@@ -28,6 +28,8 @@ hình. Miền tìm kiếm của từng hàm được lấy theo bộ giá trị 
 tại \url{https://www.sfu.ca/~ssurjano/optimization.html} [8], nơi người
 đọc có thể tham khảo thêm công thức và đặc trưng chi tiết của từng hàm
 benchmark.
+
+\vspace{1em}
 
 \textbf{Hàm Easom} có công thức
 \begin{equation}
@@ -297,6 +299,8 @@ Schwefel   & $3{,}60$ & $47$ & $\approx 0$ & $2{,}5455\times10^{-5}$ & $420{,}96
 \end{tabular}
 \end{table}
 
+\textbf{Nhận xét và đánh giá kết quả}
+
 Kết quả cho thấy GA tìm được nghiệm toàn cục hoặc nghiệm rất gần tối
 ưu trên cả năm hàm. Easom và Rastrigin đạt đúng giá trị tối ưu; Ackley
 và Schwefel cũng đạt sai số rất nhỏ. Đáng chú ý, GA vẫn tìm được
@@ -316,93 +320,45 @@ hẹp và có cấu trúc đặc biệt còn hạn chế. Đây cũng là cơ s�
 GA với tìm kiếm cục bộ trong các bài toán cần độ chính xác cao ở giai
 đoạn cuối.
 
-\section{Tối ưu có ràng buộc: Bộ chuẩn CEC 2006}
+\section{Tối ưu có ràng buộc}
 \label{sec:ud-co-rang-buoc}
 
-Ở lớp bài toán không ràng buộc trình bày tại
-Mục~\ref{sec:ud-khong-rang-buoc}, mọi điểm thuộc miền tìm kiếm đều là
-một nghiệm hợp lệ, nên toàn bộ công sức của thuật toán dành cho việc
-cải thiện hàm mục tiêu. Khi có thêm ràng buộc, tình thế thay đổi về
-bản chất: phần lớn không gian tìm kiếm trở thành vùng không sử dụng
-được, và thuật toán phải xác định được miền khả thi trước khi có thể
-bàn tới chuyện tối ưu. Một giá trị hàm mục tiêu nhỏ đạt được tại điểm
-vi phạm ràng buộc không mang ý nghĩa gì, thậm chí còn gây hiểu nhầm vì
-nó thường nhỏ hơn giá trị tối ưu thực sự.
+Với bài toán có ràng buộc, không phải mọi điểm trong miền tìm kiếm đều
+hợp lệ; do đó, thuật toán phải xét tính khả thi trước khi tối ưu hàm
+mục tiêu, vì nghiệm vi phạm ràng buộc dù có giá trị mục tiêu tốt vẫn
+không có ý nghĩa.
 
-Để đánh giá GA trên lớp bài toán này, thực nghiệm sử dụng bộ chuẩn
-CEC 2006 của Liang và cộng sự — tập hợp hai mươi bốn bài toán tối ưu
-có ràng buộc được công bố kèm nghiệm tối ưu, hiện là thước đo tham
-chiếu phổ biến trong lĩnh vực tính toán tiến hóa. So với các bài toán
-tự đặt, một bộ chuẩn đã công bố mang lại hai lợi thế. Thứ nhất, nghiệm
-đúng đã được xác lập nên sai lệch của GA đo được trực tiếp thay vì
-phải dựa vào một phương pháp đối chứng. Thứ hai, kết quả thu được có
-thể đặt cạnh các công trình khác cùng sử dụng bộ chuẩn này.
+Thực nghiệm sử dụng bộ benchmark CEC 2006 của Liang và cộng sự
+(\url{https://cw.fel.cvut.cz/b241/_media/courses/a0m33eoa/cviceni/2006_problem_definitions_and_evaluation_criteria_for_the_cec_2006_special_session_on_constraint_real-parameter_optimization.pdf}
+[9]), gồm $24$ bài toán tối ưu có ràng buộc kèm nghiệm tối ưu. Năm bài
+toán g01, g06, g08, g11 và g15 được chọn nhằm bao quát nhiều dạng ràng
+buộc, mức độ chật hẹp của miền khả thi và vị trí của nghiệm tối ưu so
+với biên.
 
-Năm bài toán được chọn là g01, g06, g08, g11 và g15. Tiêu chí lựa chọn
-là bao quát các dạng ràng buộc khác nhau, đồng thời trải rộng về mức
-độ chật hẹp của miền khả thi và về vị trí tương đối giữa nghiệm tối ưu
-và biên của miền đó. Bảng~\ref{tab:dac-diem-cec} tóm tắt đặc điểm của
-năm bài toán, trong đó $\rho$ là tỉ lệ ước lượng giữa thể tích miền
-khả thi và thể tích miền tìm kiếm, còn cột cuối cho biết số ràng buộc
-đạt đẳng thức tại nghiệm tối ưu.
-
-\begin{table}[htbp]
-\centering
-\caption{Đặc điểm năm bài toán được chọn từ bộ chuẩn CEC 2006}
-\label{tab:dac-diem-cec}
-\footnotesize
-\setlength{\tabcolsep}{5pt}
-\begin{tabular}{lccccc}
-\toprule
-\textbf{Bài toán} & \textbf{Số biến} & \textbf{Dạng hàm} & $\boldsymbol{\rho}$
-& \textbf{Ràng buộc} & \textbf{Ràng buộc active} \\
-\midrule
-g01 & $13$ & bậc hai   & $0{,}0111\%$ & 9 bất đẳng thức tuyến tính & $6$ \\
-g06 & $2$  & bậc ba    & $0{,}0066\%$ & 2 bất đẳng thức phi tuyến  & $2$ \\
-g08 & $2$  & phi tuyến & $0{,}8560\%$ & 2 bất đẳng thức phi tuyến  & $0$ \\
-g11 & $2$  & bậc hai   & $0{,}0000\%$ & 1 đẳng thức phi tuyến      & $1$ \\
-g15 & $3$  & bậc hai   & $0{,}0000\%$ & 2 đẳng thức, 1 tuyến tính  & $2$ \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-Bộ chuẩn quy định rõ thế nào là một nghiệm khả thi. Với ràng buộc bất
-đẳng thức, điều kiện là $g_i(x) \le 0$ được thỏa mãn tuyệt đối. Với
-ràng buộc đẳng thức, điều kiện được nới thành
+Theo bộ benchmark CEC 2006, ràng buộc bất đẳng thức yêu cầu $g_i(x) \le 0$,
+trong khi ràng buộc đẳng thức sử dụng dung sai
 $\lvert h_j(x)\rvert - \varepsilon \le 0$ với $\varepsilon = 10^{-4}$.
-Sự phân biệt này là cần thiết chứ không tùy tiện: tập nghiệm của một
-phương trình $h_j(x) = 0$ có thể tích bằng không trong không gian tìm
-kiếm, nên không một thuật toán số nào chạm đúng vào nó được. Bản thân
-hai nghiệm tối ưu công bố của g11 và g15 cũng vi phạm ràng buộc đẳng
-thức đúng bằng $10^{-4}$, tức nằm sát ranh giới mà dung sai cho phép.
-Ngược lại, ràng buộc bất đẳng thức được thỏa mãn trên cả một vùng có
-thể tích dương nên việc đòi hỏi vi phạm bằng không là hợp lý. Toàn bộ
-kết quả báo cáo dưới đây đều có mức vi phạm bằng $0$ theo đúng định
-nghĩa này.
+Với ràng buộc đẳng thức, việc yêu cầu $h_j(x) = 0$ một cách tuyệt đối
+là không thực tế đối với thuật toán số, vì chỉ cần sai lệch rất nhỏ
+cũng khiến nghiệm bị xem là không hợp lệ. Chẳng hạn, nghiệm công bố
+của g11 và g15 cũng nằm ngay tại mức sai số này.
 
-Về phương pháp, GA mã hóa số thực xử lý ràng buộc bằng quy tắc khả thi
-của Deb kết hợp ngưỡng $\varepsilon$ giảm dần đã trình bày ở
-Mục~\ref{subsec:ham-thich-nghi}, với quần thể $1000$ cá thể chạy trong
-$500$ thế hệ. Tiếp sau GA là một bước tinh chỉnh cục bộ theo nguyên lý
-tìm kiếm trực tiếp: xuất phát từ nghiệm tốt nhất mà GA tìm được, thuật
-toán dò lần lượt theo từng trục tọa độ với một bước dịch chuyển ban
-đầu, chỉ chấp nhận những điểm vừa còn khả thi vừa có giá trị hàm mục
-tiêu nhỏ hơn; khi không còn hướng nào cải thiện được nữa thì bước dịch
-chuyển được giảm đi một nửa và quá trình lặp lại. Cách kết hợp một
-thuật toán tiến hóa với một thủ tục tìm kiếm cục bộ như vậy chính là
-mô hình thuật toán ghi nhớ, cũng là cách tiếp cận
-được dùng cho bài toán người du lịch ở Mục~\ref{sec:ud-tsp}. Vai trò
-phân công giữa hai giai đoạn rất rõ: GA đảm nhiệm việc định vị vùng
-chứa nghiệm trên toàn miền tìm kiếm, còn bước tinh chỉnh đảm nhiệm
-việc tiếp cận chính xác những nghiệm nằm sát biên của miền khả thi.
-Kết quả của cả hai giai đoạn đều được báo cáo để thấy rõ phần đóng góp
-của từng bước.
+GA mã hóa số thực được kết hợp quy tắc khả thi của Deb và ngưỡng
+$\varepsilon$ giảm dần (Mục~\ref{subsec:ham-thich-nghi}), sử dụng
+$1000$ cá thể trong $500$ thế hệ. Sau GA, một bước tìm kiếm cục bộ
+theo từng trục tọa độ được thực hiện từ nghiệm tốt nhất: chỉ chấp nhận
+điểm khả thi có giá trị mục tiêu tốt hơn; khi không còn cải thiện,
+bước dịch chuyển được giảm một nửa và tiếp tục tìm kiếm. Mô hình kết
+hợp này cũng được áp dụng cho bài toán người du lịch ở
+Mục~\ref{sec:ud-tsp}. Trong đó, GA đảm nhiệm khám phá toàn cục, còn
+tìm kiếm cục bộ đảm nhiệm tinh chỉnh nghiệm, đặc biệt khi nghiệm nằm
+sát biên miền khả thi. Kết quả của cả hai giai đoạn được báo cáo riêng
+để đánh giá đóng góp của từng bước.
 
-\subsection{Bài toán g01}
-\label{subsec:g01}
+\vspace{1em}
 
-Bài toán g01 có hàm mục tiêu bậc hai trên mười ba biến, chịu chín ràng
-buộc bất đẳng thức đều tuyến tính:
+\textbf{Bài toán g01} có hàm mục tiêu bậc hai trên mười ba biến, chịu
+chín ràng buộc bất đẳng thức đều tuyến tính:
 \begin{equation}
 \begin{aligned}
 \min_{x \in \mathbb{R}^{13}} \quad
@@ -453,11 +409,10 @@ tốt đối với không gian mười ba chiều. Bước tinh chỉnh đưa sa
 xuống $1{,}77\times10^{-12}$, tức trùng với nghiệm công bố trong giới
 hạn biểu diễn số thực dấu phẩy động.
 
-\subsection{Bài toán g06}
-\label{subsec:g06}
+\vspace{1em}
 
-Bài toán g06 chỉ có hai biến nhưng hàm mục tiêu bậc ba và cả hai ràng
-buộc đều phi tuyến:
+\textbf{Bài toán g06} chỉ có hai biến nhưng hàm mục tiêu bậc ba và cả
+hai ràng buộc đều phi tuyến:
 \begin{equation}
 \begin{aligned}
 \min_{x \in \mathbb{R}^{2}} \quad
@@ -510,10 +465,10 @@ kiếm. Bước tinh chỉnh cục bộ đưa kết quả về $2{,}64\times10^{
 cải thiện hơn chín bậc độ lớn. Đây là bài toán mà việc kết hợp tìm
 kiếm cục bộ phát huy tác dụng rõ rệt nhất.
 
-\subsection{Bài toán g08}
-\label{subsec:g08}
+\vspace{1em}
 
-Bài toán g08 có hàm mục tiêu chứa hàm lượng giác và phân thức:
+\textbf{Bài toán g08} có hàm mục tiêu chứa hàm lượng giác và phân
+thức:
 \begin{equation}
 \begin{aligned}
 \min_{x \in \mathbb{R}^{2}} \quad
@@ -559,11 +514,10 @@ minh họa rằng độ khó của một bài toán có ràng buộc không nằ
 phi tuyến của hàm mục tiêu mà nằm ở vị trí của nghiệm so với biên miền
 khả thi.
 
-\subsection{Bài toán g11}
-\label{subsec:g11}
+\vspace{1em}
 
-Bài toán g11 có dạng đơn giản nhất về hình thức nhưng chứa một ràng
-buộc đẳng thức phi tuyến:
+\textbf{Bài toán g11} có dạng đơn giản nhất về hình thức nhưng chứa
+một ràng buộc đẳng thức phi tuyến:
 \begin{equation}
 \begin{aligned}
 \min_{x \in \mathbb{R}^{2}} \quad
@@ -617,11 +571,10 @@ kể vì miền khả thi là một dải cong rất hẹp, trong đó các bư�
 chuyển song song với trục tọa độ nhanh chóng đi ra ngoài miền và bị
 loại.
 
-\subsection{Bài toán g15}
-\label{subsec:g15}
+\vspace{1em}
 
-Bài toán g15 có ba biến cùng hai ràng buộc đẳng thức, một phi tuyến và
-một tuyến tính:
+\textbf{Bài toán g15} có ba biến cùng hai ràng buộc đẳng thức, một phi
+tuyến và một tuyến tính:
 \begin{equation}
 \begin{aligned}
 \min_{x \in \mathbb{R}^{3}} \quad
@@ -666,11 +619,12 @@ là kết quả này đạt được ngay từ giai đoạn GA; cũng như ở g
 tinh chỉnh cục bộ không phát huy nhiều tác dụng khi miền khả thi là
 một đường cong hẹp.
 
-\subsection{Nhận xét chung}
-\label{subsec:nhan-xet-cec}
+\vspace{1em}
+
+\textbf{Nhận xét và đánh giá kết quả}
 
 Bảng~\ref{tab:kq-co-rang-buoc} tổng hợp kết quả trên cả năm bài toán.
-Mọi nghiệm báo cáo đều khả thi tuyệt đối theo định nghĩa của bộ chuẩn,
+Mọi nghiệm báo cáo đều khả thi tuyệt đối theo định nghĩa của bộ benchmark,
 với mức vi phạm bằng $0$.
 
 \begin{table}[htbp]
@@ -728,10 +682,10 @@ toán của giai đoạn tinh chỉnh không đáng kể so với giai đoạn t
 
 Riêng với g11 và g15, phần sai lệch còn lại chủ yếu bắt nguồn từ dung
 sai $\varepsilon = 10^{-4}$ dành cho ràng buộc đẳng thức chứ không
-phải từ năng lực hội tụ của thuật toán. Như đã phân tích ở
-Mục~\ref{subsec:g11}, giá trị công bố của g11 còn nhỏ hơn cực tiểu
-chính xác của bài toán, nên khoảng cách giữa kết quả thu được và giá
-trị công bố không phản ánh sai số của phương pháp.
+phải từ năng lực hội tụ của thuật toán. Như đã phân tích ở phần bài
+toán g11 phía trên, giá trị công bố của g11 còn nhỏ hơn cực tiểu chính
+xác của bài toán, nên khoảng cách giữa kết quả thu được và giá trị
+công bố không phản ánh sai số của phương pháp.
 
 \section{Bài toán Người du lịch: GA hoán vị kết hợp Tìm kiếm Cục bộ}
 \label{sec:ud-tsp}
