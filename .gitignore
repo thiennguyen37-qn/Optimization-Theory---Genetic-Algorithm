@@ -23,6 +23,9 @@ tmp.toc
 tmp.synctex.gz
 tmp_wrapper.tex
 
+# Ghi chú review cá nhân, không đưa vào repo
+Report Review.md
+
 # OS
 .DS_Store
 Thumbs.db
