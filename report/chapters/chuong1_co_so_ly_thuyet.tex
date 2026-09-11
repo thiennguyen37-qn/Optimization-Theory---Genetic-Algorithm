@@ -254,10 +254,23 @@ ngược lại, nếu chọn $\lambda_i$ quá lớn, số hạng phạt sẽ l�
 toàn hàm mục tiêu, khiến quần thể chỉ tập trung thỏa mãn ràng buộc mà
 không còn khả năng phân biệt giữa các nghiệm khả thi tốt và kém. Để
 khắc phục hạn chế này, nhiều kỹ thuật xử lý ràng buộc nâng cao đã được
-đề xuất, tiêu biểu như quy tắc khả thi của Deb hoặc ngưỡng
-$\varepsilon$ giảm dần theo thời gian do Takahama và Sato đề xuất. Các
-kỹ thuật này sẽ được trình bày cụ thể cùng với phần cài đặt thực nghiệm
-trong Chương 2.
+đề xuất, không còn dựa vào một hệ số phạt cố định.
+
+\textbf{Quy tắc khả thi của Deb} thay hàm phạt bằng một quy tắc so
+sánh trực tiếp giữa hai cá thể, dựa trên ba trường hợp: (i) giữa hai
+cá thể đều khả thi, cá thể có giá trị hàm mục tiêu tốt hơn luôn được
+ưu tiên; (ii) giữa một cá thể khả thi và một cá thể không khả thi, cá
+thể khả thi luôn được ưu tiên bất kể giá trị hàm mục tiêu; (iii) giữa
+hai cá thể đều không khả thi, cá thể có tổng mức vi phạm ràng buộc nhỏ
+hơn được ưu tiên. Quy tắc này loại bỏ hoàn toàn nhu cầu xác định hệ số
+phạt, vì việc so sánh không còn cộng gộp mức vi phạm vào hàm mục tiêu.
+
+\textbf{Ngưỡng $\varepsilon$ giảm dần} do Takahama và Sato đề xuất
+không yêu cầu mức vi phạm bằng $0$ ngay từ đầu. Thay vào đó, cá thể
+được xem là khả thi khi tổng mức vi phạm không vượt quá ngưỡng
+$\varepsilon(t)$. Ngưỡng này bắt đầu ở giá trị dương, cho phép quần
+thể khám phá cả vùng không khả thi, rồi giảm dần về $0$ tại thế hệ
+$T_c$, từ đó hướng quần thể hội tụ vào miền khả thi.
 
 \subsection*{Các Phép chọn lọc}
 \label{subsec:chon-loc}
@@ -979,7 +992,7 @@ NASA, dự đoán độ lớn từ trường và vận tốc Alfvén. Kết qu�
 của ba nhóm bài toán GA sẽ được đối
 chiếu với một mốc so sánh tương ứng: giá trị cực tiểu toàn cục đã biết
 của các hàm benchmark cho bài toán không ràng buộc, nghiệm tối ưu công
-bố của bộ chuẩn CEC 2006 cho bài toán có ràng buộc, và nghiệm tối ưu
+bố của bộ benchmark CEC 2006 cho bài toán có ràng buộc, và nghiệm tối ưu
 công bố của TSPLIB95 cho bài toán người du lịch. Riêng kết quả của GP
 cho bài toán hồi quy symbolic sẽ được đối chiếu với phương pháp hồi
 quy tuyến tính, đóng vai trò mốc so sánh cơ sở (baseline).
