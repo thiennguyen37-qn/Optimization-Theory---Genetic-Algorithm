@@ -148,7 +148,7 @@ sau khi đã vào được trong đó.
 \end{subfigure}
 \caption{Hàm Rosenbrock: thung lũng cong hẹp hình quả chuối, và diễn
 biến giá trị tốt nhất qua các thế hệ --- GA chốt kỷ lục ngay ở thế hệ
-$11$ rồi không cải thiện thêm trong $89$ thế hệ còn lại.}
+$11$ rồi không cải thiện thêm trong $39$ thế hệ còn lại.}
 \label{fig:rosenbrock}
 \end{figure}
 
@@ -235,11 +235,11 @@ $\alpha \in [-0{,}25;\, 1{,}25]$, đột biến Gauss với xác suất $0{,}15$
 trên mỗi gene và $\sigma$ bằng $0{,}08$ lần bề rộng miền, chọn lọc
 giải đấu theo thứ hạng với $k = 3$, giữ lại $2$ cá thể tinh hoa mỗi
 thế hệ --- theo Mục~\ref{sec:toan-tu-cot-loi}) được chạy một lần với
-quần thể $500$ cá thể trong $100$ thế hệ, hạt giống ngẫu nhiên cố định
+quần thể $500$ cá thể trong $50$ thế hệ, hạt giống ngẫu nhiên cố định
 bằng $42$ để kết quả tái lập được. Cá thể được cắt về miền tìm kiếm
 sau mỗi phép lai ghép và đột biến, vì ở đây miền đóng vai trò miền xác
 định của bài toán. Thuật toán không có tiêu chí dừng sớm: vòng lặp
-luôn chạy đủ $100$ thế hệ. Cột \textit{số thế hệ thỏa mãn} trong
+luôn chạy đủ $50$ thế hệ. Cột \textit{số thế hệ thỏa mãn} trong
 Bảng~\ref{tab:kq-khong-rang-buoc} vì vậy không phải thế hệ mà thuật
 toán dừng lại, mà là thế hệ sớm nhất đạt được giá trị $f^{*}$ cuối
 cùng --- tức lần cuối cùng kỷ lục được cải thiện.
@@ -256,11 +256,11 @@ cùng --- tức lần cuối cùng kỷ lục được cải thiện.
 & \textbf{$f^{*}$} & \textbf{$x^{*}$} & \textbf{$y^{*}$} \\
 & \textbf{(s)} & \textbf{thỏa mãn} & & & \\
 \midrule
-Easom      & $1{,}3619$ & $51$ & $-1{,}0000000000$      & $3{,}141593$              & $3{,}141593$               \\
-Rastrigin  & $1{,}3876$ & $45$ & $0{,}0000000000$       & $8{,}00\times10^{-10}$    & $-2{,}11\times10^{-9}$     \\
-Rosenbrock & $1{,}4194$ & $11$ & $0{,}0009051359$       & $1{,}008839$              & $1{,}014881$               \\
-Ackley     & $1{,}5411$ & $76$ & $0{,}0000000000$       & $-9{,}22\times10^{-17}$   & $-2{,}99\times10^{-16}$    \\
-Schwefel   & $1{,}4160$ & $52$ & $2{,}5455\times10^{-5}$ & $420{,}968746$           & $420{,}968746$             \\
+Easom      & $4{,}4989$ & $49$ & $-1{,}0000000000$      & $3{,}141593$              & $3{,}141593$               \\
+Rastrigin  & $4{,}9980$ & $45$ & $0{,}0000000000$       & $8{,}00\times10^{-10}$    & $-2{,}11\times10^{-9}$     \\
+Rosenbrock & $4{,}3244$ & $11$ & $0{,}0009051359$       & $1{,}008839$              & $1{,}014881$               \\
+Ackley     & $3{,}6452$ & $50$ & $3{,}344\times10^{-10}$ & $-7{,}55\times10^{-11}$   & $-9{,}10\times10^{-11}$    \\
+Schwefel   & $3{,}5967$ & $47$ & $2{,}5455\times10^{-5}$ & $420{,}968746$           & $420{,}968746$             \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -273,8 +273,12 @@ của tìm kiếm dựa trên quần thể đã trình bày ở
 Mục~\ref{subsec:ho-thuat-toan-tien-hoa}: vì GA duy trì $500$ cá thể
 trải rộng trên không gian tìm kiếm thay vì một điểm duy nhất, nó không
 phụ thuộc vào việc điểm khởi tạo có nằm gần cực tiểu toàn cục hay
-không, khác với các phương pháp gradient cổ điển. Với Rastrigin và
-Ackley, GA về đúng $0$ trong giới hạn biểu diễn số thực dấu phẩy động.
+không, khác với các phương pháp gradient cổ điển. Với Rastrigin, GA về
+đúng $0$ trong giới hạn biểu diễn số thực dấu phẩy động; Ackley tiệm
+cận rất sát $0$ ($3{,}344\times10^{-10}$) nhưng chưa chạm hẳn ngưỡng đó
+vì ngân sách $50$ thế hệ kết thúc đúng lúc kỷ lục của nó vẫn còn đang
+được cải thiện, như sẽ thấy rõ hơn khi đối chiếu với Rosenbrock ngay
+sau đây.
 
 Rosenbrock là ngoại lệ duy nhất, và cách nó khác biệt lại soi sáng
 đúng điểm mạnh cũng như điểm yếu của GA. Sai số $9{,}05\times10^{-4}$
@@ -282,10 +286,11 @@ của nó lớn hơn bốn hàm còn lại nhiều bậc độ lớn, mặc dù 
 \textit{duy nhất} trong năm hàm không hề có bẫy cực tiểu cục bộ.
 Đường hội tụ ở Hình~\ref{fig:rosenbrock} cho thấy rõ cơ chế: giá trị
 tốt nhất tụt rất nhanh trong mười thế hệ đầu rồi chốt lại ở thế hệ
-$11$ và đứng yên suốt $89$ thế hệ còn lại. Nghĩa là GA lọt vào đúng
+$11$ và đứng yên suốt $39$ thế hệ còn lại. Nghĩa là GA lọt vào đúng
 thung lũng gần như tức thì, nhưng sau đó không nhích thêm được nữa.
-Đối chiếu với Ackley --- hàm mà GA cải thiện kỷ lục rải rác cho tới
-tận thế hệ $76$ --- có thể thấy hai kiểu khó khăn hoàn toàn khác nhau:
+Đối chiếu với Ackley --- hàm mà kỷ lục vẫn còn được cải thiện đến tận
+thế hệ cuối cùng ($50$), tức chưa kịp ổn định trong đúng ngân sách thế
+hệ đã cho --- có thể thấy hai kiểu khó khăn hoàn toàn khác nhau:
 Rastrigin, Ackley, Easom và Schwefel khó ở chỗ \textit{tìm ra} đúng
 vùng chứa nghiệm, còn Rosenbrock khó ở chỗ \textit{dò theo} một cấu
 trúc cong sau khi đã tìm ra vùng đó.
