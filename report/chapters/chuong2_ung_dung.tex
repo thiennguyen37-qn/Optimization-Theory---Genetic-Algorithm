@@ -270,19 +270,12 @@ nhất qua các thế hệ.}
 \label{fig:schwefel}
 \end{figure}
 
-Với mỗi hàm, GA mã hóa số thực (lai ghép trộn BLX-$\alpha$ với
-$\alpha \in [-0{,}25;\, 1{,}25]$, đột biến Gauss với xác suất $0{,}15$
-trên mỗi gene và $\sigma$ bằng $0{,}08$ lần bề rộng miền, chọn lọc
-giải đấu theo thứ hạng với $k = 3$, giữ lại $2$ cá thể tinh hoa mỗi
-thế hệ --- theo Mục~\ref{sec:toan-tu-cot-loi}) được chạy một lần với
-quần thể $500$ cá thể trong $50$ thế hệ, hạt giống ngẫu nhiên cố định
-bằng $42$ để kết quả tái lập được. Cá thể được cắt về miền tìm kiếm
-sau mỗi phép lai ghép và đột biến, vì ở đây miền đóng vai trò miền xác
-định của bài toán. Thuật toán không có tiêu chí dừng sớm: vòng lặp
-luôn chạy đủ $50$ thế hệ. Cột \textit{số thế hệ thỏa mãn} trong
-Bảng~\ref{tab:kq-khong-rang-buoc} vì vậy không phải thế hệ mà thuật
-toán dừng lại, mà là thế hệ sớm nhất đạt được giá trị $f^{*}$ cuối
-cùng --- tức lần cuối cùng kỷ lục được cải thiện.
+Đối với mỗi hàm benchmark, GA được thực nghiệm trên cùng một thiết lập
+với quần thể $500$ cá thể và tối đa $50$ thế hệ. Các cá thể được giữ
+trong miền tìm kiếm của từng hàm và thuật toán luôn chạy đủ $50$ thế
+hệ. Cột \textit{số thế hệ thỏa mãn} biểu thị thế hệ sớm nhất đạt được
+giá trị tốt nhất cuối cùng $f^{*}$, không phải thời điểm thuật toán
+dừng.
 
 \begin{table}[htbp]
 \centering
@@ -292,9 +285,8 @@ cùng --- tức lần cuối cùng kỷ lục được cải thiện.
 \setlength{\tabcolsep}{3pt}
 \begin{tabular}{lcccccc}
 \toprule
-\textbf{Hàm} & \textbf{Thời gian} & \textbf{Số thế hệ}
+\textbf{Hàm} & \textbf{Thời gian (s)} & \textbf{Thế hệ}
 & \textbf{$f_{\text{thực}}$} & \textbf{$f^{*}$} & \textbf{$x^{*}$} & \textbf{$y^{*}$} \\
-& \textbf{(s)} & \textbf{thỏa mãn} & & & & \\
 \midrule
 Easom      & $4{,}4989$ & $49$ & $-1$        & $-1{,}0000000000$      & $3{,}141593$              & $3{,}141593$               \\
 Rastrigin  & $4{,}9980$ & $45$ & $0$         & $0{,}0000000000$       & $8{,}00\times10^{-10}$    & $-2{,}11\times10^{-9}$     \\
@@ -305,44 +297,24 @@ Schwefel   & $3{,}5967$ & $47$ & $\approx 0$ & $2{,}5455\times10^{-5}$ & $420{,}
 \end{tabular}
 \end{table}
 
-GA tìm đúng, hoặc gần đúng đến sai số không đáng kể, cực tiểu toàn cục
-trên cả năm hàm --- kể cả Easom và Schwefel, hai hàm được thiết kế
-riêng để đánh lừa các thuật toán chỉ khai thác thông tin cục bộ quanh
-điểm hiện tại. Kết quả này minh chứng trực tiếp cho ưu điểm cốt lõi
-của tìm kiếm dựa trên quần thể đã trình bày ở
-Mục~\ref{subsec:ho-thuat-toan-tien-hoa}: vì GA duy trì $500$ cá thể
-trải rộng trên không gian tìm kiếm thay vì một điểm duy nhất, nó không
-phụ thuộc vào việc điểm khởi tạo có nằm gần cực tiểu toàn cục hay
-không, khác với các phương pháp gradient cổ điển. Với Rastrigin, GA về
-đúng $0$ trong giới hạn biểu diễn số thực dấu phẩy động; Ackley tiệm
-cận rất sát $0$ ($3{,}344\times10^{-10}$) nhưng chưa chạm hẳn ngưỡng đó
-vì ngân sách $50$ thế hệ kết thúc đúng lúc kỷ lục của nó vẫn còn đang
-được cải thiện, như sẽ thấy rõ hơn khi đối chiếu với Rosenbrock ngay
-sau đây.
+Kết quả cho thấy GA tìm được nghiệm toàn cục hoặc nghiệm rất gần tối
+ưu trên cả năm hàm. Easom và Rastrigin đạt đúng giá trị tối ưu; Ackley
+và Schwefel cũng đạt sai số rất nhỏ. Đáng chú ý, GA vẫn tìm được
+nghiệm tốt trên Easom và Schwefel, cho thấy khả năng khám phá rộng
+của tìm kiếm dựa trên quần thể.
 
-Rosenbrock là ngoại lệ duy nhất, và cách nó khác biệt lại soi sáng
-đúng điểm mạnh cũng như điểm yếu của GA. Sai số $9{,}05\times10^{-4}$
-của nó lớn hơn bốn hàm còn lại nhiều bậc độ lớn, mặc dù đây là hàm
-\textit{duy nhất} trong năm hàm không hề có bẫy cực tiểu cục bộ.
-Đường hội tụ ở Hình~\ref{fig:rosenbrock} cho thấy rõ cơ chế: giá trị
-tốt nhất tụt rất nhanh trong mười thế hệ đầu rồi chốt lại ở thế hệ
-$11$ và đứng yên suốt $39$ thế hệ còn lại. Nghĩa là GA lọt vào đúng
-thung lũng gần như tức thì, nhưng sau đó không nhích thêm được nữa.
-Đối chiếu với Ackley --- hàm mà kỷ lục vẫn còn được cải thiện đến tận
-thế hệ cuối cùng ($50$), tức chưa kịp ổn định trong đúng ngân sách thế
-hệ đã cho --- có thể thấy hai kiểu khó khăn hoàn toàn khác nhau:
-Rastrigin, Ackley, Easom và Schwefel khó ở chỗ \textit{tìm ra} đúng
-vùng chứa nghiệm, còn Rosenbrock khó ở chỗ \textit{dò theo} một cấu
-trúc cong sau khi đã tìm ra vùng đó.
+Rosenbrock là trường hợp khó nhất khi chỉ đạt $f^{*} = 9{,}05\times10^{-4}$.
+GA nhanh chóng tiến vào vùng gần nghiệm tối ưu nhưng sau đó hầu như
+không cải thiện thêm. Nguyên nhân là thung lũng của Rosenbrock hẹp và
+cong, đòi hỏi quá trình tinh chỉnh chính xác dọc theo đáy thung lũng,
+trong khi các phép biến đổi của GA không thực sự hiệu quả ở giai đoạn
+này.
 
-Sự phân đôi này phản ánh bản chất của các toán tử tiến hóa ngẫu nhiên
-đẳng hướng: chúng rất mạnh trong việc định vị một vùng rộng trên không
-gian tìm kiếm, nhưng yếu trong việc tinh chỉnh dọc theo một hướng ưu
-tiên hẹp. Đây chính là lý do các thuật toán lai ghép GA với tìm kiếm
-cục bộ tồn tại --- và cũng là cách tiếp cận được
-áp dụng cho bài toán người du lịch ở Mục~\ref{sec:ud-tsp}, nơi GA
-thuần túy được bổ sung thêm bước tối ưu cục bộ 2-opt để xử lý đúng
-phần việc mà lai ghép và đột biến ngẫu nhiên làm không tốt.
+Nhìn chung, kết quả cho thấy GA có ưu thế rõ rệt trong khám phá và
+định vị vùng nghiệm, nhưng khả năng tinh chỉnh nghiệm trong những vùng
+hẹp và có cấu trúc đặc biệt còn hạn chế. Đây cũng là cơ sở để kết hợp
+GA với tìm kiếm cục bộ trong các bài toán cần độ chính xác cao ở giai
+đoạn cuối.
 
 \section{Tối ưu có ràng buộc: Bộ chuẩn CEC 2006}
 \label{sec:ud-co-rang-buoc}
