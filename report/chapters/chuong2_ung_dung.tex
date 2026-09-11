@@ -74,18 +74,30 @@ f(x,y) = 20 + x^2 + y^2 - 10\cos(2\pi x) - 10\cos(2\pi y),
 \label{eq:rastrigin}
 \end{equation}
 với miền tìm kiếm $x, y \in [-5.12,\, 5.12]$ và cực tiểu toàn cục
-$f(0,0) = 0$. Hai số hạng cosin có chu kỳ bằng
-$1$ nên tạo ra một mạng lưới cực tiểu cục bộ nằm xấp xỉ tại các điểm
-có tọa độ nguyên; trong miền $[-5.12,\, 5.12]^2$ có khoảng $121$ cực
-tiểu cục bộ như vậy, bao quanh dày đặc cực tiểu toàn cục tại gốc tọa
-độ. Khó khăn ở đây là bài toán \textit{đa cực trị} điển hình: một
-phương pháp cục bộ xuất phát từ điểm ngẫu nhiên gần như chắc chắn hội
-tụ về cực tiểu cục bộ gần nhất rồi dừng lại, và cực tiểu đó hầu như
-không bao giờ là cực tiểu toàn cục ở gốc tọa độ. Yếu tố giúp GA vượt
-qua khó khăn này là biên độ đột biến: với
-$\sigma = 0{,}08 \times 10{,}24 \approx 0{,}82$, mỗi bước đột biến đủ
-lớn để vượt qua khoảng cách giữa hai cực tiểu cục bộ liền kề (bằng
-$1$), nhờ đó cá thể không bị mắc kẹt tại một cực tiểu duy nhất.
+$f(0,0) = 0$.
+
+Bề mặt của hàm không trơn theo nghĩa trực quan mà gồm rất nhiều gợn
+sóng liên tiếp, tạo thành các cực tiểu và cực đại cục bộ xen kẽ nhau.
+Do hai số hạng cosin có chu kỳ bằng $1$, các cực tiểu cục bộ này xuất
+hiện gần các điểm có tọa độ nguyên; trong miền $[-5.12,\, 5.12]^2$ có
+khoảng $121$ cực tiểu cục bộ như vậy, bao quanh dày đặc cực tiểu toàn
+cục tại gốc tọa độ.
+
+Cấu trúc này khiến Rastrigin trở thành bài toán \textit{đa cực trị}
+điển hình, khó đối với các phương pháp chỉ tìm kiếm trong phạm vi lân
+cận: xuất phát từ một điểm ngẫu nhiên, phương pháp cục bộ gần như chắc
+chắn hội tụ về cực tiểu cục bộ gần nhất rồi dừng lại tại đó, dù vẫn
+còn một nghiệm tốt hơn ở nơi khác trong không gian tìm kiếm. Nói cách
+khác, thuật toán dễ bị mắc kẹt tại một cực tiểu cục bộ thay vì tìm
+được cực tiểu toàn cục.
+
+Đặc điểm này cũng chính là lý do Rastrigin phù hợp để minh họa ưu điểm
+của GA. Thay vì chỉ cải thiện một nghiệm duy nhất, GA duy trì đồng
+thời nhiều cá thể trong quần thể và liên tục sinh ra nghiệm mới qua
+lai ghép và đột biến; đột biến với biên độ phù hợp có thể đưa cá thể
+thoát khỏi vùng đang bị mắc kẹt để khám phá các vùng khác của không
+gian tìm kiếm. Nhờ đó, GA có khả năng vượt qua các cực tiểu cục bộ và
+tăng cơ hội tìm được cực tiểu toàn cục tại gốc tọa độ.
 
 \begin{figure}[htbp]
 \centering
@@ -113,23 +125,28 @@ f(x,y) = (1-x)^2 + 100(y-x^2)^2,
 \label{eq:rosenbrock}
 \end{equation}
 với miền tìm kiếm $x, y \in [-5,\, 10]$ và cực tiểu toàn cục
-$f(1,1) = 0$. Khác hẳn bốn hàm còn lại, hàm này
-\textit{không} đa cực trị: trên miền hai biến nó chỉ có duy nhất một
-cực tiểu, nên không tồn tại bẫy cục bộ nào để thuật toán mắc vào. Khó
-khăn nằm ở hình dạng của đáy hàm. Số hạng $100(y-x^2)^2$ phạt rất nặng
-mọi sai lệch khỏi đường cong $y = x^2$, tạo thành một thung lũng hẹp
-và cong, trong khi dọc theo lòng thung lũng giá trị hàm lại thay đổi
-rất chậm. Muốn tiến về $(1,1)$, thuật toán phải thay đổi $x$ và $y$
-một cách \textit{phối hợp} sao cho $y$ luôn bám theo $x^2$; chỉ cần
-lệch khỏi quỹ đạo này, giá trị hàm sẽ tăng vọt do bị phạt nặng. Cụ thể,
-để đạt được $f < 10^{-3}$ thì đồng thời phải có $|1-x| < 0{,}032$ và
-$|y-x^2| < 0{,}0032$ --- một dải rất mỏng và cong. Cả hai toán tử của
-GA đều không phù hợp với yêu cầu này: lai ghép trộn nội suy theo
-\textit{đường thẳng} nối hai cha mẹ, còn đột biến Gauss xê dịch từng
-tọa độ một cách \textit{độc lập}, nên không toán tử nào bám được theo
-một đường cong. Nói cách khác, với Rosenbrock cái khó không phải là
-\textit{tìm ra} vùng chứa nghiệm mà là \textit{dò theo} đáy thung lũng
-sau khi đã vào được trong đó.
+$f(1,1) = 0$.
+
+Khác với bốn hàm còn lại, Rosenbrock không có nhiều cực tiểu cục bộ
+trong miền xét; khó khăn ở đây không nằm ở việc thuật toán bị mắc kẹt
+tại một cực tiểu cục bộ, mà nằm ở hình dạng của vùng dẫn đến nghiệm
+tối ưu. Số hạng $100(y-x^2)^2$ phạt rất nặng mọi điểm $(x,y)$ lệch
+khỏi đường cong $y = x^2$, khiến vùng có giá trị hàm thấp co lại thành
+một thung lũng dài, hẹp và cong, với nghiệm tối ưu $(1,1)$ nằm ở đáy.
+
+Dọc theo hai bên thung lũng, giá trị hàm tăng rất nhanh khi lệch khỏi
+đường cong $y = x^2$, trong khi dọc theo đáy thung lũng giá trị hàm
+lại thay đổi rất chậm. Vì vậy, thuật toán phải thay đổi $x$ và $y$ một
+cách \textit{phối hợp} theo đúng đường cong này để tiến dần về
+$(1,1)$, thay vì chỉ cải thiện từng biến một cách độc lập.
+
+Do đó, Rosenbrock kiểm tra một khả năng khác của GA so với Rastrigin:
+nếu Rastrigin kiểm tra khả năng thoát khỏi một mạng lưới dày đặc các
+cực tiểu cục bộ, thì Rosenbrock kiểm tra khả năng \textit{dò theo}
+một không gian hẹp, cong và khó tiếp cận sau khi đã tìm ra đúng vùng
+chứa nghiệm. Đây là ví dụ điển hình cho trường hợp bài toán không có
+nhiều bẫy cục bộ nhưng vẫn khó tối ưu do cấu trúc của không gian tìm
+kiếm.
 
 \begin{figure}[htbp]
 \centering
@@ -162,16 +179,27 @@ f(x,y) = {} & -20\exp\!\left(-0.2\sqrt{0.5(x^2+y^2)}\right) \\
 \end{equation}
 với miền tìm kiếm $x, y \in [-32.768,\, 32.768]$ và cực tiểu toàn cục
 $f(0,0) = 0$.
-Hàm này kết hợp hai cấu trúc chồng lên nhau ở hai thang độ khác nhau:
-số hạng mũ thứ nhất tạo một cái phễu lớn dốc dần về gốc tọa độ, còn số
-hạng cosin phủ lên bề mặt phễu đó vô số gợn sóng cực tiểu cục bộ nhỏ.
-Cấu trúc phễu ở thang lớn là thông tin có ích --- nó chỉ đúng hướng
-về nghiệm; các gợn sóng ở thang nhỏ mới là bẫy. Do đó Ackley kiểm tra
-khả năng \textit{đọc được xu thế toàn cục mà không bị nhiễu cục bộ
-đánh lạc hướng}. Với GA, biên độ đột biến
-$\sigma = 0{,}08 \times 65{,}536 \approx 5{,}24$ lớn hơn nhiều so với
-bước sóng của gợn nhiễu (bằng $1$), nên các gợn sóng gần như trong
-suốt đối với quá trình tìm kiếm.
+
+Bề mặt của hàm có thể hình dung như một phễu lớn phủ nhiều gợn sóng
+nhỏ. Số hạng mũ thứ nhất tạo ra xu thế tổng thể hướng về gốc tọa độ:
+càng xa $(0,0)$, giá trị hàm nhìn chung càng lớn --- đây là thông tin
+có ích, vì nó chỉ đúng hướng cần tiến về nghiệm. Số hạng cosin phủ
+thêm lên bề mặt đó vô số gợn sóng và cực tiểu cục bộ nhỏ, khiến quá
+trình tìm kiếm có thể bị nhiễu hoặc dừng lại tại những vị trí chưa tối
+ưu.
+
+Do đó, khó khăn của Ackley nằm ở việc phân biệt xu thế toàn cục giữa
+nhiều biến động cục bộ: thuật toán vừa phải tận dụng xu thế chung
+hướng về gốc tọa độ, vừa phải duy trì khả năng khám phá để không bị
+mắc kẹt bởi các gợn sóng nhỏ. Với GA, lai ghép và đột biến liên tục
+tạo ra cá thể mới ở những vị trí khác nhau, qua đó tăng khả năng vượt
+qua các cực tiểu cục bộ và tiếp tục tiến về vùng tối ưu.
+
+Như vậy, nếu Rastrigin kiểm tra khả năng thoát khỏi một mạng lưới dày
+đặc các cực tiểu cục bộ, còn Rosenbrock kiểm tra khả năng dò theo một
+thung lũng hẹp và cong, thì Ackley kiểm tra khả năng nhận diện xu thế
+tối ưu ở quy mô lớn trong khi không bị các biến động nhỏ ở quy mô cục
+bộ chi phối.
 
 \begin{figure}[htbp]
 \centering
@@ -199,16 +227,27 @@ f(x,y) = 837.9658 - x\sin\sqrt{|x|} - y\sin\sqrt{|y|},
 \label{eq:schwefel}
 \end{equation}
 với miền tìm kiếm $x, y \in [-500,\, 500]$ và cực tiểu toàn cục
-$f(420.9687,\, 420.9687) \approx 0$. Đây là hàm
-được thiết kế để \textit{đánh lừa}: các cực tiểu cục bộ của nó phân bố
-không đều, và điều nguy hiểm là cực tiểu cục bộ tốt thứ nhì lại nằm
-rất xa cực tiểu toàn cục trong không gian tìm kiếm. Hệ quả là thông
-tin cục bộ dẫn đường sai --- một thuật toán càng khai thác sớm và
-càng mạnh vùng đang có vẻ tốt thì càng bị kéo ra xa nghiệm đúng. Thêm
-vào đó, cực tiểu toàn cục nằm ở $420{,}97$, tức sát biên $500$ của
-miền tìm kiếm, nên những cài đặt cắt hoặc co cá thể về phía tâm miền
-sẽ bỏ sót nó. Hàm này vì vậy kiểm tra khả năng duy trì thăm dò trên
-diện rộng và không cam kết quá sớm vào một vùng.
+$f(420.9687,\, 420.9687) \approx 0$.
+
+Đặc điểm của Schwefel là vùng có vẻ tốt nhất tại một vị trí có thể
+không dẫn đến nghiệm tối ưu thực sự: các cực tiểu cục bộ của nó phân
+bố không đều trong toàn miền tìm kiếm, và cực tiểu cục bộ tốt thứ nhì
+lại nằm rất xa cực tiểu toàn cục. Do đó, nếu thuật toán chỉ tập trung
+khai thác một vùng đang cho kết quả tốt, nó có thể nhanh chóng đạt
+được một nghiệm khá tốt nhưng bỏ qua nghiệm tốt nhất nằm ở một khu vực
+hoàn toàn khác.
+
+Thêm vào đó, cực tiểu toàn cục $(420{,}9687,\, 420{,}9687)$ nằm khá
+gần biên của miền tìm kiếm, nên thuật toán không nên mặc định rằng
+nghiệm tốt nằm gần tâm không gian tìm kiếm; nếu cơ chế xử lý biên vô
+tình co cá thể về phía tâm miền, khả năng tìm thấy nghiệm tối ưu sẽ
+giảm.
+
+Vì vậy, Schwefel chủ yếu kiểm tra khả năng duy trì sự đa dạng và thăm
+dò trên phạm vi rộng của không gian tìm kiếm, thay vì hội tụ sớm vào
+một vùng có vẻ hứa hẹn. Đây là một điểm mạnh của GA, vì quần thể gồm
+nhiều cá thể cho phép thuật toán tiếp tục khám phá nhiều khu vực khác
+nhau thay vì chỉ đi theo một hướng duy nhất.
 
 \begin{figure}[htbp]
 \centering
