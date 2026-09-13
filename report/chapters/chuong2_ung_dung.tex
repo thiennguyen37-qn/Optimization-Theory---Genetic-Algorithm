@@ -394,14 +394,17 @@ quần thể di chuyển tương đối dễ dàng ngay cả khi đã tiến sá
 \centering
 \caption{Kết quả trên bài toán g01}
 \label{tab:kq-g01}
-\small
+\footnotesize
+\setlength{\tabcolsep}{2pt}
 \begin{tabular}{cccccc}
 \toprule
 $f^{*}$ \textbf{công bố} & $f^{*}$ \textbf{(GA)}
-& $f^{*}$ \textbf{(GA + tinh chỉnh)} & \textbf{Sai lệch} & \textbf{Vi phạm}
+& \shortstack{\textbf{Sai lệch}\\\textbf{(GA)}} & $f^{*}$ \textbf{(GA + tinh chỉnh)}
+& \shortstack{\textbf{Sai lệch}\\\textbf{(GA + tinh chỉnh)}}
 & \shortstack{\textbf{Số thế hệ}\\\textbf{thỏa mãn}} \\
 \midrule
-$-15{,}000000$ & $-14{,}999204$ & $-15{,}000000$ & $1{,}77\times10^{-12}$ & $0$ & $499$ \\
+$-15{,}000000$ & $-14{,}999204$ & $7{,}96\times10^{-4}$ & $-15{,}000000$
+& $1{,}77\times10^{-12}$ & $499$ \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -453,15 +456,17 @@ rất dốc.
 \centering
 \caption{Kết quả trên bài toán g06}
 \label{tab:kq-g06}
-\small
+\footnotesize
+\setlength{\tabcolsep}{2pt}
 \begin{tabular}{cccccc}
 \toprule
 $f^{*}$ \textbf{công bố} & $f^{*}$ \textbf{(GA)}
-& $f^{*}$ \textbf{(GA + tinh chỉnh)} & \textbf{Sai lệch} & \textbf{Vi phạm}
+& \shortstack{\textbf{Sai lệch}\\\textbf{(GA)}} & $f^{*}$ \textbf{(GA + tinh chỉnh)}
+& \shortstack{\textbf{Sai lệch}\\\textbf{(GA + tinh chỉnh)}}
 & \shortstack{\textbf{Số thế hệ}\\\textbf{thỏa mãn}} \\
 \midrule
-$-6961{,}813876$ & $-6898{,}462524$ & $-6961{,}813876$
-& $2{,}64\times10^{-8}$ & $0$ & $457$ \\
+$-6961{,}813876$ & $-6898{,}462524$ & $63{,}35$ & $-6961{,}813876$
+& $2{,}64\times10^{-8}$ & $457$ \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -512,15 +517,17 @@ miền tìm kiếm.
 \centering
 \caption{Kết quả trên bài toán g08}
 \label{tab:kq-g08}
-\small
+\footnotesize
+\setlength{\tabcolsep}{2pt}
 \begin{tabular}{cccccc}
 \toprule
 $f^{*}$ \textbf{công bố} & $f^{*}$ \textbf{(GA)}
-& $f^{*}$ \textbf{(GA + tinh chỉnh)} & \textbf{Sai lệch} & \textbf{Vi phạm}
+& \shortstack{\textbf{Sai lệch}\\\textbf{(GA)}} & $f^{*}$ \textbf{(GA + tinh chỉnh)}
+& \shortstack{\textbf{Sai lệch}\\\textbf{(GA + tinh chỉnh)}}
 & \shortstack{\textbf{Số thế hệ}\\\textbf{thỏa mãn}} \\
 \midrule
-$-0{,}095825$ & $-0{,}095825$ & $-0{,}095825$
-& $2{,}78\times10^{-17}$ & $0$ & $362$ \\
+$-0{,}095825$ & $-0{,}095825$ & $2{,}78\times10^{-17}$ & $-0{,}095825$
+& $2{,}78\times10^{-17}$ & $362$ \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -575,14 +582,16 @@ dụng theo hướng làm giảm hàm mục tiêu.
 \centering
 \caption{Kết quả trên bài toán g11}
 \label{tab:kq-g11}
-\small
+\footnotesize
+\setlength{\tabcolsep}{2pt}
 \begin{tabular}{cccccc}
 \toprule
 $f^{*}$ \textbf{công bố} & $f^{*}$ \textbf{(GA)}
-& $f^{*}$ \textbf{(GA + tinh chỉnh)} & \textbf{Sai lệch} & \textbf{Vi phạm}
+& \shortstack{\textbf{Sai lệch}\\\textbf{(GA)}} & $f^{*}$ \textbf{(GA + tinh chỉnh)}
+& \shortstack{\textbf{Sai lệch}\\\textbf{(GA + tinh chỉnh)}}
 & \shortstack{\textbf{Số thế hệ}\\\textbf{thỏa mãn}} \\
 \midrule
-$0{,}749900$ & $0{,}750268$ & $0{,}750259$ & $3{,}59\times10^{-4}$ & $0$ & $392$ \\
+$0{,}749900$ & $0{,}750268$ & $3{,}68\times10^{-4}$ & $0{,}750259$ & $3{,}59\times10^{-4}$ & $392$ \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -634,15 +643,17 @@ lệch về vị trí không bị khuếch đại mạnh như ở g06.
 \centering
 \caption{Kết quả trên bài toán g15}
 \label{tab:kq-g15}
-\small
+\footnotesize
+\setlength{\tabcolsep}{2pt}
 \begin{tabular}{cccccc}
 \toprule
 $f^{*}$ \textbf{công bố} & $f^{*}$ \textbf{(GA)}
-& $f^{*}$ \textbf{(GA + tinh chỉnh)} & \textbf{Sai lệch} & \textbf{Vi phạm}
+& \shortstack{\textbf{Sai lệch}\\\textbf{(GA)}} & $f^{*}$ \textbf{(GA + tinh chỉnh)}
+& \shortstack{\textbf{Sai lệch}\\\textbf{(GA + tinh chỉnh)}}
 & \shortstack{\textbf{Số thế hệ}\\\textbf{thỏa mãn}} \\
 \midrule
-$961{,}715022$ & $961{,}715374$ & $961{,}715308$
-& $2{,}86\times10^{-4}$ & $0$ & $249$ \\
+$961{,}715022$ & $961{,}715374$ & $3{,}52\times10^{-4}$ & $961{,}715308$
+& $2{,}86\times10^{-4}$ & $249$ \\
 \bottomrule
 \end{tabular}
 \end{table}
