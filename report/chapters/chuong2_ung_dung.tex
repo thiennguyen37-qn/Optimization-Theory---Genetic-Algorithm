@@ -767,6 +767,11 @@ trình khép kín đi qua tất cả các địa điểm đúng một lần là 
 \min_{\pi} L(\pi) = \sum_{k=1}^{n-1} d_{\pi_k, \pi_{k+1}} + d_{\pi_n, \pi_1}.
 \label{eq:tsp}
 \end{equation}
+Thực nghiệm trong mục này xét trường hợp TSP đối xứng (Symmetric
+TSP): khoảng cách giữa hai địa điểm không phụ thuộc chiều di chuyển,
+tức $d_{ij} = d_{ji}$ với mọi $i, j$, tương ứng với một đồ thị vô
+hướng.
+
 Bài toán này được mã hóa dưới dạng hoán vị đã giới thiệu ở
 Mục~\ref{subsec:ma-hoa}: mỗi cá thể của GA chính là một hoán vị $\pi$,
 dùng lai ghép theo thứ tự và đột biến hoán đổi
@@ -774,77 +779,113 @@ dùng lai ghép theo thứ tự và đột biến hoán đổi
 thay cho các toán tử số thực ở hai mục trước.
 
 Để đánh giá khách quan trên dữ liệu thực thay vì các ví dụ tự tạo quy
-mô nhỏ, ba bộ dữ liệu chuẩn từ thư viện benchmark TSPLIB95 [7] được sử
-dụng: berlin52 ($n=52$ địa điểm tại Berlin), rd100 ($n=100$ địa điểm
-ngẫu nhiên), và ch150 ($n=150$ địa điểm). Mỗi bộ dữ liệu đều có kèm
-theo lộ trình tối ưu đã được công bố, dùng làm mốc đối chiếu khách
-quan thay cho phương pháp vét cạn — vốn cần thử $(n-1)!$ hoán vị và
-trở nên bất khả thi về mặt tính toán ngay từ $n$ vài chục.
+mô nhỏ, ba bộ dữ liệu chuẩn từ thư viện benchmark TSPLIB95 [7]
+(\url{https://comopt.ifi.uni-heidelberg.de/software/TSPLIB95/tsp/tspindex.html})
+được sử dụng: berlin52 ($n=52$ địa điểm tại Berlin), rd100 ($n=100$
+địa điểm ngẫu nhiên), và ch150 ($n=150$ địa điểm). Mỗi bộ dữ liệu đều
+có kèm theo lộ trình tối ưu đã được công bố
+(\url{https://comopt.ifi.uni-heidelberg.de/software/TSPLIB95/tsp/TSP-BEST.html}),
+dùng làm mốc đối chiếu khách quan thay cho phương pháp vét cạn — vốn
+cần thử $(n-1)!$ hoán vị và trở nên bất khả thi về mặt tính toán ngay
+từ $n$ vài chục.
 
-Thử nghiệm ban đầu với GA hoán vị thuần túy (chỉ dùng lai ghép theo thứ tự và
-đột biến hoán đổi) cho
-kết quả chênh lệch rất lớn so với nghiệm tối ưu đã công bố, từ $20\%$
-đến $84\%$ tùy bộ dữ liệu và tăng dần theo số địa điểm $n$. Nguyên nhân là hai toán tử này không có cơ chế sửa các đoạn đường bị
-cắt chéo nhau trong lộ trình — một lộ trình càng có nhiều địa điểm thì
-càng dễ chứa những đoạn cắt chéo như vậy, và chúng chỉ có thể tạo ra
-một cấu hình mới ngẫu nhiên chứ không chủ động ``gỡ'' đoạn cắt chéo đó.
-Để khắc phục hạn chế này, một chiến lược lai giữa GA và tìm kiếm cục bộ
- được áp dụng: sau mỗi thế hệ, một tỉ lệ cá
-thể tốt nhất trong quần thể được tinh chỉnh thêm bằng phép tìm kiếm cục
-bộ \textbf{2-opt} — xét lần lượt từng cặp cạnh trong lộ trình, hoán đổi
-hai cạnh đó nếu việc hoán đổi làm giảm tổng độ dài — trước khi tiếp tục
-vòng lặp tiến hóa (chọn lọc, lai ghép, đột biến) như bình thường. Với
-tỉ lệ tinh chỉnh bằng khoảng $5\%$ quần thể mỗi thế hệ, cả ba bộ dữ
-liệu đều đạt đúng lộ trình tối ưu đã công bố, như trình bày ở
-Bảng~\ref{tab:kq-tsp}.
+Mục này còn dùng đến hai khái niệm khác: \textbf{2-opt} và
+\textbf{memetic algorithm}. 2-opt là một phép tìm kiếm cục bộ riêng
+cho TSP: xét từng cặp cạnh không kề nhau trong lộ trình, nếu hoán đổi
+hai cạnh đó — tương đương đảo ngược đoạn đường nằm giữa — làm giảm
+tổng độ dài thì phép đổi được chấp nhận, lặp lại đến khi không còn cặp
+cạnh nào cải thiện được nữa; về mặt hình học, mỗi lần đổi tương ứng với
+việc gỡ bỏ một chỗ giao nhau giữa hai đoạn đường trên lộ trình. Khi một
+thuật toán tiến hóa được kết hợp thêm bước tìm kiếm cục bộ như vậy để
+tinh chỉnh từng cá thể, kết quả được gọi là một memetic algorithm: GA
+đảm nhiệm khám phá không gian nghiệm trên diện rộng, còn tìm kiếm cục
+bộ đảm nhiệm hoàn thiện lời giải quanh vùng đã tìm được.
+
+\begin{figure}[H]
+\centering
+\begin{minipage}{0.42\linewidth}
+\centering
+\begin{tikzpicture}[scale=1.3, >=stealth, every node/.style={circle, fill=black, inner sep=1.5pt}]
+    \node[label=above:$A$] (A) at (0,2) {};
+    \node[label=above:$B$] (B) at (2,2) {};
+    \node[label=below:$C$] (C) at (0,0) {};
+    \node[label=below:$D$] (D) at (2,0) {};
+    \draw[->, thick, red!70!black] (A) -- (D);
+    \draw[->, thick, red!70!black] (D) -- (C);
+    \draw[->, thick, red!70!black] (C) -- (B);
+    \draw[->, thick, red!70!black] (B) -- (A);
+\end{tikzpicture}
+\\[0.3em]
+\textit{Trước: cạnh $A\text{-}D$ và $C\text{-}B$ cắt chéo nhau}
+\end{minipage}
+\hfill
+\begin{minipage}{0.42\linewidth}
+\centering
+\begin{tikzpicture}[scale=1.3, >=stealth, every node/.style={circle, fill=black, inner sep=1.5pt}]
+    \node[label=above:$A$] (A) at (0,2) {};
+    \node[label=above:$B$] (B) at (2,2) {};
+    \node[label=below:$C$] (C) at (0,0) {};
+    \node[label=below:$D$] (D) at (2,0) {};
+    \draw[->, thick, teal] (A) -- (C);
+    \draw[->, thick, teal] (C) -- (D);
+    \draw[->, thick, teal] (D) -- (B);
+    \draw[->, thick, teal] (B) -- (A);
+\end{tikzpicture}
+\\[0.3em]
+\textit{Sau 2-opt: loại bỏ cạnh $A\text{-}D$ và $C\text{-}B$, đảo đoạn
+giữa chúng, tạo tour mới $A\text{-}C\text{-}D\text{-}B\text{-}A$}
+\end{minipage}
+\caption{Minh họa một bước 2-opt trên bốn địa điểm: hai cạnh cắt chéo
+nhau (trái) được thay bằng hai cạnh ngắn hơn, không cắt chéo (phải),
+bằng cách loại bỏ cạnh $A\text{-}D$ và $C\text{-}B$ rồi đảo ngược đoạn
+đường nằm giữa chúng để tạo tour mới $A\text{-}C\text{-}D\text{-}B\text{-}A$.}
+\label{fig:2-opt-minh-hoa}
+\end{figure}
+
+GA hoán vị thuần túy không có cơ chế chủ động sửa các đoạn đường cắt
+chéo nhau như vậy trong lộ trình, nên hội tụ rất chậm và cách xa
+nghiệm tối ưu khi số địa điểm tăng lên. Kết hợp thêm 2-opt cho một tỉ
+lệ nhỏ cá thể tốt nhất mỗi thế hệ (khoảng $5\%$ quần thể) khắc phục
+được hạn chế này: cả ba bộ dữ liệu đều đạt đúng lộ trình tối ưu đã
+công bố, như trình bày ở Bảng~\ref{tab:kq-tsp}.
 
 \begin{table}[htbp]
 \centering
 \caption{Kết quả GA kết hợp 2-opt trên ba bộ dữ liệu TSPLIB95}
 \label{tab:kq-tsp}
-\begin{tabular}{lcccc}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lccccc}
 \toprule
-\textbf{Bộ dữ liệu} & \textbf{Số địa điểm ($n$)} & \textbf{Nghiệm tối ưu} & \textbf{GA} & \textbf{Đạt được ở thế hệ} \\
+\textbf{Bộ dữ liệu} & \textbf{Số địa điểm ($n$)} & \textbf{Nghiệm tối ưu} & \textbf{GA} & \textbf{Đạt được ở thế hệ} & \shortstack{\textbf{Thời gian}\\\textbf{hội tụ (s)}} \\
 \midrule
-berlin52 & 52  & 7542 & 7542 & 8/50  \\
-rd100    & 100 & 7910 & 7910 & 48/50 \\
-ch150    & 150 & 6528 & 6528 & 37/50 \\
+berlin52 & 52  & 7542 & 7542 & 8/50  & $1{,}75$  \\
+rd100    & 100 & 7910 & 7910 & 48/50 & $6{,}76$  \\
+ch150    & 150 & 6528 & 6528 & 37/50 & $14{,}51$ \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.58\linewidth]{figures/hoitu_tsp_berlin52.png}
+\includegraphics[width=0.72\linewidth]{figures/hoitu_tsp_berlin52.png}
 \caption{Đường hội tụ của GA trên bộ dữ liệu berlin52}
 \label{fig:hoitu-tsp-berlin52}
 \end{figure}
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.58\linewidth]{figures/hoitu_tsp_rd100.png}
+\includegraphics[width=0.72\linewidth]{figures/hoitu_tsp_rd100.png}
 \caption{Đường hội tụ của GA trên bộ dữ liệu rd100}
 \label{fig:hoitu-tsp-rd100}
 \end{figure}
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.58\linewidth]{figures/hoitu_tsp_ch150.png}
+\includegraphics[width=0.72\linewidth]{figures/hoitu_tsp_ch150.png}
 \caption{Đường hội tụ của GA trên bộ dữ liệu ch150}
 \label{fig:hoitu-tsp-ch150}
 \end{figure}
-
-Trong quá trình hiệu chỉnh tham số, một quan sát quan trọng được ghi
-nhận: tỉ lệ cá thể được tinh chỉnh bằng 2-opt cần được đặt theo
-\textit{phần trăm} của quần thể chứ không phải theo một số lượng cố
-định. Cụ thể, khi giữ nguyên số lượng cá thể được tinh chỉnh ở một
-con số tuyệt đối nhưng tăng kích thước quần thể lên, kết quả trở nên
-tệ hơn so với quần thể nhỏ — nguyên nhân là vì trong một quần thể lớn,
-số cá thể đã qua tinh chỉnh chiếm tỉ lệ quá nhỏ nên khó lan gen tốt ra
-phần còn lại của quần thể thông qua phép chọn lọc. Quan sát này cho
-thấy các tham số của một chiến lược lai giữa GA và tìm kiếm cục bộ
-không thể được chọn độc lập với nhau, mà phải cân chỉnh tương thích
-với quy mô quần thể.
 
 \section{Hồi quy Symbolic bằng Lập trình Di truyền}
 \label{sec:ud-symbolic-regression}
