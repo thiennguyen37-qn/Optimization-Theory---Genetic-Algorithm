@@ -638,8 +638,7 @@ các phương pháp trực tiếp.
 
 \vspace{1em}
 
-\textbf{Bài toán g15} có ba biến cùng hai ràng buộc đẳng thức, một phi
-tuyến và một tuyến tính:
+\textbf{Bài toán g15} được phát biểu như sau:
 \begin{equation}
 \begin{aligned}
 \min_{x \in \mathbb{R}^{3}} \quad
@@ -656,11 +655,10 @@ x^{*} = (3{,}512128;\ 0{,}216988;\ 3{,}552179), \qquad
 f(x^{*}) = 961{,}715022.
 \]
 
-Hai ràng buộc đẳng thức mô tả một mặt cầu và một mặt phẳng, giao của
-chúng là một đường tròn trong không gian ba chiều. Xét về thể tích,
-đây là miền khả thi chật hẹp nhất trong năm bài toán. Bù lại, hàm mục
-tiêu khá thoải: chuẩn gradient tại nghiệm chỉ khoảng $15{,}8$, nên sai
-lệch về vị trí không bị khuếch đại mạnh như ở g06.
+g15 có ba biến và hai ràng buộc đẳng thức, gồm một ràng buộc phi
+tuyến và một ràng buộc tuyến tính. Hai ràng buộc đẳng thức của g15
+tương ứng với một mặt cầu và một mặt phẳng; giao của chúng là một
+đường tròn trong không gian ba chiều.
 
 \begin{table}[htbp]
 \centering
@@ -681,11 +679,11 @@ $961{,}715022$ & $961{,}715374$ & $3{,}52\times10^{-4}$ & $961{,}715308$
 \end{tabular}
 \end{table}
 
-Sai lệch tương đối chỉ $3{,}0\times10^{-7}$, thuộc nhóm kết quả tốt
-nhất trong năm bài toán mặc dù miền khả thi hẹp nhất. Điều đáng chú ý
-là kết quả này đạt được ngay từ giai đoạn GA; cũng như ở g11, bước
-tinh chỉnh cục bộ không phát huy nhiều tác dụng khi miền khả thi là
-một đường cong hẹp.
+Theo Bảng~\ref{tab:kq-g15}, GA đạt $f^{*}=961{,}715374$, với sai lệch
+$3{,}52\times10^{-4}$ so với nghiệm tối ưu công bố $961{,}715022$. Sau
+bước tinh chỉnh cục bộ, sai lệch giảm xuống $2{,}86\times10^{-4}$, cho
+thấy tinh chỉnh có cải thiện nhưng mức độ không lớn. Thuật toán đạt
+tiêu chí thỏa mãn tại thế hệ $249$.
 
 \begin{figure}[H]
 \centering
@@ -694,15 +692,14 @@ một đường cong hẹp.
 \label{fig:hoitu-g15}
 \end{figure}
 
-Hình~\ref{fig:hoitu-g15} cho thấy một bước nhảy đặc trưng ngay tại thời
-điểm đạt tính khả thi tuyệt đối: đến hết thế hệ $126$, giá trị tốt
-nhất được ghi nhận là $962{,}03$, nhưng ngay khi xuất hiện cá thể đầu
-tiên thỏa mãn đồng thời cả hai ràng buộc đẳng thức ở thế hệ $127$, giá
-trị tăng lên $963{,}07$, vì quy tắc Deb luôn ưu tiên tính khả thi hơn
-giá trị mục tiêu. Từ đó, giá trị giảm đơn điệu, đạt gần giá trị cuối
-cùng $961{,}7154$ vào thế hệ $245$ rồi ổn định hoàn toàn ở thế hệ
-$249$, cho thấy phần lớn công việc tinh chỉnh diễn ra rất nhanh ngay
-sau khi tìm được điểm khả thi.
+Hình~\ref{fig:hoitu-g15} cho thấy giá trị tốt nhất biến động rõ rệt
+tại thời điểm quần thể tìm được cá thể thỏa mãn đồng thời hai ràng
+buộc. Trước thế hệ $127$, giá trị tốt nhất đạt khoảng $962{,}03$; khi
+xuất hiện cá thể khả thi, giá trị tăng lên $963{,}07$ do quy tắc Deb
+ưu tiên tính khả thi hơn giá trị hàm mục tiêu. Sau đó, giá trị giảm
+dần và tiến gần $961{,}7154$ từ khoảng thế hệ $245$, rồi ổn định hoàn
+toàn tại thế hệ $249$. Diễn biến này cho thấy phần lớn quá trình cải
+thiện diễn ra sau khi quần thể đã xác định được vùng khả thi.
 
 \vspace{1em}
 
