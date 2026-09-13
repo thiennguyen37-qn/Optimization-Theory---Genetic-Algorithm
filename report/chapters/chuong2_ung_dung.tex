@@ -421,6 +421,20 @@ hạn biểu diễn số thực dấu phẩy động.
 \label{fig:hoitu-g01}
 \end{figure}
 
+Hình~\ref{fig:hoitu-g01} cho thấy quá trình hội tụ trên g01 tách thành
+hai giai đoạn, phân cách bởi thời điểm quần thể xuất hiện cá thể khả
+thi tuyệt đối đầu tiên, ở thế hệ thứ $163$. Trước mốc này, giá trị tốt
+nhất được ghi nhận biến động không đơn điệu, thậm chí có bước nhảy từ
+khoảng $-12{,}90$ lên $-3{,}34$ ở thế hệ thứ $76$: do chưa cá thể nào
+thỏa mãn tuyệt đối các ràng buộc, quy tắc xếp hạng chọn cá thể có mức
+vi phạm nhỏ nhất làm đại diện tốt nhất, nên giá trị hàm mục tiêu tương
+ứng phụ thuộc vào cá thể nào đang giữ mức vi phạm thấp nhất tại từng
+thời điểm chứ chưa phản ánh chất lượng tối ưu hóa thực sự. Từ thế hệ
+$163$ trở đi, giá trị tốt nhất giảm đơn điệu và tiệm cận $f^{*}=-15$,
+song vẫn tiếp tục cải thiện ở mức rất nhỏ cho đến tận thế hệ cuối cùng
+được ghi nhận là $499$, phản ánh chi phí thế hệ cần thiết để thỏa mãn
+đồng thời chín ràng buộc tuyến tính trong không gian mười ba chiều.
+
 \vspace{1em}
 
 \textbf{Bài toán g06} chỉ có hai biến nhưng hàm mục tiêu bậc ba và cả
@@ -487,6 +501,20 @@ kiếm cục bộ phát huy tác dụng rõ rệt nhất.
 \label{fig:hoitu-g06}
 \end{figure}
 
+Hình~\ref{fig:hoitu-g06} cho thấy trong hai thế hệ đầu tiên, khi quần
+thể còn chưa có cá thể khả thi, giá trị tốt nhất dao động rất mạnh, từ
+khoảng $-7507$ đến $-1745$, do cơ chế xếp hạng ưu tiên mức vi phạm nhỏ
+nhất. Ngay từ thế hệ thứ $3$, quần thể đã tìm được cá thể khả thi tuyệt
+đối, nhưng sau đó lại mắc kẹt tại nghiệm cục bộ $-6328{,}01$ trong suốt
+hơn bốn trăm thế hệ liên tiếp, kéo dài đến tận thế hệ $426$. Chỉ trong
+giai đoạn cuối, từ thế hệ $451$ đến $476$, quần thể mới thoát khỏi
+nghiệm này và tiến thêm đến $-6898{,}46$, giá trị được giữ nguyên tới
+hết thế hệ $500$. Sự đình trệ kéo dài này minh họa trực quan cho nhận
+định đã nêu: miền khả thi dạng lưỡi liềm cực hẹp khiến các phép biến
+đổi của GA hiếm khi sinh ra được cá thể vừa khả thi vừa tốt hơn, và
+khoảng cách còn lại đến nghiệm công bố $-6961{,}81$ chỉ được thu hẹp
+đáng kể nhờ bước tìm kiếm cục bộ.
+
 \vspace{1em}
 
 \textbf{Bài toán g08} có hàm mục tiêu chứa hàm lượng giác và phân
@@ -545,6 +573,16 @@ khả thi.
 \caption{Đường hội tụ của GA trên bài toán g08}
 \label{fig:hoitu-g08}
 \end{figure}
+
+Hình~\ref{fig:hoitu-g08} cho thấy một quá trình hội tụ trơn tru, không
+xuất hiện giai đoạn bất ổn định do ràng buộc như ở các bài toán khác:
+quần thể đã khả thi ngay từ thế hệ đầu tiên, nhờ miền khả thi đủ rộng
+để phép khởi tạo ngẫu nhiên dễ dàng rơi trúng. Giá trị tốt nhất giảm
+nhanh trong khoảng hai mươi lăm thế hệ đầu, từ $-0{,}040975$ xuống gần
+$-0{,}095649$, sau đó tiếp tục giảm rất chậm qua nhiều bước nhỏ để đạt
+$-0{,}095825$ khi hội tụ hoàn toàn ở thế hệ $362$. Diễn biến này phù
+hợp với nhận định rằng độ khó của g08 không nằm ở việc tìm miền khả
+thi mà ở việc tinh chỉnh vị trí bên trong một miền đã rộng rãi.
 
 \vspace{1em}
 
@@ -613,6 +651,17 @@ loại.
 \label{fig:hoitu-g11}
 \end{figure}
 
+Hình~\ref{fig:hoitu-g11} thể hiện rõ đặc thù của một ràng buộc đẳng
+thức có miền khả thi diện tích bằng không: quần thể phải mất đến thế
+hệ thứ $100$ mới tìm được cá thể thỏa mãn tuyệt đối ràng buộc
+$x_2-x_1^2=0$ trong giới hạn dung sai. Trước mốc đó, giá trị tốt nhất
+dao động quanh khoảng $0{,}78$ đến $0{,}86$ do cơ chế xếp hạng theo mức
+vi phạm nhỏ nhất còn chi phối, kể cả một bước tăng từ $0{,}785$ lên
+$0{,}863$ ở thế hệ $61$. Sau thế hệ $100$, giá trị giảm dần qua nhiều
+bước nhỏ liên tiếp cho đến khi ổn định ở $0{,}750268$ từ thế hệ $392$,
+cho thấy phần lớn ngân sách thế hệ còn lại được dùng để trượt dọc theo
+đường cong ràng buộc, tiến dần tới điểm gần nghiệm tối ưu nhất trên đó.
+
 \vspace{1em}
 
 \textbf{Bài toán g15} có ba biến cùng hai ràng buộc đẳng thức, một phi
@@ -670,6 +719,16 @@ một đường cong hẹp.
 \caption{Đường hội tụ của GA trên bài toán g15}
 \label{fig:hoitu-g15}
 \end{figure}
+
+Hình~\ref{fig:hoitu-g15} cho thấy một bước nhảy đặc trưng ngay tại thời
+điểm đạt tính khả thi tuyệt đối: đến hết thế hệ $126$, giá trị tốt
+nhất được ghi nhận là $962{,}03$, nhưng ngay khi xuất hiện cá thể đầu
+tiên thỏa mãn đồng thời cả hai ràng buộc đẳng thức ở thế hệ $127$, giá
+trị tăng lên $963{,}07$, vì quy tắc Deb luôn ưu tiên tính khả thi hơn
+giá trị mục tiêu. Từ đó, giá trị giảm đơn điệu, đạt gần giá trị cuối
+cùng $961{,}7154$ vào thế hệ $245$ rồi ổn định hoàn toàn ở thế hệ
+$249$, cho thấy phần lớn công việc tinh chỉnh diễn ra rất nhanh ngay
+sau khi tìm được điểm khả thi.
 
 \vspace{1em}
 
