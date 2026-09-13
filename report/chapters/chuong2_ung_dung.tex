@@ -714,60 +714,46 @@ với mức vi phạm bằng $0$.
 \caption{Tổng hợp kết quả GA trên năm bài toán chuẩn CEC 2006}
 \label{tab:kq-co-rang-buoc}
 \footnotesize
-\setlength{\tabcolsep}{5pt}
-\begin{tabular}{lccccc}
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lcccccc}
 \toprule
 \textbf{Bài toán} & $f^{*}$ \textbf{công bố} & $f^{*}$ \textbf{(GA)}
 & \shortstack{$f^{*}$ \textbf{(GA)}\\\textbf{+ tinh chỉnh}}
-& \shortstack{\textbf{Sai lệch}\\\textbf{tương đối}}
-& \shortstack{\textbf{Thời gian}\\\textbf{(s)}} \\
+& \textbf{Sai lệch}
+& \shortstack{\textbf{Thời gian}\\\textbf{hội tụ (s)}}
+& \shortstack{\textbf{Số thế hệ}\\\textbf{thỏa mãn}} \\
 \midrule
-g01 & $-15{,}000000$   & $-14{,}999204$   & $-15{,}000000$   & $1{,}2\times10^{-13}$ & $18{,}7$ \\
-g06 & $-6961{,}813876$ & $-6898{,}462524$ & $-6961{,}813876$ & $3{,}8\times10^{-12}$ & $14{,}1$ \\
-g08 & $-0{,}095825$    & $-0{,}095825$    & $-0{,}095825$    & $2{,}9\times10^{-16}$ & $13{,}2$ \\
-g11 & $0{,}749900$     & $0{,}750268$     & $0{,}750259$     & $4{,}8\times10^{-4}$  & $13{,}3$ \\
-g15 & $961{,}715022$   & $961{,}715374$   & $961{,}715308$   & $3{,}0\times10^{-7}$  & $13{,}8$ \\
+g01 & $-15{,}000000$   & $-14{,}999204$   & $-15{,}000000$   & $1{,}77\times10^{-12}$ & $18{,}7$ & $499$ \\
+g06 & $-6961{,}813876$ & $-6898{,}462524$ & $-6961{,}813876$ & $2{,}64\times10^{-8}$ & $14{,}1$ & $457$ \\
+g08 & $-0{,}095825$    & $-0{,}095825$    & $-0{,}095825$    & $2{,}78\times10^{-17}$ & $13{,}2$ & $362$ \\
+g11 & $0{,}749900$     & $0{,}750268$     & $0{,}750259$     & $3{,}59\times10^{-4}$  & $13{,}3$ & $392$ \\
+g15 & $961{,}715022$   & $961{,}715374$   & $961{,}715308$   & $2{,}86\times10^{-4}$  & $13{,}8$ & $249$ \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-Kết quả cho thấy độ khó của một bài toán tối ưu có ràng buộc đối với
-GA không được quyết định bởi số biến hay bậc của hàm mục tiêu, mà bởi
-hai yếu tố thuộc về hình học của bài toán tại lân cận nghiệm tối ưu.
+Kết quả cho thấy độ khó của các bài toán ràng buộc đối với GA không
+chỉ phụ thuộc vào số biến hay độ phức tạp của hàm mục tiêu, mà còn
+chịu ảnh hưởng đáng kể bởi hình học của miền khả thi và đặc trưng của
+hàm mục tiêu quanh nghiệm tối ưu. Khi miền khả thi hẹp, như ở g11, g15
+hoặc vùng giao của các ràng buộc cong ở g06, lai ghép và đột biến dễ
+tạo ra các cá thể vi phạm ràng buộc, làm giảm hiệu quả tìm kiếm. Ngược
+lại, các bài toán có miền khả thi rộng hơn như g08 hoặc cấu trúc hình
+học thuận lợi như g01 tạo điều kiện để GA duy trì các cá thể khả thi
+và tiếp cận vùng nghiệm tốt hơn.
 
-Yếu tố thứ nhất là thể tích miền khả thi quanh nghiệm. Khi nghiệm nằm
-sâu bên trong miền khả thi như ở g08, quần thể di chuyển tự do và GA
-đạt độ chính xác giới hạn của số thực ngay từ giai đoạn tiến hóa. Khi
-nghiệm nằm tại một đỉnh của đa diện lồi như ở g01, vùng lân cận vẫn
-còn thể tích đáng kể nên GA tiếp cận tốt. Ngược lại, khi nghiệm nằm
-tại giao điểm của hai mặt cong như ở g06, hoặc trên một đường cong có
-thể tích bằng không như ở g11 và g15, các phép lai ghép và đột biến
-ngẫu nhiên hầu như luôn sinh ra cá thể bất khả thi và bị loại bỏ,
-khiến quá trình cải thiện chững lại.
+g06 thể hiện rõ nhất sự kết hợp của miền khả thi hẹp và hàm mục tiêu
+biến thiên mạnh, khiến sai lệch nhỏ về vị trí có thể dẫn đến sai lệch
+đáng kể về giá trị hàm mục tiêu. Vì vậy, đây cũng là bài toán mà tìm
+kiếm cục bộ mang lại mức cải thiện lớn nhất, giảm sai lệch từ
+$63{,}35$ xuống $2{,}64\times10^{-8}$. Kết quả này cho thấy GA phù hợp
+với vai trò xác định vùng chứa nghiệm, trong khi tìm kiếm cục bộ phát
+huy hiệu quả ở bước tinh chỉnh nghiệm trong vùng lân cận.
 
-Yếu tố thứ hai là độ dốc của hàm mục tiêu tại nghiệm, đại lượng quyết
-định một sai lệch về vị trí được khuếch đại bao nhiêu lần thành sai
-lệch về giá trị hàm. Chuẩn gradient tại nghiệm của g06 lớn gấp khoảng
-bảy mươi lần so với g15 và gấp một trăm lần so với g01, giải thích vì
-sao cùng một mức chính xác về vị trí lại cho ra sai lệch chênh nhau
-nhiều bậc độ lớn giữa các bài toán.
-
-Hai yếu tố này độc lập với nhau, và g06 là bài toán duy nhất mà cả hai
-cùng bất lợi. Đó cũng là bài toán mà giai đoạn tinh chỉnh cục bộ mang
-lại cải thiện lớn nhất, đưa sai lệch từ $63{,}35$ xuống
-$2{,}64\times10^{-8}$. Nhìn rộng hơn, sự phân công giữa hai giai đoạn
-đã được xác nhận qua thực nghiệm: GA giải quyết phần việc định vị vùng
-chứa nghiệm trên một không gian mà phần lớn là bất khả thi, còn tìm
-kiếm cục bộ giải quyết phần việc tiếp cận chính xác nghiệm nằm sát
-biên. Không giai đoạn nào thay thế được giai đoạn kia, và chi phí tính
-toán của giai đoạn tinh chỉnh không đáng kể so với giai đoạn tiến hóa.
-
-Riêng với g11 và g15, phần sai lệch còn lại chủ yếu bắt nguồn từ dung
-sai $\varepsilon = 10^{-4}$ dành cho ràng buộc đẳng thức chứ không
-phải từ năng lực hội tụ của thuật toán. Như đã phân tích ở phần bài
-toán g11 phía trên, giá trị công bố của g11 còn nhỏ hơn cực tiểu chính
-xác của bài toán, nên khoảng cách giữa kết quả thu được và giá trị
-công bố không phản ánh sai số của phương pháp.
+Đối với g11 và g15, sai lệch còn lại có thể chủ yếu liên quan đến
+dung sai $\varepsilon = 10^{-4}$ được sử dụng cho các ràng buộc đẳng
+thức. Do đó, sai lệch quan sát được không nhất thiết phản ánh trực
+tiếp khả năng hội tụ chưa đầy đủ của GA.
 
 \section{Bài toán Người du lịch: GA hoán vị kết hợp Tìm kiếm Cục bộ}
 \label{sec:ud-tsp}
