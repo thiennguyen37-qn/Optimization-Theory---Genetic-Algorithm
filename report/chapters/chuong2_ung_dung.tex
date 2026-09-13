@@ -395,12 +395,13 @@ quần thể di chuyển tương đối dễ dàng ngay cả khi đã tiến sá
 \caption{Kết quả trên bài toán g01}
 \label{tab:kq-g01}
 \small
-\begin{tabular}{ccccc}
+\begin{tabular}{cccccc}
 \toprule
 $f^{*}$ \textbf{công bố} & $f^{*}$ \textbf{(GA)}
-& $f^{*}$ \textbf{(GA + tinh chỉnh)} & \textbf{Sai lệch} & \textbf{Vi phạm} \\
+& $f^{*}$ \textbf{(GA + tinh chỉnh)} & \textbf{Sai lệch} & \textbf{Vi phạm}
+& \shortstack{\textbf{Số thế hệ}\\\textbf{thỏa mãn}} \\
 \midrule
-$-15{,}000000$ & $-14{,}999204$ & $-15{,}000000$ & $1{,}77\times10^{-12}$ & $0$ \\
+$-15{,}000000$ & $-14{,}999204$ & $-15{,}000000$ & $1{,}77\times10^{-12}$ & $0$ & $499$ \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -409,6 +410,13 @@ GA đơn thuần đạt sai lệch tương đối $5{,}3\times10^{-5}$, một k�
 tốt đối với không gian mười ba chiều. Bước tinh chỉnh đưa sai lệch
 xuống $1{,}77\times10^{-12}$, tức trùng với nghiệm công bố trong giới
 hạn biểu diễn số thực dấu phẩy động.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.58\linewidth]{figures/hoitu_g01.png}
+\caption{Đường hội tụ của GA trên bài toán g01}
+\label{fig:hoitu-g01}
+\end{figure}
 
 \vspace{1em}
 
@@ -446,13 +454,14 @@ rất dốc.
 \caption{Kết quả trên bài toán g06}
 \label{tab:kq-g06}
 \small
-\begin{tabular}{ccccc}
+\begin{tabular}{cccccc}
 \toprule
 $f^{*}$ \textbf{công bố} & $f^{*}$ \textbf{(GA)}
-& $f^{*}$ \textbf{(GA + tinh chỉnh)} & \textbf{Sai lệch} & \textbf{Vi phạm} \\
+& $f^{*}$ \textbf{(GA + tinh chỉnh)} & \textbf{Sai lệch} & \textbf{Vi phạm}
+& \shortstack{\textbf{Số thế hệ}\\\textbf{thỏa mãn}} \\
 \midrule
 $-6961{,}813876$ & $-6898{,}462524$ & $-6961{,}813876$
-& $2{,}64\times10^{-8}$ & $0$ \\
+& $2{,}64\times10^{-8}$ & $0$ & $457$ \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -465,6 +474,13 @@ tương ứng với sai số vị trí chỉ khoảng $0{,}06\%$ bề rộng mi�
 kiếm. Bước tinh chỉnh cục bộ đưa kết quả về $2{,}64\times10^{-8}$,
 cải thiện hơn chín bậc độ lớn. Đây là bài toán mà việc kết hợp tìm
 kiếm cục bộ phát huy tác dụng rõ rệt nhất.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.58\linewidth]{figures/hoitu_g06.png}
+\caption{Đường hội tụ của GA trên bài toán g06}
+\label{fig:hoitu-g06}
+\end{figure}
 
 \vspace{1em}
 
@@ -497,13 +513,14 @@ miền tìm kiếm.
 \caption{Kết quả trên bài toán g08}
 \label{tab:kq-g08}
 \small
-\begin{tabular}{ccccc}
+\begin{tabular}{cccccc}
 \toprule
 $f^{*}$ \textbf{công bố} & $f^{*}$ \textbf{(GA)}
-& $f^{*}$ \textbf{(GA + tinh chỉnh)} & \textbf{Sai lệch} & \textbf{Vi phạm} \\
+& $f^{*}$ \textbf{(GA + tinh chỉnh)} & \textbf{Sai lệch} & \textbf{Vi phạm}
+& \shortstack{\textbf{Số thế hệ}\\\textbf{thỏa mãn}} \\
 \midrule
 $-0{,}095825$ & $-0{,}095825$ & $-0{,}095825$
-& $2{,}78\times10^{-17}$ & $0$ \\
+& $2{,}78\times10^{-17}$ & $0$ & $362$ \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -514,6 +531,13 @@ phẩy động, và bước tinh chỉnh không còn gì để cải thiện. K�
 minh họa rằng độ khó của một bài toán có ràng buộc không nằm ở tính
 phi tuyến của hàm mục tiêu mà nằm ở vị trí của nghiệm so với biên miền
 khả thi.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.58\linewidth]{figures/hoitu_g08.png}
+\caption{Đường hội tụ của GA trên bài toán g08}
+\label{fig:hoitu-g08}
+\end{figure}
 
 \vspace{1em}
 
@@ -552,12 +576,13 @@ dụng theo hướng làm giảm hàm mục tiêu.
 \caption{Kết quả trên bài toán g11}
 \label{tab:kq-g11}
 \small
-\begin{tabular}{ccccc}
+\begin{tabular}{cccccc}
 \toprule
 $f^{*}$ \textbf{công bố} & $f^{*}$ \textbf{(GA)}
-& $f^{*}$ \textbf{(GA + tinh chỉnh)} & \textbf{Sai lệch} & \textbf{Vi phạm} \\
+& $f^{*}$ \textbf{(GA + tinh chỉnh)} & \textbf{Sai lệch} & \textbf{Vi phạm}
+& \shortstack{\textbf{Số thế hệ}\\\textbf{thỏa mãn}} \\
 \midrule
-$0{,}749900$ & $0{,}750268$ & $0{,}750259$ & $3{,}59\times10^{-4}$ & $0$ \\
+$0{,}749900$ & $0{,}750268$ & $0{,}750259$ & $3{,}59\times10^{-4}$ & $0$ & $392$ \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -571,6 +596,13 @@ nghiệm khả thi không hướng tới. Bước tinh chỉnh cải thiện kh�
 kể vì miền khả thi là một dải cong rất hẹp, trong đó các bước dịch
 chuyển song song với trục tọa độ nhanh chóng đi ra ngoài miền và bị
 loại.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.58\linewidth]{figures/hoitu_g11.png}
+\caption{Đường hội tụ của GA trên bài toán g11}
+\label{fig:hoitu-g11}
+\end{figure}
 
 \vspace{1em}
 
@@ -603,13 +635,14 @@ lệch về vị trí không bị khuếch đại mạnh như ở g06.
 \caption{Kết quả trên bài toán g15}
 \label{tab:kq-g15}
 \small
-\begin{tabular}{ccccc}
+\begin{tabular}{cccccc}
 \toprule
 $f^{*}$ \textbf{công bố} & $f^{*}$ \textbf{(GA)}
-& $f^{*}$ \textbf{(GA + tinh chỉnh)} & \textbf{Sai lệch} & \textbf{Vi phạm} \\
+& $f^{*}$ \textbf{(GA + tinh chỉnh)} & \textbf{Sai lệch} & \textbf{Vi phạm}
+& \shortstack{\textbf{Số thế hệ}\\\textbf{thỏa mãn}} \\
 \midrule
 $961{,}715022$ & $961{,}715374$ & $961{,}715308$
-& $2{,}86\times10^{-4}$ & $0$ \\
+& $2{,}86\times10^{-4}$ & $0$ & $249$ \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -619,6 +652,13 @@ nhất trong năm bài toán mặc dù miền khả thi hẹp nhất. Điều đ
 là kết quả này đạt được ngay từ giai đoạn GA; cũng như ở g11, bước
 tinh chỉnh cục bộ không phát huy nhiều tác dụng khi miền khả thi là
 một đường cong hẹp.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.58\linewidth]{figures/hoitu_g15.png}
+\caption{Đường hội tụ của GA trên bài toán g15}
+\label{fig:hoitu-g15}
+\end{figure}
 
 \vspace{1em}
 
