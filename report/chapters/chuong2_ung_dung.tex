@@ -358,8 +358,7 @@ toán được trình bày lần lượt dưới đây.
 
 \vspace{1em}
 
-\textbf{Bài toán g01} có hàm mục tiêu bậc hai trên mười ba biến, chịu
-chín ràng buộc bất đẳng thức đều tuyến tính:
+\textbf{Bài toán g01} được phát biểu như sau:
 \begin{equation}
 \begin{aligned}
 \min_{x \in \mathbb{R}^{13}} \quad
@@ -432,8 +431,7 @@ chính xác cao trong không gian mười ba chiều.
 
 \vspace{1em}
 
-\textbf{Bài toán g06} chỉ có hai biến nhưng hàm mục tiêu bậc ba và cả
-hai ràng buộc đều phi tuyến:
+\textbf{Bài toán g06} được phát biểu như sau:
 \begin{equation}
 \begin{aligned}
 \min_{x \in \mathbb{R}^{2}} \quad
@@ -500,8 +498,7 @@ $-6961{,}81$ được thu hẹp đáng kể sau bước tinh chỉnh cục bộ.
 
 \vspace{1em}
 
-\textbf{Bài toán g08} có hàm mục tiêu chứa hàm lượng giác và phân
-thức:
+\textbf{Bài toán g08} được phát biểu như sau:
 \begin{equation}
 \begin{aligned}
 \min_{x \in \mathbb{R}^{2}} \quad
@@ -517,12 +514,8 @@ với $0 \le x_1 \le 10$ và $0 \le x_2 \le 10$. Nghiệm tối ưu công bố l
 x^{*} = (1{,}227971;\ 4{,}245373), \qquad f(x^{*}) = -0{,}095825.
 \]
 
-Điểm khác biệt căn bản của bài toán này là nghiệm tối ưu nằm hẳn bên
-trong miền khả thi, không ràng buộc nào đạt đẳng thức. Do đó nghiệm là
-một điểm dừng của hàm mục tiêu và gradient tại đó bằng không, khiến
-sai lệch về vị trí hầu như không chuyển thành sai lệch về giá trị hàm.
-Miền khả thi cũng rộng rãi hơn hẳn bốn bài còn lại, chiếm $0{,}8560\%$
-miền tìm kiếm.
+g08 là bài toán hai biến với hàm mục tiêu phi tuyến, chứa cả hàm
+lượng giác và phân thức, cùng hai ràng buộc bất đẳng thức phi tuyến.
 
 \begin{table}[htbp]
 \centering
@@ -543,12 +536,11 @@ $-0{,}095825$ & $-0{,}095825$ & $2{,}78\times10^{-17}$ & $-0{,}095825$
 \end{tabular}
 \end{table}
 
-GA đạt nghiệm công bố ngay ở giai đoạn đầu với sai lệch
-$2{,}78\times10^{-17}$, tức đã chạm ngưỡng chính xác của số thực dấu
-phẩy động, và bước tinh chỉnh không còn gì để cải thiện. Kết quả này
-minh họa rằng độ khó của một bài toán có ràng buộc không nằm ở tính
-phi tuyến của hàm mục tiêu mà nằm ở vị trí của nghiệm so với biên miền
-khả thi.
+Theo Bảng~\ref{tab:kq-g08}, GA đơn thuần đã đạt đúng giá trị tối ưu
+công bố $f^{*}=-0{,}095825$, với sai lệch chỉ $2{,}78\times10^{-17}$.
+Bước tinh chỉnh cục bộ không làm thay đổi kết quả, cho thấy GA đã xác
+định được nghiệm với độ chính xác rất cao. Thuật toán đạt giá trị tối
+ưu tại thế hệ $362$.
 
 \begin{figure}[H]
 \centering
@@ -557,20 +549,18 @@ khả thi.
 \label{fig:hoitu-g08}
 \end{figure}
 
-Hình~\ref{fig:hoitu-g08} cho thấy một quá trình hội tụ trơn tru, không
-xuất hiện giai đoạn bất ổn định do ràng buộc như ở các bài toán khác:
-quần thể đã khả thi ngay từ thế hệ đầu tiên, nhờ miền khả thi đủ rộng
-để phép khởi tạo ngẫu nhiên dễ dàng rơi trúng. Giá trị tốt nhất giảm
-nhanh trong khoảng hai mươi lăm thế hệ đầu, từ $-0{,}040975$ xuống gần
-$-0{,}095649$, sau đó tiếp tục giảm rất chậm qua nhiều bước nhỏ để đạt
-$-0{,}095825$ khi hội tụ hoàn toàn ở thế hệ $362$. Diễn biến này phù
-hợp với nhận định rằng độ khó của g08 không nằm ở việc tìm miền khả
-thi mà ở việc tinh chỉnh vị trí bên trong một miền đã rộng rãi.
+Hình~\ref{fig:hoitu-g08} cho thấy quá trình hội tụ diễn ra tương đối
+ổn định. Giá trị tốt nhất giảm nhanh trong khoảng hai mươi lăm thế hệ
+đầu, từ khoảng $-0{,}041$ xuống gần $-0{,}09565$. Sau đó, giá trị chỉ
+tiếp tục cải thiện qua các bước rất nhỏ và gần như giữ nguyên quanh
+mức này trong phần lớn số thế hệ, trước khi đạt $-0{,}095825$ tại thế
+hệ $362$. Sự ổn định ở giai đoạn cuối cho thấy quần thể đã tập trung
+quanh vùng nghiệm tốt và không còn tạo ra các cá thể có giá trị cải
+thiện đáng kể.
 
 \vspace{1em}
 
-\textbf{Bài toán g11} có dạng đơn giản nhất về hình thức nhưng chứa
-một ràng buộc đẳng thức phi tuyến:
+\textbf{Bài toán g11} được phát biểu như sau:
 \begin{equation}
 \begin{aligned}
 \min_{x \in \mathbb{R}^{2}} \quad
@@ -585,19 +575,17 @@ với $-1 \le x_1 \le 1$ và $-1 \le x_2 \le 1$. Nghiệm tối ưu công bố l
 x^{*} = (-0{,}707036;\ 0{,}500000), \qquad f(x^{*}) = 0{,}7499.
 \]
 
-Miền khả thi ở đây là một đường cong parabol trong mặt phẳng, tức một
-tập có diện tích bằng không. Không một điểm sinh ngẫu nhiên nào rơi
-trúng miền này, nên toàn bộ việc tiếp cận miền khả thi phụ thuộc vào
-cơ chế nới lỏng ngưỡng $\varepsilon$ của thuật toán.
-
-Bài toán này cho phép kiểm chứng nghiệm bằng giải tích. Thế
-$x_2 = x_1^2$ vào hàm mục tiêu và đặt $u = x_1^2 \ge 0$, ta được
-$u + (u-1)^2 = u^2 - u + 1$, đạt cực tiểu tại $u = 1/2$ với giá trị
-đúng bằng $0{,}75$. Như vậy cực tiểu chính xác của bài toán là
-$0{,}75$, trong khi giá trị công bố $0{,}7499$ lại nhỏ hơn con số đó.
-Nguyên nhân là nghiệm công bố không nằm trên đường cong mà lệch khỏi
-nó đúng bằng dung sai $\varepsilon = 10^{-4}$, và độ lệch ấy được tận
-dụng theo hướng làm giảm hàm mục tiêu.
+Miền khả thi chính xác của g11 là đường parabol $x_2=x_1^2$; các điểm
+sinh ra ngẫu nhiên khi khởi tạo quần thể, hay qua lai ghép và đột
+biến, hầu như không bao giờ rơi đúng lên đường này. Khi áp dụng dung
+sai $\varepsilon=10^{-4}$, các điểm lệch khỏi đường này một khoảng nhỏ
+vẫn được xem là khả thi. Nếu yêu cầu ràng buộc thỏa mãn
+tuyệt đối, giá trị nhỏ nhất của hàm mục tiêu là $0{,}75$. Giá trị công
+bố $0{,}7499$ thấp hơn vì nghiệm của CEC 2006 được phép lệch khỏi
+đường parabol trong phạm vi dung sai. GA đạt $0{,}750268$, rất gần mức
+$0{,}75$, nhưng chưa tìm được điểm tận dụng dung sai để giảm giá trị
+hàm mục tiêu xuống mức $0{,}7499$. Bước tinh chỉnh cũng chỉ cải thiện
+rất nhỏ do miền chấp nhận quanh đường parabol rất hẹp.
 
 \begin{table}[htbp]
 \centering
@@ -617,15 +605,11 @@ $0{,}749900$ & $0{,}750268$ & $3{,}68\times10^{-4}$ & $0{,}750259$ & $3{,}59\tim
 \end{tabular}
 \end{table}
 
-GA hội tụ về $0{,}750259$, tức cách cực tiểu giải tích $0{,}75$ một
-khoảng $2{,}6\times10^{-4}$ và cách giá trị công bố $3{,}59\times
-10^{-4}$. Phần chênh lệch còn lại mang tính cấu trúc chứ không phải do
-thuật toán hội tụ kém: muốn đạt được đúng con số $0{,}7499$ thì nghiệm
-phải nằm ở rìa ngoài của dải dung sai, điều mà một thuật toán tìm
-nghiệm khả thi không hướng tới. Bước tinh chỉnh cải thiện không đáng
-kể vì miền khả thi là một dải cong rất hẹp, trong đó các bước dịch
-chuyển song song với trục tọa độ nhanh chóng đi ra ngoài miền và bị
-loại.
+Theo Bảng~\ref{tab:kq-g11}, GA đạt $f^{*}=0{,}750268$, với sai lệch
+$3{,}68\times10^{-4}$ so với nghiệm tối ưu công bố $0{,}749900$. Sau
+tinh chỉnh cục bộ, sai lệch chỉ giảm nhẹ xuống $3{,}59\times10^{-4}$,
+cho thấy bước tinh chỉnh có tác động hạn chế đối với bài toán này.
+Nghiệm đạt tiêu chí thỏa mãn tại thế hệ $392$.
 
 \begin{figure}[H]
 \centering
@@ -634,16 +618,23 @@ loại.
 \label{fig:hoitu-g11}
 \end{figure}
 
-Hình~\ref{fig:hoitu-g11} thể hiện rõ đặc thù của một ràng buộc đẳng
-thức có miền khả thi diện tích bằng không: quần thể phải mất đến thế
-hệ thứ $100$ mới tìm được cá thể thỏa mãn tuyệt đối ràng buộc
-$x_2-x_1^2=0$ trong giới hạn dung sai. Trước mốc đó, giá trị tốt nhất
-dao động quanh khoảng $0{,}78$ đến $0{,}86$ do cơ chế xếp hạng theo mức
-vi phạm nhỏ nhất còn chi phối, kể cả một bước tăng từ $0{,}785$ lên
-$0{,}863$ ở thế hệ $61$. Sau thế hệ $100$, giá trị giảm dần qua nhiều
-bước nhỏ liên tiếp cho đến khi ổn định ở $0{,}750268$ từ thế hệ $392$,
-cho thấy phần lớn ngân sách thế hệ còn lại được dùng để trượt dọc theo
-đường cong ràng buộc, tiến dần tới điểm gần nghiệm tối ưu nhất trên đó.
+Hình~\ref{fig:hoitu-g11} cho thấy giá trị tốt nhất dao động trong giai
+đoạn đầu do quần thể chưa tìm được cá thể thỏa mãn ràng buộc
+$x_2-x_1^2=0$ trong giới hạn dung sai, nên việc lựa chọn vẫn chịu chi
+phối bởi mức độ vi phạm. Điều này dẫn đến các biến động, như mức tăng
+từ $0{,}785$ lên $0{,}863$ tại thế hệ $61$. Từ khoảng thế hệ $100$,
+giá trị tốt nhất giảm dần qua nhiều bước nhỏ và ổn định tại
+$0{,}750268$ ở thế hệ $392$. Ở giai đoạn cuối, các cá thể tốt nhất đã
+tập trung quanh vùng nghiệm có chất lượng cao nên các phép biến đổi
+tiếp theo khó tạo ra giá trị mục tiêu nhỏ hơn đáng kể, khiến đường hội
+tụ gần như giữ nguyên.
+
+Với bài toán đơn giản như g11, chỉ có hai biến và một ràng buộc
+$x_2=x_1^2$, có thể biến đổi trực tiếp ràng buộc để đưa bài toán về
+tối ưu một biến. Vì vậy, GA chưa chắc mang lại lợi thế so với cách
+giải trực tiếp dựa trên cấu trúc của bài toán. Điều này cho thấy GA
+phù hợp hơn với các bài toán có cấu trúc phức tạp hoặc khó giải bằng
+các phương pháp trực tiếp.
 
 \vspace{1em}
 
