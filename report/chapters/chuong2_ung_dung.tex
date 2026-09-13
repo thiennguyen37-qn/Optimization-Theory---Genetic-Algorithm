@@ -385,10 +385,10 @@ x^{*} = (1,1,1,1,1,1,1,1,1,3,3,3,1), \qquad f(x^{*}) = -15,
 \]
 tại đó sáu trong chín ràng buộc đạt đẳng thức.
 
-Đây là bài toán có số biến lớn nhất trong năm bài. Điểm thuận lợi nằm
-ở chỗ mọi ràng buộc đều tuyến tính, nên miền khả thi là một đa diện
-lồi và vùng lân cận nghiệm tối ưu vẫn còn thể tích đáng kể. Nhờ vậy
-quần thể di chuyển tương đối dễ dàng ngay cả khi đã tiến sát nghiệm.
+g01 là bài toán có số biến lớn nhất trong năm bài được xét, với mười
+ba biến và chín ràng buộc bất đẳng thức tuyến tính. Do đó, miền khả
+thi có cấu trúc đa diện, không xuất hiện các ràng buộc phi tuyến gây
+biến dạng miền nghiệm.
 
 \begin{table}[htbp]
 \centering
@@ -409,10 +409,10 @@ $-15{,}000000$ & $-14{,}999204$ & $7{,}96\times10^{-4}$ & $-15{,}000000$
 \end{tabular}
 \end{table}
 
-GA đơn thuần đạt sai lệch tương đối $5{,}3\times10^{-5}$, một kết quả
-tốt đối với không gian mười ba chiều. Bước tinh chỉnh đưa sai lệch
-xuống $1{,}77\times10^{-12}$, tức trùng với nghiệm công bố trong giới
-hạn biểu diễn số thực dấu phẩy động.
+GA đơn thuần đạt sai lệch tương đối $5{,}3\times10^{-5}$ so với nghiệm
+tối ưu công bố. Sau bước tinh chỉnh cục bộ, sai lệch giảm xuống
+$1{,}77\times10^{-12}$, cho thấy bước tinh chỉnh cải thiện đáng kể độ
+chính xác của nghiệm.
 
 \begin{figure}[H]
 \centering
@@ -421,19 +421,14 @@ hạn biểu diễn số thực dấu phẩy động.
 \label{fig:hoitu-g01}
 \end{figure}
 
-Hình~\ref{fig:hoitu-g01} cho thấy quá trình hội tụ trên g01 tách thành
-hai giai đoạn, phân cách bởi thời điểm quần thể xuất hiện cá thể khả
-thi tuyệt đối đầu tiên, ở thế hệ thứ $163$. Trước mốc này, giá trị tốt
-nhất được ghi nhận biến động không đơn điệu, thậm chí có bước nhảy từ
-khoảng $-12{,}90$ lên $-3{,}34$ ở thế hệ thứ $76$: do chưa cá thể nào
-thỏa mãn tuyệt đối các ràng buộc, quy tắc xếp hạng chọn cá thể có mức
-vi phạm nhỏ nhất làm đại diện tốt nhất, nên giá trị hàm mục tiêu tương
-ứng phụ thuộc vào cá thể nào đang giữ mức vi phạm thấp nhất tại từng
-thời điểm chứ chưa phản ánh chất lượng tối ưu hóa thực sự. Từ thế hệ
-$163$ trở đi, giá trị tốt nhất giảm đơn điệu và tiệm cận $f^{*}=-15$,
-song vẫn tiếp tục cải thiện ở mức rất nhỏ cho đến tận thế hệ cuối cùng
-được ghi nhận là $499$, phản ánh chi phí thế hệ cần thiết để thỏa mãn
-đồng thời chín ràng buộc tuyến tính trong không gian mười ba chiều.
+Hình~\ref{fig:hoitu-g01} cho thấy quá trình hội tụ trên g01 có thể
+chia thành hai giai đoạn. Trước thế hệ $163$, giá trị tốt nhất biến
+động do chưa xuất hiện cá thể thỏa mãn hoàn toàn các ràng buộc, nên
+giá trị hàm mục tiêu chưa phản ánh trực tiếp chất lượng tối ưu. Từ thế
+hệ $163$, giá trị tốt nhất giảm dần và tiệm cận $f^{*}=-15$, sau đó chỉ
+cải thiện rất nhỏ cho đến thế hệ $499$. Điều này cho thấy GA cần số
+thế hệ tương đối lớn để đồng thời thỏa mãn chín ràng buộc và đạt độ
+chính xác cao trong không gian mười ba chiều.
 
 \vspace{1em}
 
@@ -455,16 +450,10 @@ x^{*} = (14{,}095000;\ 0{,}842961), \qquad f(x^{*}) = -6961{,}813876,
 \]
 tại đó cả hai ràng buộc đều đạt đẳng thức.
 
-Hai ràng buộc mô tả phần bên ngoài một đường tròn và phần bên trong
-một đường tròn khác, nên miền khả thi là một dải hình lưỡi liềm rất
-hẹp, chỉ chiếm $0{,}0066\%$ thể tích miền tìm kiếm. Nghiệm tối ưu nằm
-đúng tại giao điểm của hai đường tròn, tức một điểm không chiều. Bên
-cạnh đó, chuẩn của gradient hàm mục tiêu tại nghiệm xấp xỉ $1102$,
-lớn hơn hai bậc độ lớn so với các bài toán còn lại. Hệ quả là một sai
-lệch nhỏ về vị trí bị khuếch đại thành sai lệch lớn về giá trị hàm
-mục tiêu. Đây là bài toán duy nhất trong năm bài hội tụ đồng thời cả
-hai yếu tố bất lợi: miền khả thi cực hẹp quanh nghiệm và hàm mục tiêu
-rất dốc.
+g06 là bài toán chỉ có hai biến nhưng hàm mục tiêu bậc ba và cả hai
+ràng buộc đều phi tuyến. Đặc biệt, nghiệm tối ưu nằm tại điểm mà cả
+hai ràng buộc đều đạt đẳng thức, do đó việc vừa duy trì tính khả thi
+vừa tìm kiếm nghiệm tối ưu là tương đối khó.
 
 \begin{table}[htbp]
 \centering
@@ -485,14 +474,11 @@ $-6961{,}813876$ & $-6898{,}462524$ & $63{,}35$ & $-6961{,}813876$
 \end{tabular}
 \end{table}
 
-GA đơn thuần dừng lại ở $-6898{,}462524$, cách nghiệm công bố
-$63{,}35$ đơn vị, tương ứng sai lệch tương đối $9{,}1\times10^{-3}$.
-Cần lưu ý rằng con số này phản ánh độ dốc của hàm mục tiêu nhiều hơn
-là chất lượng định vị của GA: quy đổi qua chuẩn gradient, sai lệch đó
-tương ứng với sai số vị trí chỉ khoảng $0{,}06\%$ bề rộng miền tìm
-kiếm. Bước tinh chỉnh cục bộ đưa kết quả về $2{,}64\times10^{-8}$,
-cải thiện hơn chín bậc độ lớn. Đây là bài toán mà việc kết hợp tìm
-kiếm cục bộ phát huy tác dụng rõ rệt nhất.
+Theo Bảng~\ref{tab:kq-g06}, GA đơn thuần đạt $f^{*}=-6898{,}462524$,
+sai lệch $63{,}35$ so với nghiệm tối ưu công bố $-6961{,}813876$. Sau
+bước tinh chỉnh cục bộ, giá trị đạt $f^{*}=-6961{,}813876$, với sai
+lệch chỉ $2{,}64\times10^{-8}$. Kết quả cho thấy bước tinh chỉnh cải
+thiện đáng kể độ chính xác của nghiệm.
 
 \begin{figure}[H]
 \centering
@@ -501,19 +487,16 @@ kiếm cục bộ phát huy tác dụng rõ rệt nhất.
 \label{fig:hoitu-g06}
 \end{figure}
 
-Hình~\ref{fig:hoitu-g06} cho thấy trong hai thế hệ đầu tiên, khi quần
-thể còn chưa có cá thể khả thi, giá trị tốt nhất dao động rất mạnh, từ
-khoảng $-7507$ đến $-1745$, do cơ chế xếp hạng ưu tiên mức vi phạm nhỏ
-nhất. Ngay từ thế hệ thứ $3$, quần thể đã tìm được cá thể khả thi tuyệt
-đối, nhưng sau đó lại mắc kẹt tại nghiệm cục bộ $-6328{,}01$ trong suốt
-hơn bốn trăm thế hệ liên tiếp, kéo dài đến tận thế hệ $426$. Chỉ trong
-giai đoạn cuối, từ thế hệ $451$ đến $476$, quần thể mới thoát khỏi
-nghiệm này và tiến thêm đến $-6898{,}46$, giá trị được giữ nguyên tới
-hết thế hệ $500$. Sự đình trệ kéo dài này minh họa trực quan cho nhận
-định đã nêu: miền khả thi dạng lưỡi liềm cực hẹp khiến các phép biến
-đổi của GA hiếm khi sinh ra được cá thể vừa khả thi vừa tốt hơn, và
-khoảng cách còn lại đến nghiệm công bố $-6961{,}81$ chỉ được thu hẹp
-đáng kể nhờ bước tìm kiếm cục bộ.
+Hình~\ref{fig:hoitu-g06} cho thấy giá trị tốt nhất dao động mạnh trong
+hai thế hệ đầu. Nguyên nhân là khi chưa có cá thể khả thi, quy tắc lựa
+chọn ưu tiên \textbf{cá thể có tổng mức vi phạm ràng buộc nhỏ hơn}; vì
+vậy, cá thể tốt nhất có thể thay đổi giữa các thế hệ và kéo theo giá
+trị hàm mục tiêu dao động từ khoảng $-7507$ đến $-1745$. Từ thế hệ
+$3$, thuật toán tìm được cá thể khả thi và gần như hội tụ tại mức
+$-6328{,}01$ trong hơn bốn trăm thế hệ. Chỉ từ khoảng thế hệ $451$,
+giá trị tốt nhất mới tiếp tục được cải thiện lên $-6898{,}46$ và duy
+trì đến cuối quá trình. Khoảng cách còn lại đến nghiệm tối ưu công bố
+$-6961{,}81$ được thu hẹp đáng kể sau bước tinh chỉnh cục bộ.
 
 \vspace{1em}
 
