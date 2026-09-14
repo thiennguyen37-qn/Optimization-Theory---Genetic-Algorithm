@@ -16,7 +16,7 @@ Dự án học phần **Lý thuyết Tối ưu**: cài đặt Thuật toán Di t
 │   └── data_TSPLIB/                 # 3 bộ chuẩn TSPLIB95 (berlin52, rd100, ch150): .tsp + .opt.tour
 ├── requirements.txt                 # Thư viện Python cần cài
 ├── CEC2006_TechnicalReport.pdf       # Định nghĩa bộ chuẩn CEC 2006 + nghiệm công bố (dùng cho notebook 02)
-├── TieuLuan.pdf
+├── TieuLuan.pdf                      # Đề bài/hướng dẫn nộp tiểu luận của học phần
 ├── report/                          # Mã nguồn LaTeX của báo cáo
 │   ├── REPORT.tex
 │   ├── REPORT.pdf
@@ -40,18 +40,19 @@ pip install -r requirements.txt
 
 ## Cơ sở lý thuyết
 
-GA được cài đặt dựa trên khung lý thuyết gồm 4 phần chính:
+GA và GP được trình bày dựa trên khung lý thuyết gồm 5 phần chính:
 
 1. Tổng quan bài toán tối ưu và họ thuật toán tiến hóa (Evolutionary Computation)
 2. Cơ sở khoa học & nguyên lý hoạt động của GA (mã hóa nhị phân, số thực, hoán vị...)
 3. Các thành phần cốt lõi: hàm thích nghi, chọn lọc, lai ghép, đột biến, elitism
 4. Quy trình thuật toán và điều kiện dừng
+5. Lập trình Di truyền (Genetic Programming — GP): mã hóa dạng cây biểu thức
 
 Nội dung đầy đủ (định nghĩa toán học, giả mã, bảng đối chiếu thuật ngữ sinh học — tin học...) xem tại [`report/REPORT.pdf`](report/REPORT.pdf).
 
 ## Ứng dụng
 
-GA được áp dụng trên 4 nhóm bài toán:
+GA và GP được thực nghiệm trên 4 nhóm bài toán:
 
 - **Tối ưu không ràng buộc** (Easom, Rastrigin, Rosenbrock, Ackley, Schwefel)
 - **Tối ưu có ràng buộc** (ràng buộc tuyến tính và phi tuyến; Entropy tối đa, LP, QP, tối ưu lồi...)

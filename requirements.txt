@@ -4,7 +4,7 @@
 
 numpy==2.5.2
 sympy==1.14.0
-matplotlib==3.11.1      # notebook 01: đồ thị hội tụ
+matplotlib==3.11.1      # đồ thị hội tụ và biểu đồ kết quả (cả 4 notebook)
 scipy==1.18.1           # phụ thuộc của scikit-learn (notebook 04)
 pandas==2.2.3           # notebook 04: đọc/xử lý dữ liệu
 scikit-learn==1.6.1     # notebook 04: train_test_split + các metric đánh giá
