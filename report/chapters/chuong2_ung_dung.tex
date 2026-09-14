@@ -891,72 +891,83 @@ ch150    & 150 & 6528 & 6528 & 37/50 & $14{,}77$ \\
 \label{sec:ud-symbolic-regression}
 
 Ứng dụng cuối cùng minh họa Lập trình Di truyền (Mục~\ref{sec:gp}) cho
-bài toán hồi quy symbolic trên dữ liệu vật lý thực: các phép đo mật độ
-hạt, vận tốc, và từ trường của gió mặt trời do vệ tinh WIND của NASA
-ghi nhận. Ba thành phần từ trường đo được là $B_X, B_Y, B_Z$, và mật độ
-hạt đo được là $n$. Từ bốn đại lượng này, hai đại lượng vật lý phái
-sinh được chọn làm mục tiêu dự đoán cho GP:
+bài toán hồi quy symbolic trên dữ liệu quan trắc thời tiết thực tế
+(bộ dữ liệu thời tiết công khai trên Kaggle). Mục tiêu dự đoán là
+nhiệt độ điểm sương $T_{dew}$ (dew point), tính từ hai đặc trưng đo
+được là nhiệt độ không khí $T$ và độ ẩm tương đối $rh$. Quan hệ vật lý
+đúng giữa ba đại lượng này được mô tả bởi công thức Magnus:
 \begin{equation}
-|B|^2 = B_X^2+B_Y^2+B_Z^2
-\qquad \text{(bình phương độ lớn từ trường)},
-\label{eq:b-squared}
+\gamma(T, rh) = \ln\!\left(\frac{rh}{100}\right) + \frac{aT}{b+T},
+\label{eq:magnus-gamma}
 \end{equation}
 \begin{equation}
-V_A^2 \propto \frac{|B|^2}{n}
-\qquad \text{(vận tốc Alfvén bình phương)}.
-\label{eq:alfven-squared}
+T_{dew} = \frac{b\,\gamma}{a-\gamma},
+\label{eq:magnus}
 \end{equation}
-Đại lượng thứ nhất là một quan hệ tổng bình phương (dạng Pythagore)
-giữa ba biến đo được; đại lượng thứ hai kết hợp thêm một phép chia cho
-biến mật độ hạt.
+với $a=17.27$ và $b=237.7$. Đây là một quan hệ phi tuyến có cấu trúc
+phức tạp, kết hợp logarit và phép chia lồng nhau, hoàn toàn không thể
+biểu diễn dưới dạng tổ hợp tuyến tính đơn giản của $T$ và $rh$ — điều
+này khiến bài toán trở thành một phép thử thực tế cho khả năng GP tự
+khám phá cấu trúc hàm phi tuyến từ dữ liệu mà không cần biết trước
+dạng công thức~\eqref{eq:magnus}.
 
-Điểm mấu chốt khiến hai đại lượng này trở thành phép thử công bằng cho
-GP là: quan hệ tổng bình phương ở Phương trình~\eqref{eq:b-squared}
-\textit{không thể} tuyến tính hóa bằng phép biến đổi logarit như các
-quan hệ dạng lũy thừa thông thường, vì $B_X, B_Y, B_Z$ có thể mang giá
-trị âm nên không lấy logarit được. Do đó, Hồi quy Tuyến tính áp dụng
-trực tiếp trên ba đặc trưng thô $B_X, B_Y, B_Z$ gần như chắc chắn
-không thể biểu diễn được cấu trúc bậc hai này, vì mô hình tuyến tính
-chỉ có thể biểu diễn một tổ hợp tuyến tính của chính các đặc trưng đó,
-không tự sinh ra được số hạng bậc hai. Ngược lại, GP có thể tự xây
-dựng số hạng bậc hai bằng cách nhân một biến với chính nó ngay trong
-cây biểu thức, mà không cần được cung cấp trước các đặc trưng
-$B_X^2, B_Y^2, B_Z^2$ như một phép biến đổi thủ công. Kết quả đối
-chiếu hai phương pháp trên tập kiểm tra được trình bày ở
-Bảng~\ref{tab:kq-symbolic-regression}.
+Tập toán tử được sử dụng gồm $\{+, \times, \div, \log\}$ (phép chia
+được bảo vệ như đã trình bày ở Mục~\ref{sec:gp}). Phép trừ bị loại
+khỏi tập toán tử vì có thể biểu diễn tương đương thông qua phép nhân
+với hằng số âm; các hàm lượng giác $\sin, \cos$ cũng bị loại vì bài
+toán không mang tính tuần hoàn — thực nghiệm sơ bộ cho thấy giữ lại
+hai hàm này chỉ khiến GP lợi dụng chúng như một cách gián tiếp tạo ra
+hằng số tùy ý, không phản ánh đúng cấu trúc quan hệ cần tìm. GP được
+chạy với quần thể $10\,000$ cá thể qua $500$ thế hệ, độ sâu cây tối đa
+$6$, tỉ lệ lai ghép $0{,}8$, tỉ lệ đột biến $0{,}2$ (chọn ngẫu nhiên
+đều giữa ba loại đột biến đã trình bày ở Mục~\ref{sec:gp}: thay thế
+cây con, đột biến điểm, và đột biến rút gọn), kích thước elitism
+$200$, và hệ số phạt kích thước cây $\lambda = 0{,}01$ trong hàm thích
+nghi $\text{MSE} + \lambda|T|$.
 
-\begin{table}[htbp]
+Biểu thức tốt nhất GP tìm được, đạt được ở thế hệ $499/500$, là:
+\begin{multline}
+T_{dew} = \log\!\left(\log\!\left(\frac{0.325}{\log(rh)}\right)\right)
+\times \Bigg[
+\frac{-1.46}{\big(rh\cdot(-0.121)\big)\cdot\big((-0.121)\cdot 0.161\big)} \\
++ \Big((-0.489)\cdot(-0.121)\cdot rh + T\Big)
+\Bigg],
+\label{eq:gp-tdew}
+\end{multline}
+gồm $24$ nút và có độ sâu $6$ — trùng khớp với giới hạn độ sâu tối đa
+đã đặt. Trên tập kiểm tra, biểu thức~\eqref{eq:gp-tdew} đạt
+$\text{MAE}=0{,}2659$, $\text{RMSE}=0{,}3439$, và $R^2=0{,}9967$, tức
+giải thích được hơn $99\%$ phương sai của $T_{dew}$ chỉ từ hai đặc
+trưng đầu vào. Hình~\ref{fig:hoitu-gp-tdew} minh họa quá trình hội tụ
+của cả RMSE lẫn MAE qua $500$ thế hệ, còn Hình~\ref{fig:cay-gp-tdew}
+trình bày trực quan cấu trúc cây của biểu thức tìm được.
+
+\begin{figure}[H]
 \centering
-\caption{Kết quả Hồi quy Tuyến tính và GP trên hai đại lượng vật lý phái sinh}
-\label{tab:kq-symbolic-regression}
-\begin{tabular}{llccc}
-\toprule
-\textbf{Đại lượng} & \textbf{Phương pháp} & \textbf{MAE} & \textbf{RMSE} & \textbf{$R^2$} \\
-\midrule
-\multirow{2}{*}{$|B|^2$}
-    & Hồi quy Tuyến tính & 15.1284 & 19.9825 & 0.4784 \\
-    & GP (hồi quy symbolic) & 4.1820 & 6.0779 & 0.9517 \\
-\addlinespace
-\multirow{2}{*}{$V_A^2$}
-    & Hồi quy Tuyến tính & 2.7376 & 3.6804 & 0.4629 \\
-    & GP (hồi quy symbolic) & 1.0554 & 1.5486 & 0.9049 \\
-\bottomrule
-\end{tabular}
-\end{table}
+\includegraphics[width=0.72\linewidth]{figures/hoitu_gp_tdew.png}
+\caption{Đường hội tụ của RMSE và MAE qua các thế hệ khi GP dự đoán $T_{dew}$}
+\label{fig:hoitu-gp-tdew}
+\end{figure}
 
-Kết quả cho thấy chênh lệch rõ rệt và nhất quán trên cả hai đại lượng.
-Hồi quy Tuyến tính chỉ giải thích được khoảng $46\%$ đến $48\%$ phương
-sai của dữ liệu ($R^2 \approx 0.46$–$0.48$), trong khi GP đạt trên
-$90\%$ ($R^2 \approx 0.90$–$0.95$); đồng thời sai số dự đoán của GP chỉ còn chưa đến một phần ba so với Hồi quy Tuyến tính ở
-cả hai đại lượng. Đây là kết quả trái ngược hẳn với các bài toán hồi
-quy dạng lũy thừa từng được thử nghiệm trong quá trình thực hiện tiểu
-luận — ví dụ định luật Kepler III hay áp suất động của gió mặt trời —
-là những quan hệ trở thành tuyến tính tuyệt đối sau khi biến đổi
-logarit, khiến Hồi quy Tuyến tính ở các bài toán đó luôn đạt hoặc vượt
-GP. Sự tương phản giữa hai nhóm kết quả khẳng định đúng giả thuyết ban
-đầu: lợi thế thực sự của GP so với hồi quy cổ điển chỉ bộc lộ rõ khi
-quan hệ cần khám phá có cấu trúc phi tuyến mà phép biến đổi đặc trưng
-thủ công thông thường, như logarit, không xử lý được.
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth]{figures/cay_gp_tdew.png}
+\caption{Cây biểu thức GP tìm được cho $T_{dew}$}
+\label{fig:cay-gp-tdew}
+\end{figure}
+
+Mặc dù không trùng khớp tuyệt đối với công thức Magnus gốc, biểu thức
+GP tìm được vẫn phản ánh đúng những đặc trưng cấu trúc cốt lõi của
+quan hệ vật lý thật: sự xuất hiện lặp lại của $\log(rh)$ và các phép
+chia lồng nhau cho thấy GP đã tự nhận diện được vai trò trung tâm của
+thành phần logarit độ ẩm trong công thức Magnus, dù không được cung
+cấp trước dạng hàm này. Việc chưa khớp tuyệt đối một phần xuất phát từ
+giới hạn thiết kế của engine: các hằng số tại nút lá chỉ được sinh
+ngẫu nhiên trong khoảng $[-2,2]$, trong khi công thức Magnus cần các
+hằng số lớn hơn nhiều ($a=17{,}27$, $b=237{,}7$) — muốn tổng hợp chính
+xác các hằng số này, GP phải tổ hợp nhiều lá qua các phép toán, tiêu
+tốn thêm ngân sách độ sâu vốn đã được dùng phần lớn cho cấu trúc chính
+của biểu thức.
 
 \section{Tổng kết Chương}
 \label{sec:ud-tong-ket}
@@ -975,7 +986,7 @@ tiếp nhờ khai thác tính khả vi của hàm mục tiêu và ràng buộc. 
 lại, ở những bài toán mà cấu trúc đó không có sẵn, hoặc phương pháp cổ
 điển tương ứng không còn đủ mạnh
 — bài toán người du lịch quy mô lớn cần bổ sung tìm kiếm cục bộ mới
-đạt được nghiệm tối ưu, hay quan hệ phi tuyến dạng tổng bình phương mà
-Hồi quy Tuyến tính không thể biểu diễn được — GA và GP thể hiện rõ giá
-trị thực tiễn của một phương pháp tìm kiếm không đặt giả định trước về
-cấu trúc bài toán.
+đạt được nghiệm tối ưu, hay quan hệ phi tuyến kết hợp logarit và phép
+chia của công thức Magnus giữa nhiệt độ, độ ẩm và điểm sương — GA và GP
+thể hiện rõ giá trị thực tiễn của một phương pháp tìm kiếm không đặt
+giả định trước về cấu trúc bài toán.
