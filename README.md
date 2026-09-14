@@ -1,6 +1,6 @@
 # Optimization Theory — Genetic Algorithm
 
-Dự án học phần **Lý thuyết Tối ưu**: cài đặt Thuật toán Di truyền (Genetic Algorithm — GA) cho bài toán tối ưu có/không ràng buộc, đối chiếu kết quả với mốc so sánh của từng nhóm bài toán (nghiệm tối ưu đã biết của các hàm benchmark, nghiệm công bố của **CEC 2006** và **TSPLIB95**, hồi quy tuyến tính).
+Dự án học phần **Lý thuyết Tối ưu**: cài đặt Thuật toán Di truyền (Genetic Algorithm — GA) cho bài toán tối ưu có/không ràng buộc, đối chiếu kết quả với mốc so sánh của từng nhóm bài toán (nghiệm tối ưu đã biết của các hàm benchmark, nghiệm công bố của **CEC 2006** và **TSPLIB95**, công thức Magnus cho bài toán hồi quy symbolic).
 
 ## Cấu trúc thư mục
 
@@ -23,7 +23,9 @@ Dự án học phần **Lý thuyết Tối ưu**: cài đặt Thuật toán Di t
 │   ├── logo.png
 │   └── chapters/
 │       ├── trang_bia.tex
+│       ├── danh_muc_thuat_ngu.tex
 │       ├── chuong1_co_so_ly_thuyet.tex
+│       ├── chuong2_ung_dung.tex
 │       └── tai_lieu_tham_khao.tex
 └── LICENSE
 ```

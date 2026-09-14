@@ -25,6 +25,10 @@ tmp_wrapper.tex
 
 # Ghi chú review cá nhân, không đưa vào repo
 Report Review.md
+CLAUDE.md
+
+# File tạm ở root, dùng để thử nghiệm trước khi đưa vào report
+tmp.ipynb
 
 # OS
 .DS_Store
