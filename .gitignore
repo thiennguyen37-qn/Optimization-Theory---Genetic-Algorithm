@@ -30,6 +30,10 @@ CLAUDE.md
 # File tạm ở root, dùng để thử nghiệm trước khi đưa vào report
 tmp.ipynb
 
+# Tài liệu tham khảo lớn ở root, không cần track trong repo
+CEC2006_TechnicalReport.pdf
+TieuLuan.pdf
+
 # OS
 .DS_Store
 Thumbs.db
