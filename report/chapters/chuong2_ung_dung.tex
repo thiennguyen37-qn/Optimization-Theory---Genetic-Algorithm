@@ -1034,15 +1034,26 @@ Phương trình~\eqref{eq:gp-tdew-rutgon})}
 \label{fig:cay-gp-tdew}
 \end{figure}
 
-Mặc dù không trùng khớp tuyệt đối với công thức Magnus gốc, biểu thức
-GP tìm được vẫn phản ánh đúng những đặc trưng cấu trúc cốt lõi của
-quan hệ vật lý thật: sự xuất hiện lặp lại của $\log(rh)$ và các phép
-chia lồng nhau cho thấy GP đã tự nhận diện được vai trò trung tâm của
-thành phần logarit độ ẩm trong công thức Magnus, dù không được cung
-cấp trước dạng hàm này. Việc chưa khớp tuyệt đối một phần xuất phát từ
-giới hạn thiết kế của engine: các hằng số tại nút lá chỉ được sinh
-ngẫu nhiên trong khoảng $[-2,2]$, trong khi công thức Magnus cần các
-hằng số lớn hơn nhiều ($a=17.27$, $b=237.7$) — muốn tổng hợp chính
-xác các hằng số này, GP phải tổ hợp nhiều lá qua các phép toán, tiêu
-tốn thêm ngân sách độ sâu vốn đã được dùng phần lớn cho cấu trúc chính
-của biểu thức.
+Kết quả thực nghiệm cho thấy Symbolic Regression bằng Genetic
+Programming (GP) có khả năng học và tái hiện tốt mối quan hệ phi tuyến
+giữa nhiệt độ $T$, độ ẩm tương đối $rh$ và nhiệt độ điểm sương
+$T_{dew}$. Trên tập kiểm tra, biểu thức tìm được đạt MAE = 0.2659,
+RMSE = 0.3439 và $R^2 = 0.9967$, cho thấy mô hình có độ chính xác rất
+cao dù chỉ sử dụng hai biến đầu vào.
+
+Mặc dù biểu thức GP chưa khôi phục hoàn toàn công thức Magnus, cấu
+trúc của biểu thức vẫn thể hiện rõ những đặc trưng quan trọng của
+quan hệ vật lý, đặc biệt là sự xuất hiện lặp lại của $\log(rh)$ và các
+phép chia lồng nhau. Điều này cho thấy GP không chỉ tìm được một hàm
+có khả năng dự đoán tốt mà còn có thể tự khám phá cấu trúc toán học
+phù hợp với hiện tượng thực tế.
+
+Sự khác biệt so với công thức Magnus có thể một phần xuất phát từ
+giới hạn biểu diễn của engine, khi các hằng số tại nút lá chỉ nằm
+trong khoảng $[-2,2]$, trong khi công thức Magnus sử dụng các hằng số
+lớn hơn đáng kể. Do đó, việc biểu diễn trực tiếp các hằng số này đòi
+hỏi phải kết hợp nhiều nút, làm tăng độ phức tạp của cây. Nhìn chung,
+thí nghiệm cho thấy GA/GP là một hướng tiếp cận khả thi cho Symbolic
+Regression, vừa đạt độ chính xác cao vừa cung cấp một biểu thức toán
+học có khả năng diễn giải, thay vì chỉ đưa ra một mô hình dự đoán dạng
+hộp đen.
