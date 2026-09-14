@@ -41,7 +41,7 @@ $f(\pi,\pi) = -1$. Khó khăn của hàm này nằm ở chỗ thừa số
 $\exp(-(x-\pi)^2-(y-\pi)^2)$ giảm rất nhanh về $0$ khi rời khỏi điểm
 $(\pi,\pi)$: chỉ cần cách tâm khoảng ba đơn vị, giá trị hàm đã nhỏ hơn
 $10^{-4}$ và coi như bằng $0$. Vùng thực sự mang thông tin dẫn đường vì
-thế chiếm chưa tới $0{,}1\%$ diện tích miền tìm kiếm $[-100,100]^2$,
+thế chiếm chưa tới $0.1\%$ diện tích miền tìm kiếm $[-100,100]^2$,
 toàn bộ phần còn lại gần như là một mặt phẳng tuyệt đối. Ở vùng phẳng
 đó, đạo hàm theo mọi hướng đều xấp xỉ $0$, nên các phương pháp dựa trên
 gradient không có cơ sở nào để xác định nên di chuyển về đâu --- đây là
@@ -239,7 +239,7 @@ khai thác một vùng đang cho kết quả tốt, nó có thể nhanh chóng �
 được một nghiệm khá tốt nhưng bỏ qua nghiệm tốt nhất nằm ở một khu vực
 hoàn toàn khác.
 
-Thêm vào đó, cực tiểu toàn cục $(420{,}9687,\, 420{,}9687)$ nằm khá
+Thêm vào đó, cực tiểu toàn cục $(420.9687,\, 420.9687)$ nằm khá
 gần biên của miền tìm kiếm, nên thuật toán không nên mặc định rằng
 nghiệm tốt nằm gần tâm không gian tìm kiếm; nếu cơ chế xử lý biên vô
 tình co cá thể về phía tâm miền, khả năng tìm thấy nghiệm tối ưu sẽ
@@ -290,11 +290,11 @@ dừng.
 \textbf{Hàm} & \shortstack{\textbf{Thời gian hội tụ}\\\textbf{(s)}} & \textbf{Thế hệ}
 & \textbf{$f_{\text{thực}}$} & \textbf{$f^{*}$} & \textbf{$x^{*}$} & \textbf{$y^{*}$} \\
 \midrule
-Easom      & $0{,}71$ & $48$ & $-1$        & $-1{,}0000000000$      & $3{,}141593$              & $3{,}141593$               \\
-Rastrigin  & $0{,}77$ & $45$ & $0$         & $0{,}0000000000$       & $8{,}00\times10^{-10}$    & $-2{,}11\times10^{-9}$     \\
-Rosenbrock & $0{,}70$ & $11$ & $0$         & $0{,}0009051359$       & $1{,}008839$              & $1{,}014881$               \\
-Ackley     & $0{,}75$ & $50$ & $0$         & $3{,}344\times10^{-10}$ & $-7{,}55\times10^{-11}$   & $-9{,}10\times10^{-11}$    \\
-Schwefel   & $0{,}73$ & $47$ & $\approx 0$ & $2{,}5455\times10^{-5}$ & $420{,}968746$           & $420{,}968746$             \\
+Easom      & $0.71$ & $48$ & $-1$        & $-1.0000000000$      & $3.141593$              & $3.141593$               \\
+Rastrigin  & $0.77$ & $45$ & $0$         & $0.0000000000$       & $8.00\times10^{-10}$    & $-2.11\times10^{-9}$     \\
+Rosenbrock & $0.70$ & $11$ & $0$         & $0.0009051359$       & $1.008839$              & $1.014881$               \\
+Ackley     & $0.75$ & $50$ & $0$         & $3.344\times10^{-10}$ & $-7.55\times10^{-11}$   & $-9.10\times10^{-11}$    \\
+Schwefel   & $0.73$ & $47$ & $\approx 0$ & $2.5455\times10^{-5}$ & $420.968746$           & $420.968746$             \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -307,7 +307,7 @@ và Schwefel cũng đạt sai số rất nhỏ. Đáng chú ý, GA vẫn tìm đ
 nghiệm tốt trên Easom và Schwefel, cho thấy khả năng khám phá rộng
 của tìm kiếm dựa trên quần thể.
 
-Rosenbrock là trường hợp khó nhất khi chỉ đạt $f^{*} = 9{,}05\times10^{-4}$.
+Rosenbrock là trường hợp khó nhất khi chỉ đạt $f^{*} = 9.05\times10^{-4}$.
 GA nhanh chóng tiến vào vùng gần nghiệm tối ưu nhưng sau đó hầu như
 không cải thiện thêm. Nguyên nhân là thung lũng của Rosenbrock hẹp và
 cong, đòi hỏi quá trình tinh chỉnh chính xác dọc theo đáy thung lũng,
@@ -402,15 +402,15 @@ $f^{*}$ \textbf{công bố} & $f^{*}$ \textbf{(GA)}
 & \shortstack{\textbf{Sai lệch}\\\textbf{(GA + tinh chỉnh)}}
 & \shortstack{\textbf{Số thế hệ}\\\textbf{thỏa mãn}} \\
 \midrule
-$-15{,}000000$ & $-14{,}999204$ & $7{,}96\times10^{-4}$ & $-15{,}000000$
-& $1{,}77\times10^{-12}$ & $499$ \\
+$-15.000000$ & $-14.999204$ & $7.96\times10^{-4}$ & $-15.000000$
+& $1.77\times10^{-12}$ & $499$ \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-GA đơn thuần đạt sai lệch tương đối $5{,}3\times10^{-5}$ so với nghiệm
+GA đơn thuần đạt sai lệch tương đối $5.3\times10^{-5}$ so với nghiệm
 tối ưu công bố. Sau bước tinh chỉnh cục bộ, sai lệch giảm xuống
-$1{,}77\times10^{-12}$, cho thấy bước tinh chỉnh cải thiện đáng kể độ
+$1.77\times10^{-12}$, cho thấy bước tinh chỉnh cải thiện đáng kể độ
 chính xác của nghiệm.
 
 \begin{figure}[H]
@@ -438,13 +438,13 @@ chính xác cao trong không gian mười ba chiều.
 & f(x) = (x_1 - 10)^3 + (x_2 - 20)^3 \\
 \text{subject to} \quad
 & -(x_1 - 5)^2 - (x_2 - 5)^2 + 100 \le 0 \\
-& (x_1 - 6)^2 + (x_2 - 5)^2 - 82{,}81 \le 0
+& (x_1 - 6)^2 + (x_2 - 5)^2 - 82.81 \le 0
 \end{aligned}
 \label{eq:g06}
 \end{equation}
 với $13 \le x_1 \le 100$ và $0 \le x_2 \le 100$. Nghiệm tối ưu công bố là
 \[
-x^{*} = (14{,}095000;\ 0{,}842961), \qquad f(x^{*}) = -6961{,}813876,
+x^{*} = (14.095000;\ 0.842961), \qquad f(x^{*}) = -6961.813876,
 \]
 tại đó cả hai ràng buộc đều đạt đẳng thức.
 
@@ -466,16 +466,16 @@ $f^{*}$ \textbf{công bố} & $f^{*}$ \textbf{(GA)}
 & \shortstack{\textbf{Sai lệch}\\\textbf{(GA + tinh chỉnh)}}
 & \shortstack{\textbf{Số thế hệ}\\\textbf{thỏa mãn}} \\
 \midrule
-$-6961{,}813876$ & $-6898{,}462524$ & $63{,}35$ & $-6961{,}813876$
-& $2{,}64\times10^{-8}$ & $457$ \\
+$-6961.813876$ & $-6898.462524$ & $63.35$ & $-6961.813876$
+& $2.64\times10^{-8}$ & $457$ \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-Theo Bảng~\ref{tab:kq-g06}, GA đơn thuần đạt $f^{*}=-6898{,}462524$,
-sai lệch $63{,}35$ so với nghiệm tối ưu công bố $-6961{,}813876$. Sau
-bước tinh chỉnh cục bộ, giá trị đạt $f^{*}=-6961{,}813876$, với sai
-lệch chỉ $2{,}64\times10^{-8}$. Kết quả cho thấy bước tinh chỉnh cải
+Theo Bảng~\ref{tab:kq-g06}, GA đơn thuần đạt $f^{*}=-6898.462524$,
+sai lệch $63.35$ so với nghiệm tối ưu công bố $-6961.813876$. Sau
+bước tinh chỉnh cục bộ, giá trị đạt $f^{*}=-6961.813876$, với sai
+lệch chỉ $2.64\times10^{-8}$. Kết quả cho thấy bước tinh chỉnh cải
 thiện đáng kể độ chính xác của nghiệm.
 
 \begin{figure}[H]
@@ -491,10 +491,10 @@ chọn ưu tiên \textbf{cá thể có tổng mức vi phạm ràng buộc nhỏ
 vậy, cá thể tốt nhất có thể thay đổi giữa các thế hệ và kéo theo giá
 trị hàm mục tiêu dao động từ khoảng $-7507$ đến $-1745$. Từ thế hệ
 $3$, thuật toán tìm được cá thể khả thi và gần như hội tụ tại mức
-$-6328{,}01$ trong hơn bốn trăm thế hệ. Chỉ từ khoảng thế hệ $451$,
-giá trị tốt nhất mới tiếp tục được cải thiện lên $-6898{,}46$ và duy
+$-6328.01$ trong hơn bốn trăm thế hệ. Chỉ từ khoảng thế hệ $451$,
+giá trị tốt nhất mới tiếp tục được cải thiện lên $-6898.46$ và duy
 trì đến cuối quá trình. Khoảng cách còn lại đến nghiệm tối ưu công bố
-$-6961{,}81$ được thu hẹp đáng kể sau bước tinh chỉnh cục bộ.
+$-6961.81$ được thu hẹp đáng kể sau bước tinh chỉnh cục bộ.
 
 \vspace{1em}
 
@@ -511,7 +511,7 @@ $-6961{,}81$ được thu hẹp đáng kể sau bước tinh chỉnh cục bộ.
 \end{equation}
 với $0 \le x_1 \le 10$ và $0 \le x_2 \le 10$. Nghiệm tối ưu công bố là
 \[
-x^{*} = (1{,}227971;\ 4{,}245373), \qquad f(x^{*}) = -0{,}095825.
+x^{*} = (1.227971;\ 4.245373), \qquad f(x^{*}) = -0.095825.
 \]
 
 g08 là bài toán hai biến với hàm mục tiêu phi tuyến, chứa cả hàm
@@ -530,14 +530,14 @@ $f^{*}$ \textbf{công bố} & $f^{*}$ \textbf{(GA)}
 & \shortstack{\textbf{Sai lệch}\\\textbf{(GA + tinh chỉnh)}}
 & \shortstack{\textbf{Số thế hệ}\\\textbf{thỏa mãn}} \\
 \midrule
-$-0{,}095825$ & $-0{,}095825$ & $2{,}78\times10^{-17}$ & $-0{,}095825$
-& $2{,}78\times10^{-17}$ & $362$ \\
+$-0.095825$ & $-0.095825$ & $2.78\times10^{-17}$ & $-0.095825$
+& $2.78\times10^{-17}$ & $362$ \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 Theo Bảng~\ref{tab:kq-g08}, GA đơn thuần đã đạt đúng giá trị tối ưu
-công bố $f^{*}=-0{,}095825$, với sai lệch chỉ $2{,}78\times10^{-17}$.
+công bố $f^{*}=-0.095825$, với sai lệch chỉ $2.78\times10^{-17}$.
 Bước tinh chỉnh cục bộ không làm thay đổi kết quả, cho thấy GA đã xác
 định được nghiệm với độ chính xác rất cao. Thuật toán đạt giá trị tối
 ưu tại thế hệ $362$.
@@ -551,9 +551,9 @@ Bước tinh chỉnh cục bộ không làm thay đổi kết quả, cho thấy 
 
 Hình~\ref{fig:hoitu-g08} cho thấy quá trình hội tụ diễn ra tương đối
 ổn định. Giá trị tốt nhất giảm nhanh trong khoảng hai mươi lăm thế hệ
-đầu, từ khoảng $-0{,}041$ xuống gần $-0{,}09565$. Sau đó, giá trị chỉ
+đầu, từ khoảng $-0.041$ xuống gần $-0.09565$. Sau đó, giá trị chỉ
 tiếp tục cải thiện qua các bước rất nhỏ và gần như giữ nguyên quanh
-mức này trong phần lớn số thế hệ, trước khi đạt $-0{,}095825$ tại thế
+mức này trong phần lớn số thế hệ, trước khi đạt $-0.095825$ tại thế
 hệ $362$. Sự ổn định ở giai đoạn cuối cho thấy quần thể đã tập trung
 quanh vùng nghiệm tốt và không còn tạo ra các cá thể có giá trị cải
 thiện đáng kể.
@@ -572,7 +572,7 @@ thiện đáng kể.
 \end{equation}
 với $-1 \le x_1 \le 1$ và $-1 \le x_2 \le 1$. Nghiệm tối ưu công bố là
 \[
-x^{*} = (-0{,}707036;\ 0{,}500000), \qquad f(x^{*}) = 0{,}7499.
+x^{*} = (-0.707036;\ 0.500000), \qquad f(x^{*}) = 0.7499.
 \]
 
 Miền khả thi chính xác của g11 là đường parabol $x_2=x_1^2$; các điểm
@@ -580,11 +580,11 @@ sinh ra ngẫu nhiên khi khởi tạo quần thể, hay qua lai ghép và độ
 biến, hầu như không bao giờ rơi đúng lên đường này. Khi áp dụng dung
 sai $\varepsilon=10^{-4}$, các điểm lệch khỏi đường này một khoảng nhỏ
 vẫn được xem là khả thi. Nếu yêu cầu ràng buộc thỏa mãn
-tuyệt đối, giá trị nhỏ nhất của hàm mục tiêu là $0{,}75$. Giá trị công
-bố $0{,}7499$ thấp hơn vì nghiệm của CEC 2006 được phép lệch khỏi
-đường parabol trong phạm vi dung sai. GA đạt $0{,}750268$, rất gần mức
-$0{,}75$, nhưng chưa tìm được điểm tận dụng dung sai để giảm giá trị
-hàm mục tiêu xuống mức $0{,}7499$. Bước tinh chỉnh cũng chỉ cải thiện
+tuyệt đối, giá trị nhỏ nhất của hàm mục tiêu là $0.75$. Giá trị công
+bố $0.7499$ thấp hơn vì nghiệm của CEC 2006 được phép lệch khỏi
+đường parabol trong phạm vi dung sai. GA đạt $0.750268$, rất gần mức
+$0.75$, nhưng chưa tìm được điểm tận dụng dung sai để giảm giá trị
+hàm mục tiêu xuống mức $0.7499$. Bước tinh chỉnh cũng chỉ cải thiện
 rất nhỏ do miền chấp nhận quanh đường parabol rất hẹp.
 
 \begin{table}[htbp]
@@ -600,14 +600,14 @@ $f^{*}$ \textbf{công bố} & $f^{*}$ \textbf{(GA)}
 & \shortstack{\textbf{Sai lệch}\\\textbf{(GA + tinh chỉnh)}}
 & \shortstack{\textbf{Số thế hệ}\\\textbf{thỏa mãn}} \\
 \midrule
-$0{,}749900$ & $0{,}750268$ & $3{,}68\times10^{-4}$ & $0{,}750259$ & $3{,}59\times10^{-4}$ & $392$ \\
+$0.749900$ & $0.750268$ & $3.68\times10^{-4}$ & $0.750259$ & $3.59\times10^{-4}$ & $392$ \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-Theo Bảng~\ref{tab:kq-g11}, GA đạt $f^{*}=0{,}750268$, với sai lệch
-$3{,}68\times10^{-4}$ so với nghiệm tối ưu công bố $0{,}749900$. Sau
-tinh chỉnh cục bộ, sai lệch chỉ giảm nhẹ xuống $3{,}59\times10^{-4}$,
+Theo Bảng~\ref{tab:kq-g11}, GA đạt $f^{*}=0.750268$, với sai lệch
+$3.68\times10^{-4}$ so với nghiệm tối ưu công bố $0.749900$. Sau
+tinh chỉnh cục bộ, sai lệch chỉ giảm nhẹ xuống $3.59\times10^{-4}$,
 cho thấy bước tinh chỉnh có tác động hạn chế đối với bài toán này.
 Nghiệm đạt tiêu chí thỏa mãn tại thế hệ $392$.
 
@@ -622,9 +622,9 @@ Hình~\ref{fig:hoitu-g11} cho thấy giá trị tốt nhất dao động trong g
 đoạn đầu do quần thể chưa tìm được cá thể thỏa mãn ràng buộc
 $x_2-x_1^2=0$ trong giới hạn dung sai, nên việc lựa chọn vẫn chịu chi
 phối bởi mức độ vi phạm. Điều này dẫn đến các biến động, như mức tăng
-từ $0{,}785$ lên $0{,}863$ tại thế hệ $61$. Từ khoảng thế hệ $100$,
+từ $0.785$ lên $0.863$ tại thế hệ $61$. Từ khoảng thế hệ $100$,
 giá trị tốt nhất giảm dần qua nhiều bước nhỏ và ổn định tại
-$0{,}750268$ ở thế hệ $392$. Ở giai đoạn cuối, các cá thể tốt nhất đã
+$0.750268$ ở thế hệ $392$. Ở giai đoạn cuối, các cá thể tốt nhất đã
 tập trung quanh vùng nghiệm có chất lượng cao nên các phép biến đổi
 tiếp theo khó tạo ra giá trị mục tiêu nhỏ hơn đáng kể, khiến đường hội
 tụ gần như giữ nguyên.
@@ -651,8 +651,8 @@ các phương pháp trực tiếp.
 \end{equation}
 với $0 \le x_i \le 10$ cho $i = 1, 2, 3$. Nghiệm tối ưu công bố là
 \[
-x^{*} = (3{,}512128;\ 0{,}216988;\ 3{,}552179), \qquad
-f(x^{*}) = 961{,}715022.
+x^{*} = (3.512128;\ 0.216988;\ 3.552179), \qquad
+f(x^{*}) = 961.715022.
 \]
 
 g15 có ba biến và hai ràng buộc đẳng thức, gồm một ràng buộc phi
@@ -673,15 +673,15 @@ $f^{*}$ \textbf{công bố} & $f^{*}$ \textbf{(GA)}
 & \shortstack{\textbf{Sai lệch}\\\textbf{(GA + tinh chỉnh)}}
 & \shortstack{\textbf{Số thế hệ}\\\textbf{thỏa mãn}} \\
 \midrule
-$961{,}715022$ & $961{,}715374$ & $3{,}52\times10^{-4}$ & $961{,}715308$
-& $2{,}86\times10^{-4}$ & $249$ \\
+$961.715022$ & $961.715374$ & $3.52\times10^{-4}$ & $961.715308$
+& $2.86\times10^{-4}$ & $249$ \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-Theo Bảng~\ref{tab:kq-g15}, GA đạt $f^{*}=961{,}715374$, với sai lệch
-$3{,}52\times10^{-4}$ so với nghiệm tối ưu công bố $961{,}715022$. Sau
-bước tinh chỉnh cục bộ, sai lệch giảm xuống $2{,}86\times10^{-4}$, cho
+Theo Bảng~\ref{tab:kq-g15}, GA đạt $f^{*}=961.715374$, với sai lệch
+$3.52\times10^{-4}$ so với nghiệm tối ưu công bố $961.715022$. Sau
+bước tinh chỉnh cục bộ, sai lệch giảm xuống $2.86\times10^{-4}$, cho
 thấy tinh chỉnh có cải thiện nhưng mức độ không lớn. Thuật toán đạt
 tiêu chí thỏa mãn tại thế hệ $249$.
 
@@ -694,10 +694,10 @@ tiêu chí thỏa mãn tại thế hệ $249$.
 
 Hình~\ref{fig:hoitu-g15} cho thấy giá trị tốt nhất biến động rõ rệt
 tại thời điểm quần thể tìm được cá thể thỏa mãn đồng thời hai ràng
-buộc. Trước thế hệ $127$, giá trị tốt nhất đạt khoảng $962{,}03$; khi
-xuất hiện cá thể khả thi, giá trị tăng lên $963{,}07$ do quy tắc Deb
+buộc. Trước thế hệ $127$, giá trị tốt nhất đạt khoảng $962.03$; khi
+xuất hiện cá thể khả thi, giá trị tăng lên $963.07$ do quy tắc Deb
 ưu tiên tính khả thi hơn giá trị hàm mục tiêu. Sau đó, giá trị giảm
-dần và tiến gần $961{,}7154$ từ khoảng thế hệ $245$, rồi ổn định hoàn
+dần và tiến gần $961.7154$ từ khoảng thế hệ $245$, rồi ổn định hoàn
 toàn tại thế hệ $249$. Diễn biến này cho thấy phần lớn quá trình cải
 thiện diễn ra sau khi quần thể đã xác định được vùng khả thi.
 
@@ -723,11 +723,11 @@ với mức vi phạm bằng $0$.
 & \shortstack{\textbf{Thời gian}\\\textbf{hội tụ (s)}}
 & \shortstack{\textbf{Số thế hệ}\\\textbf{thỏa mãn}} \\
 \midrule
-g01 & $-15{,}000000$   & $-14{,}999204$   & $-15{,}000000$   & $1{,}77\times10^{-12}$ & $18{,}74$ & $499$ \\
-g06 & $-6961{,}813876$ & $-6898{,}462524$ & $-6961{,}813876$ & $2{,}64\times10^{-8}$ & $14{,}06$ & $457$ \\
-g08 & $-0{,}095825$    & $-0{,}095825$    & $-0{,}095825$    & $2{,}78\times10^{-17}$ & $13{,}20$ & $362$ \\
-g11 & $0{,}749900$     & $0{,}750268$     & $0{,}750259$     & $3{,}59\times10^{-4}$  & $13{,}31$ & $392$ \\
-g15 & $961{,}715022$   & $961{,}715374$   & $961{,}715308$   & $2{,}86\times10^{-4}$  & $13{,}82$ & $249$ \\
+g01 & $-15.000000$   & $-14.999204$   & $-15.000000$   & $1.77\times10^{-12}$ & $18.74$ & $499$ \\
+g06 & $-6961.813876$ & $-6898.462524$ & $-6961.813876$ & $2.64\times10^{-8}$ & $14.06$ & $457$ \\
+g08 & $-0.095825$    & $-0.095825$    & $-0.095825$    & $2.78\times10^{-17}$ & $13.20$ & $362$ \\
+g11 & $0.749900$     & $0.750268$     & $0.750259$     & $3.59\times10^{-4}$  & $13.31$ & $392$ \\
+g15 & $961.715022$   & $961.715374$   & $961.715308$   & $2.86\times10^{-4}$  & $13.82$ & $249$ \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -746,7 +746,7 @@ g06 thể hiện rõ nhất sự kết hợp của miền khả thi hẹp và h�
 biến thiên mạnh, khiến sai lệch nhỏ về vị trí có thể dẫn đến sai lệch
 đáng kể về giá trị hàm mục tiêu. Vì vậy, đây cũng là bài toán mà tìm
 kiếm cục bộ mang lại mức cải thiện lớn nhất, giảm sai lệch từ
-$63{,}35$ xuống $2{,}64\times10^{-8}$. Kết quả này cho thấy GA phù hợp
+$63.35$ xuống $2.64\times10^{-8}$. Kết quả này cho thấy GA phù hợp
 với vai trò xác định vùng chứa nghiệm, trong khi tìm kiếm cục bộ phát
 huy hiệu quả ở bước tinh chỉnh nghiệm trong vùng lân cận.
 
@@ -859,9 +859,9 @@ công bố, như trình bày ở Bảng~\ref{tab:kq-tsp}.
 \toprule
 \textbf{Bộ dữ liệu} & \textbf{Số địa điểm ($n$)} & \textbf{Nghiệm tối ưu} & \textbf{GA} & \textbf{Đạt được ở thế hệ} & \shortstack{\textbf{Thời gian}\\\textbf{hội tụ (s)}} \\
 \midrule
-berlin52 & 52  & 7542 & 7542 & 8/50  & $1{,}83$  \\
-rd100    & 100 & 7910 & 7910 & 48/50 & $7{,}11$  \\
-ch150    & 150 & 6528 & 6528 & 37/50 & $14{,}77$ \\
+berlin52 & 52  & 7542 & 7542 & 8/50  & $1.83$  \\
+rd100    & 100 & 7910 & 7910 & 48/50 & $7.11$  \\
+ch150    & 150 & 6528 & 6528 & 37/50 & $14.77$ \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -913,19 +913,51 @@ này khiến bài toán trở thành một phép thử thực tế cho khả nă
 khám phá cấu trúc hàm phi tuyến từ dữ liệu mà không cần biết trước
 dạng công thức~\eqref{eq:magnus}.
 
-Tập toán tử được sử dụng gồm $\{+, \times, \div, \log\}$ (phép chia
-được bảo vệ như đã trình bày ở Mục~\ref{sec:gp}). Phép trừ bị loại
-khỏi tập toán tử vì có thể biểu diễn tương đương thông qua phép nhân
-với hằng số âm; các hàm lượng giác $\sin, \cos$ cũng bị loại vì bài
-toán không mang tính tuần hoàn — thực nghiệm sơ bộ cho thấy giữ lại
-hai hàm này chỉ khiến GP lợi dụng chúng như một cách gián tiếp tạo ra
-hằng số tùy ý, không phản ánh đúng cấu trúc quan hệ cần tìm. GP được
-chạy với quần thể $10\,000$ cá thể qua $500$ thế hệ, độ sâu cây tối đa
-$6$, tỉ lệ lai ghép $0{,}8$, tỉ lệ đột biến $0{,}2$ (chọn ngẫu nhiên
-đều giữa ba loại đột biến đã trình bày ở Mục~\ref{sec:gp}: thay thế
-cây con, đột biến điểm, và đột biến rút gọn), kích thước elitism
-$200$, và hệ số phạt kích thước cây $\lambda = 0{,}01$ trong hàm thích
-nghi $\text{MSE} + \lambda|T|$.
+Bộ dữ liệu gốc gồm $52\,696$ dòng quan trắc, mỗi dòng ứng với một mốc
+thời gian đo cách nhau khoảng $10$ phút trong suốt năm 2020, với tổng
+cộng $21$ đặc trưng khí tượng (áp suất, nhiệt độ, độ ẩm, tốc độ gió,
+bức xạ mặt trời...). Trong số đó, chỉ $4$ cột được giữ lại để phục vụ
+bài toán GP.
+
+\begin{table}[H]
+\centering
+\caption{Năm dòng đầu tiên của dữ liệu thời tiết sau khi lọc còn 4 cột}
+\label{tab:head-weather}
+\begin{tabular}{lccc}
+\toprule
+\textbf{date} & \textbf{T} & \textbf{Tdew} & \textbf{rh} \\
+\midrule
+2020-01-01 00:10:00 & 0.71 & $-1.33$ & 86.1 \\
+2020-01-01 00:20:00 & 0.75 & $-1.44$ & 85.2 \\
+2020-01-01 00:30:00 & 0.73 & $-1.48$ & 85.1 \\
+2020-01-01 00:40:00 & 0.37 & $-1.64$ & 86.3 \\
+2020-01-01 00:50:00 & 0.33 & $-1.50$ & 87.4 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Ý nghĩa của từng cột như sau: \texttt{date} là thời điểm đo, chỉ dùng
+để tham chiếu chứ không đưa vào làm đặc trưng số cho GP; \texttt{T} là
+nhiệt độ không khí đo được (\textdegree C); \texttt{rh} là độ ẩm tương
+đối (\%), tức tỉ lệ giữa lượng hơi nước hiện có trong không khí so với
+lượng hơi nước tối đa mà không khí có thể chứa ở cùng nhiệt độ; và
+\texttt{Tdew} là nhiệt độ điểm sương (\textdegree C) — nhiệt độ mà tại
+đó không khí đạt trạng thái bão hòa hơi nước và bắt đầu ngưng tụ thành
+sương, chính là đại lượng mục tiêu cần dự đoán. Như vậy, $T$ và $rh$
+đóng vai trò đặc trưng đầu vào, còn $T_{dew}$ là nhãn.
+
+GP được triển khai với tập toán tử và bộ tham số như sau:
+\begin{itemize}
+    \item Tập toán tử: $\{+, \times, \div, \log\}$ (phép chia được bảo
+    vệ như đã trình bày ở Mục~\ref{sec:gp});
+    \item Quần thể $10\,000$ cá thể, chạy qua $500$ thế hệ, độ sâu cây
+    tối đa $6$;
+    \item Tỉ lệ lai ghép $0.8$, tỉ lệ đột biến $0.2$ (chọn ngẫu
+    nhiên đều giữa ba loại đột biến đã trình bày ở Mục~\ref{sec:gp}:
+    thay thế cây con, đột biến điểm, và đột biến rút gọn), kích thước
+    elitism $200$;
+    \item Hệ số phạt kích thước cây $\lambda = 0.01$.
+\end{itemize}
 
 Biểu thức tốt nhất GP tìm được, đạt được ở thế hệ $499/500$, là:
 \begin{multline}
@@ -942,12 +974,12 @@ Phương trình~\eqref{eq:gp-tdew} về một hằng số duy nhất, biểu th�
 có thể viết lại gọn hơn dưới dạng:
 \begin{equation}
 T_{dew} \approx \log\!\left(\log\!\left(\frac{0.325}{\log(rh)}\right)\right)
-\times \left(\frac{-619{,}379}{rh} + 0{,}059169\,rh + T\right).
+\times \left(\frac{-619.379}{rh} + 0.059169\,rh + T\right).
 \label{eq:gp-tdew-rutgon}
 \end{equation}
 Trên tập kiểm tra, biểu thức~\eqref{eq:gp-tdew} (tương đương
-Phương trình~\eqref{eq:gp-tdew-rutgon}) đạt $\text{MAE}=0{,}2659$,
-$\text{RMSE}=0{,}3439$, và $R^2=0{,}9967$, tức giải thích được hơn
+Phương trình~\eqref{eq:gp-tdew-rutgon}) đạt $\text{MAE}=0.2659$,
+$\text{RMSE}=0.3439$, và $R^2=0.9967$, tức giải thích được hơn
 $99\%$ phương sai của $T_{dew}$ chỉ từ hai đặc trưng đầu vào.
 Hình~\ref{fig:hoitu-gp-tdew} minh họa quá trình hội tụ của cả RMSE lẫn
 MAE qua $500$ thế hệ, còn Hình~\ref{fig:cay-gp-tdew} trình bày trực
@@ -965,7 +997,7 @@ quan cấu trúc cây của biểu thức tìm được.
 \resizebox{\linewidth}{!}{%
 \begin{forest}
 for tree={
-    draw, circle, minimum size=7mm, inner sep=0pt, font=\small,
+    draw, circle, minimum size=7mm, inner sep=2pt, font=\scriptsize,
     l sep=10mm, s sep=4mm,
     edge={-},
     parent anchor=south, child anchor=north,
@@ -984,11 +1016,11 @@ for tree={
     [$+$
         [$+$
             [$\div$
-                [$-619{,}379$, rectangle]
+                [$-619.379$, rectangle]
                 [$rh$, rectangle]
             ]
             [$\times$
-                [$0{,}059169$, rectangle]
+                [$0.059169$, rectangle]
                 [$rh$, rectangle]
             ]
         ]
@@ -1010,7 +1042,7 @@ thành phần logarit độ ẩm trong công thức Magnus, dù không được 
 cấp trước dạng hàm này. Việc chưa khớp tuyệt đối một phần xuất phát từ
 giới hạn thiết kế của engine: các hằng số tại nút lá chỉ được sinh
 ngẫu nhiên trong khoảng $[-2,2]$, trong khi công thức Magnus cần các
-hằng số lớn hơn nhiều ($a=17{,}27$, $b=237{,}7$) — muốn tổng hợp chính
+hằng số lớn hơn nhiều ($a=17.27$, $b=237.7$) — muốn tổng hợp chính
 xác các hằng số này, GP phải tổ hợp nhiều lá qua các phép toán, tiêu
 tốn thêm ngân sách độ sâu vốn đã được dùng phần lớn cho cấu trúc chính
 của biểu thức.
