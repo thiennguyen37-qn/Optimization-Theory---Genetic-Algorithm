@@ -891,8 +891,10 @@ ch150    & 150 & 6528 & 6528 & 37/50 & $14{,}77$ \\
 \label{sec:ud-symbolic-regression}
 
 Ứng dụng cuối cùng minh họa Lập trình Di truyền (Mục~\ref{sec:gp}) cho
-bài toán hồi quy symbolic trên dữ liệu quan trắc thời tiết thực tế
-(bộ dữ liệu thời tiết công khai trên Kaggle). Mục tiêu dự đoán là
+bài toán hồi quy symbolic trên dữ liệu quan trắc thời tiết thực tế —
+bộ dữ liệu thời tiết công khai trên Kaggle, có thể truy cập tại
+\url{https://www.kaggle.com/datasets/alistairking/weather-long-term-time-series-forecasting}.
+Mục tiêu dự đoán là
 nhiệt độ điểm sương $T_{dew}$ (dew point), tính từ hai đặc trưng đo
 được là nhiệt độ không khí $T$ và độ ẩm tương đối $rh$. Quan hệ vật lý
 đúng giữa ba đại lượng này được mô tả bởi công thức Magnus:
@@ -929,30 +931,74 @@ Biểu thức tốt nhất GP tìm được, đạt được ở thế hệ $499
 \begin{multline}
 T_{dew} = \log\!\left(\log\!\left(\frac{0.325}{\log(rh)}\right)\right)
 \times \Bigg[
-\frac{-1.46}{\big(rh\cdot(-0.121)\big)\cdot\big((-0.121)\cdot 0.161\big)} \\
+\frac{-1.46}{\big((-0.121)\cdot rh\big)\cdot\big((-0.121)\cdot 0.161\big)} \\
 + \Big((-0.489)\cdot(-0.121)\cdot rh + T\Big)
 \Bigg],
 \label{eq:gp-tdew}
 \end{multline}
 gồm $24$ nút và có độ sâu $6$ — trùng khớp với giới hạn độ sâu tối đa
-đã đặt. Trên tập kiểm tra, biểu thức~\eqref{eq:gp-tdew} đạt
-$\text{MAE}=0{,}2659$, $\text{RMSE}=0{,}3439$, và $R^2=0{,}9967$, tức
-giải thích được hơn $99\%$ phương sai của $T_{dew}$ chỉ từ hai đặc
-trưng đầu vào. Hình~\ref{fig:hoitu-gp-tdew} minh họa quá trình hội tụ
-của cả RMSE lẫn MAE qua $500$ thế hệ, còn Hình~\ref{fig:cay-gp-tdew}
-trình bày trực quan cấu trúc cây của biểu thức tìm được.
+đã đặt. Rút gọn các tích số giữa hai hằng số ở
+Phương trình~\eqref{eq:gp-tdew} về một hằng số duy nhất, biểu thức trên
+có thể viết lại gọn hơn dưới dạng:
+\begin{equation}
+T_{dew} \approx \log\!\left(\log\!\left(\frac{0.325}{\log(rh)}\right)\right)
+\times \left(\frac{-619{,}379}{rh} + 0{,}059169\,rh + T\right).
+\label{eq:gp-tdew-rutgon}
+\end{equation}
+Trên tập kiểm tra, biểu thức~\eqref{eq:gp-tdew} (tương đương
+Phương trình~\eqref{eq:gp-tdew-rutgon}) đạt $\text{MAE}=0{,}2659$,
+$\text{RMSE}=0{,}3439$, và $R^2=0{,}9967$, tức giải thích được hơn
+$99\%$ phương sai của $T_{dew}$ chỉ từ hai đặc trưng đầu vào.
+Hình~\ref{fig:hoitu-gp-tdew} minh họa quá trình hội tụ của cả RMSE lẫn
+MAE qua $500$ thế hệ, còn Hình~\ref{fig:cay-gp-tdew} trình bày trực
+quan cấu trúc cây của biểu thức tìm được.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.72\linewidth]{figures/hoitu_gp_tdew.png}
+\includegraphics[width=0.95\linewidth]{figures/hoitu_gp_tdew.png}
 \caption{Đường hội tụ của RMSE và MAE qua các thế hệ khi GP dự đoán $T_{dew}$}
 \label{fig:hoitu-gp-tdew}
 \end{figure}
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=\linewidth]{figures/cay_gp_tdew.png}
-\caption{Cây biểu thức GP tìm được cho $T_{dew}$}
+\resizebox{\linewidth}{!}{%
+\begin{forest}
+for tree={
+    draw, circle, minimum size=7mm, inner sep=0pt, font=\small,
+    l sep=10mm, s sep=4mm,
+    edge={-},
+    parent anchor=south, child anchor=north,
+}
+[$\times$
+    [$\log$
+        [$\log$
+            [$\div$
+                [$0.325$, rectangle]
+                [$\log$
+                    [$rh$, rectangle]
+                ]
+            ]
+        ]
+    ]
+    [$+$
+        [$+$
+            [$\div$
+                [$-619{,}379$, rectangle]
+                [$rh$, rectangle]
+            ]
+            [$\times$
+                [$0{,}059169$, rectangle]
+                [$rh$, rectangle]
+            ]
+        ]
+        [$T$, rectangle]
+    ]
+]
+\end{forest}%
+}
+\caption{Cây biểu thức GP tìm được cho $T_{dew}$ (đã rút gọn theo
+Phương trình~\eqref{eq:gp-tdew-rutgon})}
 \label{fig:cay-gp-tdew}
 \end{figure}
 
@@ -968,25 +1014,3 @@ hằng số lớn hơn nhiều ($a=17{,}27$, $b=237{,}7$) — muốn tổng hợ
 xác các hằng số này, GP phải tổ hợp nhiều lá qua các phép toán, tiêu
 tốn thêm ngân sách độ sâu vốn đã được dùng phần lớn cho cấu trúc chính
 của biểu thức.
-
-\section{Tổng kết Chương}
-\label{sec:ud-tong-ket}
-
-Bốn thực nghiệm trên minh họa một đặc điểm xuyên suốt của Thuật toán
-Di truyền: tính linh hoạt cao nhờ khả năng thích ứng với nhiều cách mã
-hóa khác nhau — số thực ở Mục~\ref{sec:ud-khong-rang-buoc}
-và~\ref{sec:ud-co-rang-buoc}, hoán vị ở Mục~\ref{sec:ud-tsp}, và cây
-biểu thức ở Mục~\ref{sec:ud-symbolic-regression}. Đổi lại tính linh
-hoạt đó là hiệu quả thấp hơn các phương pháp chuyên dụng khi bài toán
-có sẵn một cấu trúc mà phương pháp đó khai thác được: ở năm bài toán
-chuẩn CEC 2006 tại Mục~\ref{sec:ud-co-rang-buoc}, GA phải bổ sung một
-bước tìm kiếm cục bộ mới tiếp cận được những nghiệm nằm sát biên miền
-khả thi, phần việc mà một phương pháp dựa trên gradient xử lý trực
-tiếp nhờ khai thác tính khả vi của hàm mục tiêu và ràng buộc. Ngược
-lại, ở những bài toán mà cấu trúc đó không có sẵn, hoặc phương pháp cổ
-điển tương ứng không còn đủ mạnh
-— bài toán người du lịch quy mô lớn cần bổ sung tìm kiếm cục bộ mới
-đạt được nghiệm tối ưu, hay quan hệ phi tuyến kết hợp logarit và phép
-chia của công thức Magnus giữa nhiệt độ, độ ẩm và điểm sương — GA và GP
-thể hiện rõ giá trị thực tiễn của một phương pháp tìm kiếm không đặt
-giả định trước về cấu trúc bài toán.
