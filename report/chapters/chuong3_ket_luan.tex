@@ -1,0 +1,85 @@
+% ============================================================
+% KẾT LUẬN (không đánh số chương, ngang hàng với Tài liệu tham khảo)
+% ============================================================
+\chapter*{Kết luận}
+\addcontentsline{toc}{chapter}{Kết luận}
+\label{chap:ket-luan}
+
+\noindent\textbf{Tóm tắt}
+\medskip
+
+Tiểu luận đã trình bày cơ sở lý thuyết của Thuật toán Di truyền (GA)
+và mở rộng của nó là Lập trình Di truyền (GP), sau đó minh họa cả hai
+phương pháp qua bốn thực nghiệm cụ thể. Chương~\ref{chap:co-so-ly-thuyet}
+xây dựng khung lý thuyết theo trình tự: tổng quan bài toán tối ưu và
+họ thuật toán tiến hóa; cơ sở khoa học của GA với ba cách mã hóa cá
+thể (nhị phân, số thực, hoán vị); các thành phần cốt lõi của một vòng
+lặp tiến hóa (hàm thích nghi, chọn lọc, lai ghép, đột biến, elitism);
+quy trình thuật toán và điều kiện dừng; và cuối cùng là GP với mã hóa
+dạng cây biểu thức, mở rộng GA sang bài toán tự động tổng hợp chương
+trình thay vì chỉ tối ưu tham số.
+
+Trên nền tảng đó, Chương~\ref{chap:ung-dung} áp dụng GA cho ba nhóm
+bài toán tối ưu số — không ràng buộc trên năm hàm benchmark kinh điển,
+có ràng buộc trên năm bài toán chuẩn CEC 2006, và bài toán người du
+lịch kết hợp 2-opt local search theo mô hình memetic algorithm — đối
+chiếu trực tiếp với các mốc nghiệm tối ưu đã công bố. Ở cả ba nhóm,
+GA (khi cần thiết được hỗ trợ thêm bởi tìm kiếm cục bộ) đều đạt hoặc
+tiệm cận nghiệm tối ưu đã biết. Riêng ứng dụng thứ tư dùng GP cho bài
+toán hồi quy symbolic, dự đoán nhiệt độ điểm sương từ nhiệt độ không
+khí và độ ẩm tương đối trên dữ liệu thời tiết thực tế, đạt
+$R^2 = 0.9967$ trên tập kiểm tra và tìm ra một biểu thức tường minh
+phản ánh đúng cấu trúc phi tuyến (logarit, phép chia lồng nhau) của
+quan hệ vật lý thật (công thức Magnus), thay vì chỉ đưa ra một mô hình
+dự đoán dạng hộp đen.
+
+\bigskip
+\noindent\textbf{Hạn chế}
+\medskip
+
+Bên cạnh các kết quả đạt được, tiểu luận còn một số hạn chế cần được
+nhìn nhận rõ. Thứ nhất, tính linh hoạt của GA/GP — không đặt giả định
+trước về cấu trúc bài toán — đi kèm với hiệu quả thấp hơn các phương
+pháp chuyên dụng khi bài toán có sẵn cấu trúc khai thác được: GA thuần
+túy cần bổ sung tìm kiếm cục bộ mới tiếp cận được nghiệm nằm sát biên
+miền khả thi ở các bài toán CEC 2006, và cần kết hợp 2-opt mới hội tụ
+đủ nhanh, đủ gần nghiệm tối ưu ở bài toán người du lịch quy mô lớn.
+Thứ hai, engine GP tự cài đặt trong tiểu luận giới hạn hằng số tại nút
+lá trong khoảng $[-2,2]$, khiến việc tổng hợp chính xác các hằng số
+lớn (như $a, b$ trong công thức Magnus) đòi hỏi tổ hợp nhiều nút, tiêu
+tốn ngân sách độ sâu vốn cần dùng cho cấu trúc chính của biểu thức —
+đây là nguyên nhân chính khiến GP chưa khôi phục được chính xác tuyệt
+đối công thức Magnus. Thứ ba, các thực nghiệm trong tiểu luận đều chỉ
+chạy với một giá trị seed cố định cho mỗi cấu hình tham số, chưa lặp
+lại nhiều lần với các seed khác nhau để đánh giá phương sai của kết
+quả; quy mô bài toán thử nghiệm (số chiều trong tối ưu ràng buộc, số
+địa điểm trong TSP, số đặc trưng đầu vào trong hồi quy symbolic) cũng
+còn tương đối nhỏ so với các bài toán thực tế phức tạp hơn.
+
+\bigskip
+\noindent\textbf{Hướng phát triển}
+\medskip
+
+Từ những hạn chế trên, tiểu luận đề xuất một số hướng phát triển cho
+các nghiên cứu tiếp theo. Một là, thực hiện nhiều lần chạy độc lập với
+các seed khác nhau cho mỗi cấu hình thực nghiệm, báo cáo kết quả dưới
+dạng giá trị trung bình và độ lệch chuẩn, nhằm đánh giá đầy đủ hơn độ
+ổn định của thuật toán thay vì chỉ dựa trên một lần chạy duy nhất. Hai
+là, mở rộng quy mô bài toán thử nghiệm — số chiều lớn hơn cho tối ưu
+có ràng buộc, số địa điểm lớn hơn cho bài toán người du lịch, số đặc
+trưng đầu vào nhiều hơn cho hồi quy symbolic — để đánh giá khả năng mở
+rộng (scalability) của các thuật toán đã cài đặt. Ba là, đối với GP,
+có thể bổ sung một bước tối ưu cục bộ riêng cho các hằng số tại nút lá
+(ví dụ bằng gradient descent hoặc least-squares sau khi cấu trúc cây
+đã cố định), thay vì chỉ dựa vào đột biến ngẫu nhiên để tinh chỉnh
+hằng số — đây là một kỹ thuật đã được chứng minh hiệu quả trong nhiều
+hệ thống GP hiện đại và có thể giúp khắc phục trực tiếp hạn chế về
+khoảng giá trị hằng số nêu ở phần Hạn chế. Bốn là, có thể thử nghiệm
+các cơ chế tham số thích ứng (self-adaptive), trong đó tỉ lệ lai ghép,
+đột biến, hoặc kích thước quần thể tự điều chỉnh theo tiến trình hội
+tụ thay vì cố định trong suốt quá trình chạy. Cuối cùng, ý tưởng kết
+hợp GA/GP với tìm kiếm cục bộ chuyên dụng — đã chứng minh hiệu quả rõ
+rệt ở bài toán người du lịch trong tiểu luận này — có thể được mở rộng
+sang các nhóm bài toán còn lại, chẳng hạn tích hợp một bước tối ưu cục
+bộ dựa trên gradient cho các bài toán tối ưu có ràng buộc khi hàm mục
+tiêu và ràng buộc khả vi.
