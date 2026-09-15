@@ -881,28 +881,18 @@ chu trình tiến hóa trên dưới dạng mã giả (pseudocode).
 \subsection*{Tiêu chuẩn Dừng và Đánh giá sự Hội tụ}
 \label{subsec:tieu-chuan-dung}
 
-Một thuật toán tiến hóa cần được trang bị một điều kiện dừng tường
-minh để kết thúc quá trình lặp. Ba tiêu chuẩn dừng phổ biến, thường
-được kết hợp sử dụng với nhau, được trình bày như sau.
+Một thuật toán tiến hóa cần có tiêu chí dừng rõ ràng để xác định thời điểm
+kết thúc quá trình tiến hóa. Trong thực tế, thay vì chỉ sử dụng một tiêu chí
+duy nhất, nhiều tiêu chí dừng thường được kết hợp để đánh giá cả số lần lặp,
+mức độ cải thiện của nghiệm và sự hội tụ của quần thể. Ba tiêu chí dừng phổ
+biến được trình bày dưới đây.
 
 \begin{itemize}
-    \item \textbf{Số thế hệ tối đa} $G_{max}$: đây là tiêu chuẩn đơn
-    giản nhất, đồng thời giúp kiểm soát trực tiếp ngân sách tính toán.
-    Tuy nhiên, việc lựa chọn $G_{max}$ cần cân nhắc: nếu $G_{max}$ quá
-    nhỏ, thuật toán có thể dừng lại trước khi quần thể hội tụ; nếu
-    $G_{max}$ quá lớn, tài nguyên tính toán sẽ bị lãng phí sau khi quần
-    thể đã hội tụ.
-    \item \textbf{Ngưỡng độ thích nghi mục tiêu}: thuật toán dừng ngay
-    khi tìm được một cá thể có độ thích nghi đạt hoặc vượt ngưỡng đặt
-    trước. Tiêu chuẩn này phù hợp khi giá trị tối ưu cần đạt đã biết
-    trước hoặc có thể ước lượng được.
-    \item \textbf{Độ trễ hội tụ}: thuật toán dừng khi độ
-    thích nghi của cá thể tốt nhất không cải thiện sau $K$ thế hệ liên
-    tiếp, được xem là dấu hiệu cho thấy các toán tử di truyền không còn
-    tạo ra tiến bộ đáng kể. Tuy vậy, cần lưu ý rằng tiêu chuẩn này có
-    thể khiến thuật toán dừng quá sớm nếu $K$ quá nhỏ, do quần thể hoàn
-    toàn có thể trải qua giai đoạn không cải thiện tạm thời trước khi
-    tiếp tục tiến triển ở các thế hệ sau.
+    \item \textbf{Số thế hệ tối đa $G_{\max}$:} đây là tiêu chí đơn giản, đồng thời cho phép kiểm soát trực tiếp số lần lặp và tài nguyên tính toán. Giá trị $G_{\max}$ cần được lựa chọn phù hợp với bài toán: nếu $G_{\max}$ quá nhỏ, thuật toán có thể chưa có đủ thời gian để đạt được nghiệm có chất lượng tốt; ngược lại, nếu quá lớn, thuật toán có thể tiếp tục thực hiện nhiều thế hệ dù mức độ cải thiện đã không còn đáng kể.
+
+    \item \textbf{Ngưỡng độ thích nghi mục tiêu:} thuật toán có thể kết thúc khi tìm được một cá thể có độ thích nghi đạt hoặc vượt qua một ngưỡng xác định trước. Tiêu chí này phù hợp khi có thể xác định trước mức chất lượng nghiệm mong muốn hoặc có một giá trị tham chiếu để làm cơ sở đánh giá.
+
+    \item \textbf{Độ trễ hội tụ:} thuật toán có thể kết thúc khi độ thích nghi của cá thể tốt nhất không cải thiện đáng kể trong $K$ thế hệ liên tiếp. Tiêu chí này dựa trên quan sát về mức độ tiến bộ của quá trình tiến hóa. Tuy nhiên, nếu $K$ được đặt quá nhỏ, thuật toán có thể kết thúc trong một giai đoạn mà mức cải thiện tạm thời thấp, trong khi quá trình tìm kiếm vẫn còn khả năng tiếp tục cải thiện nghiệm ở các thế hệ sau.
 \end{itemize}
 
 
