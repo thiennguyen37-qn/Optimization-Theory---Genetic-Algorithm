@@ -278,33 +278,36 @@ $T_c$, từ đó hướng quần thể hội tụ vào miền khả thi.
 \subsection*{Các Phép chọn lọc}
 \label{subsec:chon-loc}
 
-Toán tử chọn lọc quyết định những cá thể nào của quần thể hiện tại sẽ
-được chọn làm cha mẹ để sinh ra thế hệ tiếp theo. Nguyên tắc chung của
-toán tử này là thiên vị có hướng về phía các cá thể có độ thích nghi
-cao. Ba phương pháp chọn lọc phổ biến nhất được trình bày dưới đây.
+Toán tử chọn lọc quyết định những cá thể trong quần thể hiện tại được
+lựa chọn làm cha mẹ để tạo ra thế hệ tiếp theo. Về nguyên tắc, các cá
+thể có độ thích nghi cao sẽ có cơ hội được lựa chọn lớn hơn, qua đó
+làm tăng khả năng các đặc điểm tốt được duy trì và truyền sang thế hệ
+sau. Ba phương pháp chọn lọc phổ biến được trình bày dưới đây.
 
 \begin{itemize}
-    \item \textbf{Vòng quay Roulette}: xác
-    suất chọn cá thể $i$ tỉ lệ thuận với độ thích nghi của nó so với tổng
-    độ thích nghi của toàn quần thể:
+    \item \textbf{Vòng quay Roulette}: Xác
+    suất chọn cá thể $i$ tỉ lệ thuận với độ thích nghi của cá thể đó so
+    với tổng độ thích nghi của toàn bộ quần thể:
     \begin{equation}
     P_i = \frac{f_i}{\sum_{j=1}^{N} f_j}.
     \label{eq:roulette}
     \end{equation}
-    Hạn chế của phương pháp này là khi một cá thể có độ thích nghi vượt
-    trội hẳn so với phần còn lại, cá thể đó sẽ chiếm phần lớn xác suất
-    được chọn, từ đó làm quần thể nhanh chóng mất đi tính đa dạng.
-    \item \textbf{Giải đấu}: chọn ngẫu nhiên $k$
+    Hạn chế của phương pháp này xuất hiện khi một cá thể có độ thích
+    nghi vượt trội so với phần còn lại. Khi đó, cá thể này chiếm phần
+    lớn xác suất được lựa chọn, làm tăng áp lực chọn lọc và có thể
+    khiến tính đa dạng của quần thể giảm nhanh.
+    \item \textbf{Giải đấu}: Chọn ngẫu nhiên $k$
     cá thể từ quần thể, sau đó chọn cá thể tốt nhất trong nhóm làm cha
-    mẹ. Tham số $k$, gọi là kích thước giải đấu, kiểm soát trực tiếp
-    áp lực chọn lọc: $k$ càng lớn thì áp lực chọn lọc càng cao, quần
-    thể hội tụ càng nhanh, nhưng đổi lại rủi ro mất đa dạng cũng tăng
-    theo.
-    \item \textbf{Chọn lọc theo thứ hạng}: cá thể
-    được chọn dựa trên thứ hạng của nó trong quần thể đã được sắp xếp
-    theo độ thích nghi, thay vì dựa trên giá trị thích nghi tuyệt đối.
-    Cách tiếp cận này khắc phục được hiện tượng một cá thể vượt trội áp
-    đảo toàn bộ xác suất chọn như trong phương pháp vòng quay Roulette.
+    mẹ. Tham số $k$, được gọi là kích thước giải đấu, là một yếu tố
+    điều khiển áp lực chọn lọc: $k$ càng lớn thì cá thể tốt càng có
+    lợi thế trong quá trình lựa chọn, quần thể thường hội tụ nhanh
+    hơn, nhưng đồng thời nguy cơ mất đa dạng và hội tụ sớm cũng tăng.
+    \item \textbf{Chọn lọc theo thứ hạng}: Các cá
+    thể được sắp xếp theo độ thích nghi và việc lựa chọn được thực
+    hiện dựa trên thứ hạng thay vì giá trị độ thích nghi tuyệt đối.
+    Nhờ đó, sự chênh lệch quá lớn giữa các giá trị độ thích nghi không
+    khiến một cá thể chiếm ưu thế quá mức về xác suất được lựa chọn
+    như trong phương pháp vòng quay Roulette.
 \end{itemize}
 
 Bên cạnh các toán tử chọn lọc cha mẹ nêu trên, chiến lược lựa chọn cá
