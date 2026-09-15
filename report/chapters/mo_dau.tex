@@ -1,0 +1,52 @@
+% ============================================================
+% MỞ ĐẦU (không đánh số chương, ngang hàng với Kết luận)
+% ============================================================
+\chapter*{Mở đầu}
+\addcontentsline{toc}{chapter}{Mở đầu}
+\label{chap:mo-dau}
+
+\noindent\textbf{Đặt vấn đề}
+\medskip
+
+Tối ưu hóa là bài toán trung tâm của nhiều lĩnh vực khoa học kỹ thuật,
+với mục tiêu tìm ra phương án tốt nhất trong một không gian khả thi
+theo một tiêu chí đánh giá cho trước. Các phương pháp tối ưu cổ điển
+dựa trên đạo hàm, dù có cơ sở lý thuyết chặt chẽ và hội tụ nhanh, lại
+bộc lộ hai hạn chế cố hữu khi đối mặt với các bài toán thực tế: dễ mắc
+kẹt tại cực trị cục bộ trên hàm mục tiêu không lồi, và đòi hỏi hàm mục
+tiêu phải khả vi -- điều kiện không phải lúc nào cũng thỏa mãn, đặc
+biệt với các bài toán tổ hợp như định tuyến hay lập lịch. Những hạn chế
+này thúc đẩy sự phát triển của nhóm phương pháp metaheuristic dựa trên
+quần thể, trong đó Thuật toán Di truyền (Genetic Algorithm -- GA) là
+đại diện tiêu biểu nhất, mô phỏng nguyên lý chọn lọc tự nhiên của
+Darwin để tìm kiếm nghiệm mà không cần thông tin đạo hàm hay giả định
+về tính lồi của hàm mục tiêu.
+
+\bigskip
+\noindent\textbf{Mục tiêu}
+\medskip
+
+Tiểu luận đặt ra hai mục tiêu chính. Một là hệ thống hóa cơ sở lý
+thuyết của GA -- từ nguồn gốc sinh học, các cách mã hóa nghiệm, đến các
+thành phần và toán tử cốt lõi cấu thành một chu trình tiến hóa hoàn
+chỉnh -- cùng với Lập trình Di truyền (Genetic Programming -- GP), một
+mở rộng của GA cho phép tiến hóa trực tiếp cấu trúc chương trình hoặc
+biểu thức thay vì chỉ tối ưu tham số số. Hai là minh họa khả năng áp
+dụng của hai phương pháp này qua các thực nghiệm cụ thể, đối chiếu trực
+tiếp với các mốc nghiệm tối ưu hoặc quan hệ vật lý đã biết, nhằm đánh
+giá khách quan chất lượng nghiệm mà GA/GP tìm được.
+
+\bigskip
+\noindent\textbf{Phạm vi}
+\medskip
+
+Nội dung tiểu luận gồm hai chương chính và phần kết luận. Chương 1
+trình bày cơ sở lý thuyết của GA và GP theo trình tự từ tổng quan bài
+toán tối ưu, cơ sở khoa học, các thành phần và toán tử cốt lõi, đến quy
+trình thuật toán và điều kiện dừng. Chương 2 áp dụng GA cho ba nhóm bài
+toán tối ưu số -- không ràng buộc, có ràng buộc, và bài toán người du
+lịch -- cùng với GP cho bài toán hồi quy symbolic trên dữ liệu thời
+tiết thực tế. Phần Kết luận tổng hợp kết quả đạt được, đồng thời nhìn
+nhận các hạn chế của phạm vi thực nghiệm -- như việc mỗi cấu hình tham
+số chỉ chạy với một seed cố định và quy mô bài toán còn tương đối nhỏ
+-- cùng các hướng phát triển khả dĩ cho những nghiên cứu tiếp theo.
