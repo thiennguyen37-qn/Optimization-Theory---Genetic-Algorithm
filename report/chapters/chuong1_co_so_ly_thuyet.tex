@@ -899,7 +899,7 @@ biến được trình bày dưới đây.
 \section{Lập trình Di truyền}
 \label{sec:gp}
 
-Lập trình Di truyền được John Koza phát triển từ cuối thập niên 1980
+Lập trình Di truyền (GP) được John Koza phát triển từ cuối thập niên 1980
 và được hệ thống hóa trong các công trình của ông, trong đó có công
 trình năm 1994 [6]. GP phát triển từ các nguyên lý của Thuật toán Di
 truyền (GA), nhưng có một điểm khác biệt quan trọng về cách biểu diễn
@@ -913,8 +913,9 @@ xác định trước chính xác cấu trúc của lời giải.
 
 \subsection*{Mã hóa dạng cây biểu thức}
 
-Mỗi cá thể trong GP là một cây biểu thức. Mỗi nút trong của cây là một
-toán tử được chọn từ một \textit{tập toán tử} cho trước, chẳng hạn các
+Mỗi cá thể trong GP là một cây biểu thức. Mỗi nút trung gian
+(internal node) của cây là một toán tử được chọn từ một \textit{tập
+toán tử} cho trước, chẳng hạn các
 phép toán số học $\{+,-,\times,\div\}$ hoặc hàm lượng giác
 $\{\sin,\cos\}$; mỗi nút lá là một biến đầu vào hoặc hằng số được chọn
 từ một \textit{tập biến và hằng số} cho trước. Khi duyệt cây theo đúng
@@ -923,7 +924,8 @@ minh, có thể tính giá trị trên bất kỳ bộ dữ liệu đầu vào n
 cho phép toàn bộ quần thể các cây với hình dạng và nội dung khác nhau
 được đánh giá, so sánh một cách thống nhất như trong GA thông thường.
 
-Việc thiết kế hai tập hợp này cần thỏa mãn hai tính chất cơ bản:
+Việc thiết kế tập toán tử và tập biến, hằng số cần thỏa mãn hai tính
+chất cơ bản:
 \begin{itemize}
     \item \textbf{Tính khép kín} (closure): mọi toán tử phải chấp
     nhận bất kỳ giá trị nào do một toán tử khác hoặc một nút lá trả
@@ -1009,8 +1011,8 @@ trúc cây thay vì trên chuỗi có độ dài cố định:
     \item \textbf{Lai ghép trao đổi cây con}: chọn
     ngẫu nhiên một nút trên mỗi cây cha mẹ, sau đó hoán đổi hai cây con
     bắt rễ tại các nút đó cho nhau để tạo ra hai cây con mới. Các biến
-    thể gồm lai ghép bất đối xứng (cây con thứ nhất lấy từ nút trong,
-    cây con thứ hai từ nút lá) và lai ghép tự thân (cắt và dán trên
+    thể gồm lai ghép bất đối xứng (cây con thứ nhất lấy từ nút trung
+    gian, cây con thứ hai từ nút lá) và lai ghép tự thân (cắt và dán trên
     cùng một cây), nhằm cân bằng giữa khám phá và khai thác;
     \item \textbf{Đột biến thay thế cây con}: chọn
     ngẫu nhiên một nút trên cây, rồi thay toàn bộ cây con bắt rễ tại nút
