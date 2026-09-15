@@ -899,20 +899,17 @@ biến được trình bày dưới đây.
 \section{Lập trình Di truyền}
 \label{sec:gp}
 
-Lập trình Di truyền do John Koza phát triển
-từ cuối thập niên 1980 và được hệ thống hóa trong công trình năm 1992
-[6]. GP là một mở rộng trực tiếp của GA, tương ứng với dạng \textit{mã
-hóa dựa trên cấu trúc} đã được giới thiệu trong
-Mục~\ref{subsec:ma-hoa}. Khác biệt cốt lõi so với GA dùng mã hóa số
-thực hay hoán vị là: thay vì tiến hóa một chuỗi giá trị có độ dài cố
-định trong khuôn dạng nghiệm đã cho trước, GP tiến hóa trực tiếp
-\textbf{cấu trúc} của một biểu thức hoặc chương trình. Nhờ đó, thuật
-toán có khả năng tự khám phá đồng thời cả hình dạng lẫn tham số của
-nghiệm -- đây chính là lý do GP được xem là bước chuyển từ ``tối ưu
-tham số'' sang ``tự động tổng hợp chương trình''. Một tính chất đáng
-chú ý của GP là nghiệm cuối cùng có dạng \textit{biểu thức tường minh},
-có thể đọc, phân tích và giải thích được bởi con người, khác biệt căn
-bản với các mô hình hộp đen như mạng nơ-ron.
+Lập trình Di truyền được John Koza phát triển từ cuối thập niên 1980
+và được hệ thống hóa trong các công trình của ông, trong đó có công
+trình năm 1994 [6]. GP phát triển từ các nguyên lý của Thuật toán Di
+truyền (GA), nhưng có một điểm khác biệt quan trọng về cách biểu diễn
+nghiệm. Trong GA, một cá thể thường là một chuỗi giá trị dùng để biểu
+diễn một nghiệm cụ thể, chẳng hạn một dãy số thực hoặc một hoán vị.
+Trong khi đó, một cá thể trong GP là một chương trình hoặc một biểu
+thức, và chương trình này có thể được thực thi để tạo ra kết quả cho
+bài toán. Nhờ vậy, GP có thể được sử dụng để tự động tìm ra chương
+trình hoặc biểu thức phù hợp với yêu cầu của bài toán mà không cần
+xác định trước chính xác cấu trúc của lời giải.
 
 \subsection*{Mã hóa dạng cây biểu thức}
 
