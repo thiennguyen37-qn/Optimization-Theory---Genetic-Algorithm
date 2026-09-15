@@ -974,8 +974,8 @@ kinh điển, tất cả đều giới hạn độ sâu tối đa $d_{\max}$:
 
 \subsection*{Hàm độ thích nghi}
 
-Ứng dụng tiêu biểu nhất của GP là bài toán \textbf{symbolic regression}:
-tự động tìm một biểu thức toán học mô tả tốt
+Một trong số những ứng dụng của GP là bài toán \textbf{hồi quy symbolic}
+(symbolic regression): tự động tìm một biểu thức toán học mô tả tốt
 mối quan hệ giữa tập dữ liệu quan sát $(X, y)$ mà không giả định trước
 dạng hàm. Bài toán này khác biệt căn bản so với hồi quy tuyến tính hay
 hồi quy đa thức, nơi dạng hàm đã được ấn định sẵn và công việc còn lại
@@ -986,14 +986,21 @@ công trình còn dùng RMSE, MAE, hoặc hệ số xác định $R^2$; lựa ch
 này ảnh hưởng trực tiếp đến độ nhạy của chọn lọc đối với các ngoại lai
 trong dữ liệu.
 
-Một vấn đề đặc trưng của GP là hiện tượng \textbf{bloat}: kích thước
-cây có xu hướng tăng trưởng liên tục qua các thế hệ mà không mang lại
-cải thiện tương xứng về độ chính xác. Nguyên nhân được lý giải ở mức
-lý thuyết là các cây con trung tính (ví dụ đoạn $+0$, $\times 1$) tích
-lũy dần vì chúng không làm giảm độ thích nghi nhưng lại được bảo vệ
-khỏi đột biến có hại. Bloat làm tăng chi phí đánh giá, giảm khả năng
-diễn giải nghiệm, và có thể dẫn đến quá khớp. Để đối phó, người ta
-thường cộng thêm vào hàm thích nghi một \textbf{số hạng phạt} tỉ lệ với kích thước cây:
+Một vấn đề đặc trưng trong GP là hiện tượng \textbf{bloat}, trong đó
+kích thước của các cây chương trình có xu hướng tăng qua các thế hệ mà
+không mang lại sự cải thiện tương xứng về độ chính xác của nghiệm. Một
+trong những nguyên nhân được đề xuất là sự tích lũy của các cây con
+trung tính, tức là những phần của chương trình có thể thay đổi nhưng
+không làm thay đổi đáng kể kết quả đầu ra. Ví dụ, trong một biểu thức,
+các thành phần như $+0$ hoặc $\times 1$ không làm thay đổi giá trị của
+biểu thức nhưng vẫn làm tăng kích thước cây. Do những thành phần này
+không làm giảm độ thích nghi, chúng có thể được duy trì và tiếp tục
+tích lũy qua nhiều thế hệ. Hiện tượng bloat làm tăng chi phí tính toán
+khi đánh giá các cá thể, khiến chương trình trở nên phức tạp và khó
+diễn giải hơn, đồng thời có thể làm tăng nguy cơ quá khớp. Một cách phổ
+biến để hạn chế bloat là đưa kích thước hoặc độ phức tạp của cây vào
+quá trình đánh giá, chẳng hạn bằng cách thêm một \textbf{số hạng phạt}
+vào hàm thích nghi đối với những cây có kích thước lớn:
 \begin{equation}
     \mathrm{fitness}(T) = \mathrm{MSE}(T) + \lambda \cdot |T|,
     \label{eq:parsimony}
