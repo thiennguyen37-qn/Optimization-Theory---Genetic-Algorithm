@@ -1005,8 +1005,18 @@ vào hàm thích nghi đối với những cây có kích thước lớn:
     \mathrm{fitness}(T) = \mathrm{MSE}(T) + \lambda \cdot |T|,
     \label{eq:parsimony}
 \end{equation}
-trong đó $|T|$ là số nút của cây $T$ và $\lambda > 0$ điều chỉnh mức
-độ ưu tiên sự gọn nhẹ so với độ chính xác. Các biện pháp bổ sung gồm
+trong đó $|T|$ biểu thị kích thước của cây chương trình $T$, thường
+được xác định bằng số lượng nút trong cây. Thành phần $\lambda \cdot
+|T|$ đóng vai trò là một khoản phạt đối với những cây có kích thước
+lớn, qua đó khuyến khích GP ưu tiên các chương trình có cấu trúc đơn
+giản và gọn nhẹ. Tham số $\lambda > 0$ kiểm soát mức độ của khoản phạt
+này, từ đó điều chỉnh sự đánh đổi giữa độ chính xác và độ phức tạp của
+chương trình. Khi $\lambda$ nhỏ, quá trình tiến hóa chủ yếu tập trung
+vào việc giảm sai số MSE; ngược lại, khi $\lambda$ lớn, các cây có
+kích thước lớn sẽ chịu mức phạt cao hơn và do đó ít được ưu tiên hơn.
+Nhờ vậy, việc bổ sung thành phần phạt kích thước cây giúp hạn chế sự
+gia tăng không cần thiết của cấu trúc chương trình và góp phần kiểm
+soát hiện tượng bloat. Các biện pháp bổ sung gồm
 giới hạn độ sâu/số nút tuyệt đối, loại bỏ cá thể vi phạm ngay sau khi
 sinh, và các toán tử đột biến có chủ đích rút gọn cây.
 
@@ -1037,12 +1047,8 @@ Các thành phần còn lại của chu trình tiến hóa, bao gồm khởi t�
 thể, chọn lọc, elitism và điều kiện dừng, về bản chất tương tự như GA
 đã trình bày trong các mục trước; khác biệt duy nhất nằm ở đối tượng
 thao tác là \textbf{cây} thay vì \textbf{vector} số hoặc hoán vị.
-Chọn lọc giải đấu được ưa chuộng trong GP vì đơn giản, ít nhạy với
-thang đo của hàm thích nghi và dễ song song hóa khi kích thước quần
-thể lớn; kích thước giải đấu cụ thể tùy vào bài toán và được xác định
-bằng thực nghiệm. Điều kiện dừng thường là số thế hệ tối đa kết hợp
-với ngưỡng sai số chấp nhận được; một số hệ thống còn theo dõi độ đa
-dạng của quần thể để kết thúc sớm khi quần thể đã hội tụ.
+Điều kiện dừng thường là số thế hệ tối đa kết hợp
+với ngưỡng sai số chấp nhận được.
 
 Để minh họa cụ thể cách các toán tử trên vận hành trên cây biểu thức,
 xét hai cây cha mẹ với tập toán tử $\{+,-,\times\}$. Cha mẹ thứ nhất
