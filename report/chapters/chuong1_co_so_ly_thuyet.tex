@@ -1050,21 +1050,9 @@ thao tác là \textbf{cây} thay vì \textbf{vector} số hoặc hoán vị.
 Điều kiện dừng thường là số thế hệ tối đa kết hợp
 với ngưỡng sai số chấp nhận được.
 
-Để minh họa cụ thể cách các toán tử trên vận hành trên cây biểu thức,
-xét hai cây cha mẹ với tập toán tử $\{+,-,\times\}$. Cha mẹ thứ nhất
-là cây $(x+1)^2$; do tập toán tử không có phép lũy thừa, cây này được
-biểu diễn dưới dạng $\times[\,+[x,1],\ +[x,1]\,]$. Cha mẹ thứ hai là
-cây $(x-1)x$, biểu diễn $\times[\,-[x,1],\ x\,]$.
-
 Hình~\ref{fig:gp-crossover} minh họa phép lai ghép trao đổi cây con
-giữa hai cha mẹ này. Nút cắt được chọn là nhánh $+[x,1]$ của cha mẹ
-thứ nhất và nhánh $-[x,1]$ của cha mẹ thứ hai -- hai nhánh này được tô
-màu cam trong hình. Hoán đổi hai nhánh cho nhau sinh ra hai cá thể
-con: $(x-1)(x+1) = x^2 - 1$ và $(x+1)x = x^2 + x$, với phần vừa được
-ghép sang từ cha mẹ kia tô màu xanh lá. Cả hai cá thể con đều tổ hợp
-đúng nhân tử tuyến tính của cha mẹ này với phần còn lại của cha mẹ
-kia, minh họa trực tiếp cách lai ghép cây con tái tổ hợp các nhánh cây
-giữa nhiều cha mẹ để tạo ra cá thể mới.
+giữa hai cây cha mẹ $(x+1)^2$ và $(x-1)x$ với tập toán tử
+$\{+,-,\times\}$.
 
 \begin{figure}[H]
 \centering
@@ -1127,15 +1115,9 @@ ra hai cây con (c)--(d).}
 \label{fig:gp-crossover}
 \end{figure}
 
-Ba toán tử đột biến cũng minh họa được trên một cây đơn giản, chẳng
-hạn cây $x+3$, như trong Hình~\ref{fig:gp-mutation}. Đột biến thay thế
-cây con chọn một nhánh -- ví dụ nhánh $3$ -- và thay bằng một cây con
-mới sinh ngẫu nhiên, chẳng hạn $2x$, được cá thể $x+2x$. Đột biến điểm
-giữ nguyên cấu trúc cây, chỉ đổi một nút hàm sang hàm khác cùng số
-ngôi: đổi $+$ thành $-$, được cây $x-3$. Đột biến rút gọn thao tác
-trên một cây lớn hơn, chẳng hạn $(x+3)\times x$: chọn cây con $x+3$
-bên trong nó rồi thay thế toàn bộ cá thể bằng đúng cây con đó, được cá
-thể mới chỉ còn $x+3$, nhỏ hơn hẳn cây gốc.
+Hình~\ref{fig:gp-mutation} minh họa ba toán tử đột biến trên cây đơn
+giản $x+3$ (và, với đột biến rút gọn, trên cây lớn hơn
+$(x+3)\times x$).
 
 \begin{figure}[H]
 \centering
