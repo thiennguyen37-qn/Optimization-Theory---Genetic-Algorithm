@@ -364,8 +364,8 @@ phân và lai ghép trộn trên mã hóa số thực -- hai cách mã hóa đư
 đến nhiều nhất trong chương này, lần lượt là cách mã hóa cổ điển của GA và
 cách mã hóa dùng trong phần cài đặt thực nghiệm của tiểu luận. Với mã
 hóa nhị phân, vị trí cắt được chọn ngẫu nhiên sau gen thứ $4$; đoạn từ
-vị trí $5$ đến $8$ (tô cam) được hoán đổi giữa hai cha mẹ để tạo ra hai
-cá thể con, với đoạn vừa nhận tô xanh lá. Với mã hóa số thực, hai cá
+vị trí $5$ đến $8$ được hoán đổi giữa hai cha mẹ để tạo ra hai cá thể
+con. Với mã hóa số thực, hai cá
 thể con được tính trực tiếp theo công thức lai ghép trộn
 \eqref{eq:blend-crossover} với $\alpha = 0.75$.
 
@@ -433,21 +433,20 @@ thể con được tính trực tiếp theo công thức lai ghép trộn
 \node[gene, minimum width=13mm] at (2.15,-6.8) {$2.0$};
 \node[anchor=east, font=\small] at (-0.9,-6.8) {Cha mẹ 2};
 
-\node[align=center, font=\small] at (1.3,-7.3) {$\Downarrow$ \eqref{eq:blend-crossover}};
+\node[align=center, font=\small] at (1.3,-7.8) {$\Downarrow$ \eqref{eq:blend-crossover}};
 
-\node[gene, minimum width=13mm] at (0.5,-8.2) {$2.5$};
-\node[gene, minimum width=13mm] at (2.15,-8.2) {$-0.25$};
-\node[anchor=east, font=\small] at (-0.9,-8.2) {Con 1};
+\node[gene, minimum width=13mm] at (0.5,-8.7) {$2.5$};
+\node[gene, minimum width=13mm] at (2.15,-8.7) {$-0.25$};
+\node[anchor=east, font=\small] at (-0.9,-8.7) {Con 1};
 
-\node[gene, minimum width=13mm] at (0.5,-9.1) {$1.5$};
-\node[gene, minimum width=13mm] at (2.15,-9.1) {$1.25$};
-\node[anchor=east, font=\small] at (-0.9,-9.1) {Con 2};
+\node[gene, minimum width=13mm] at (0.5,-9.6) {$1.5$};
+\node[gene, minimum width=13mm] at (2.15,-9.6) {$1.25$};
+\node[anchor=east, font=\small] at (-0.9,-9.6) {Con 2};
 
 \end{tikzpicture}
 \caption{Ví dụ lai ghép trong GA trên hai cách mã hóa. Trên: mã hóa
-nhị phân với lai ghép đơn điểm -- đoạn sắp hoán đổi tô cam trên cha
-mẹ, đoạn vừa nhận được ở cá thể con tô xanh lá. Dưới: mã hóa số thực
-với lai ghép trộn theo \eqref{eq:blend-crossover}, $\alpha = 0.75$.}
+nhị phân với lai ghép đơn điểm. Dưới: mã hóa số thực với lai ghép trộn
+theo \eqref{eq:blend-crossover}, $\alpha = 0.75$.}
 \label{fig:ga-crossover}
 \end{figure}
 
@@ -471,14 +470,13 @@ vậy, các toán tử lai ghép chuyên biệt cần được sử dụng:
 Để tiện so sánh, cả ba ví dụ dưới đây đều xuất phát từ cùng một cặp cha
 mẹ là hai hoán vị của $8$ phần tử.
 
-Hình~\ref{fig:ga-crossover-pmx} minh họa lai ghép khớp từng phần
-(Partially Matched Crossover). Đoạn từ vị trí $3$ đến $5$ (tô cam) được
-hoán đổi trực tiếp giữa hai cha mẹ, đồng thời tạo ra một ánh xạ tương
-ứng từng cặp giá trị trong đoạn đó. Đối với các vị trí còn lại (tô
-xanh lá), giá trị gốc của cha mẹ được giữ nguyên nếu không gây trùng
-lặp với đoạn vừa hoán đổi; nếu trùng lặp, giá trị được thay thế theo
-ánh xạ đã tạo cho đến khi thu được một giá trị chưa xuất hiện trong cá
-thể con.
+Hình~\ref{fig:ga-crossover-pmx} minh họa lai ghép khớp từng phần. Đoạn
+từ vị trí $3$ đến $5$ được hoán đổi trực tiếp giữa hai cha mẹ, đồng
+thời tạo ra một ánh xạ tương ứng từng cặp giá trị trong đoạn đó. Đối
+với các vị trí còn lại, giá trị gốc của cha mẹ được giữ nguyên nếu
+không gây trùng lặp với đoạn vừa hoán đổi; nếu trùng lặp, giá trị được
+thay thế theo ánh xạ đã tạo cho đến khi thu được một giá trị chưa xuất
+hiện trong cá thể con.
 
 \begin{figure}[H]
 \centering
@@ -488,7 +486,7 @@ thể con.
     graft/.style={fill=green!20, draw=green!50!black, thick}
 ]
 
-\node[font=\small\itshape] at (2.8,1.3) {Mã hóa hoán vị -- Lai ghép khớp từng phần (Partially Matched Crossover)};
+\node[font=\small\itshape] at (2.8,1.3) {Mã hóa hoán vị -- Lai ghép khớp từng phần};
 
 \node[gene] at (0.0,0) {1};
 \node[gene] at (0.8,0) {2};
@@ -536,20 +534,20 @@ thể con.
 \node[anchor=east, font=\small] at (-0.5,-3.7) {Con 2};
 
 \end{tikzpicture}
-\caption{Ví dụ lai ghép khớp từng phần (Partially Matched Crossover)
-trên mã hóa hoán vị của $8$ phần tử. Đoạn hoán đổi trực tiếp giữa hai
-cha mẹ (vị trí $3$ đến $5$) tô cam; các vị trí còn lại của cá thể con,
-giữ nguyên hoặc được sửa theo ánh xạ để tránh trùng lặp, tô xanh lá.}
+\caption{Ví dụ lai ghép khớp từng phần trên mã hóa hoán vị của $8$
+phần tử. Đoạn hoán đổi trực tiếp giữa hai cha mẹ (vị trí $3$ đến $5$);
+các vị trí còn lại của cá thể con, giữ nguyên hoặc được sửa theo ánh
+xạ để tránh trùng lặp.}
 \label{fig:ga-crossover-pmx}
 \end{figure}
 
-Hình~\ref{fig:ga-crossover-ox} minh họa lai ghép theo thứ tự (Order
-Crossover) trên cùng cặp cha mẹ -- toán tử được sử dụng trong phần cài
+Hình~\ref{fig:ga-crossover-ox} minh họa lai ghép theo thứ tự trên cùng
+cặp cha mẹ -- toán tử được sử dụng trong phần cài
 đặt thực nghiệm cho bài toán người du lịch tại
-Chương~\ref{chap:ung-dung}. Đoạn từ vị trí $3$ đến $5$ (tô cam) được
-giữ nguyên từ cha mẹ tương ứng để tạo thành cá thể con cùng hàng; các
-vị trí còn lại của cá thể con (tô xanh lá) được điền theo đúng thứ tự
-xuất hiện của các phần tử chưa dùng trong cha mẹ còn lại.
+Chương~\ref{chap:ung-dung}. Đoạn từ vị trí $3$ đến $5$ được giữ nguyên
+từ cha mẹ tương ứng để tạo thành cá thể con cùng hàng; các vị trí còn
+lại của cá thể con được điền theo đúng thứ tự xuất hiện của các phần
+tử chưa dùng trong cha mẹ còn lại.
 
 \begin{figure}[H]
 \centering
@@ -559,7 +557,7 @@ xuất hiện của các phần tử chưa dùng trong cha mẹ còn lại.
     graft/.style={fill=green!20, draw=green!50!black, thick}
 ]
 
-\node[font=\small\itshape] at (2.8,1.3) {Mã hóa hoán vị -- Lai ghép theo thứ tự (Order Crossover)};
+\node[font=\small\itshape] at (2.8,1.3) {Mã hóa hoán vị -- Lai ghép theo thứ tự};
 
 \node[gene] at (0.0,0) {1};
 \node[gene] at (0.8,0) {2};
@@ -607,18 +605,17 @@ xuất hiện của các phần tử chưa dùng trong cha mẹ còn lại.
 \node[anchor=east, font=\small] at (-0.5,-3.7) {Con 2};
 
 \end{tikzpicture}
-\caption{Ví dụ lai ghép theo thứ tự (Order Crossover) trên mã hóa hoán
-vị của $8$ phần tử. Đoạn giữ nguyên từ cha mẹ tương ứng (vị trí $3$
-đến $5$) tô cam; các vị trí còn lại của cá thể con, điền theo thứ tự
-xuất hiện trong cha mẹ kia (bỏ qua phần tử đã dùng), tô xanh lá.}
+\caption{Ví dụ lai ghép theo thứ tự trên mã hóa hoán vị của $8$ phần
+tử. Đoạn giữ nguyên từ cha mẹ tương ứng (vị trí $3$ đến $5$); các vị
+trí còn lại của cá thể con, điền theo thứ tự xuất hiện trong cha mẹ
+kia (bỏ qua phần tử đã dùng).}
 \label{fig:ga-crossover-ox}
 \end{figure}
 
-Hình~\ref{fig:ga-crossover-cx} minh họa lai ghép theo chu trình (Cycle
-Crossover) trên cùng cặp cha mẹ. Ba chu trình được xác định giữa vị
-trí phần tử của hai cha mẹ (tô cam, xanh lá và xanh dương); mỗi cá thể
-con được tạo ra bằng cách giữ nguyên các chu trình này nhưng luân
-phiên lấy giá trị từ mỗi cha mẹ.
+Hình~\ref{fig:ga-crossover-cx} minh họa lai ghép theo chu trình trên
+cùng cặp cha mẹ. Ba chu trình được xác định giữa vị trí phần tử của
+hai cha mẹ; mỗi cá thể con được tạo ra bằng cách giữ nguyên các chu
+trình này nhưng luân phiên lấy giá trị từ mỗi cha mẹ.
 
 \begin{figure}[H]
 \centering
@@ -629,7 +626,7 @@ phiên lấy giá trị từ mỗi cha mẹ.
     cycc/.style={fill=blue!15, draw=blue!55!black, thick}
 ]
 
-\node[font=\small\itshape] at (2.8,1.3) {Mã hóa hoán vị -- Lai ghép theo chu trình (Cycle Crossover)};
+\node[font=\small\itshape] at (2.8,1.3) {Mã hóa hoán vị -- Lai ghép theo chu trình};
 \node[font=\scriptsize] at (2.8,0.85) {Chu trình 1: cam \quad\quad Chu trình 2: xanh lá \quad\quad Chu trình 3: xanh dương};
 
 \node[gene,cyca] at (0.0,0) {1};
@@ -675,10 +672,10 @@ phiên lấy giá trị từ mỗi cha mẹ.
 \node[anchor=east, font=\small] at (-0.5,-3.4) {Con 2};
 
 \end{tikzpicture}
-\caption{Ví dụ lai ghép theo chu trình (Cycle Crossover) trên mã hóa
-hoán vị của $8$ phần tử. Ba chu trình giữa vị trí phần tử của hai cha
-mẹ được tô cam, xanh lá và xanh dương. Con 1 lấy chu trình cam và xanh
-dương từ Cha mẹ 1, chu trình xanh lá từ Cha mẹ 2; Con 2 lấy ngược lại.}
+\caption{Ví dụ lai ghép theo chu trình trên mã hóa hoán vị của $8$
+phần tử, với ba chu trình được xác định giữa vị trí phần tử của hai
+cha mẹ. Con 1 lấy chu trình 1 và 3 từ Cha mẹ 1, chu trình 2 từ Cha mẹ
+2; Con 2 lấy ngược lại.}
 \label{fig:ga-crossover-cx}
 \end{figure}
 
@@ -714,11 +711,10 @@ Một số dạng đột biến tiêu biểu bao gồm:
 
 Tương tự, Hình~\ref{fig:ga-mutation} minh họa đột biến đảo bit trên mã
 hóa nhị phân và đột biến Gauss trên mã hóa số thực. Với mã hóa nhị
-phân, gen tại vị trí $3$ (tô cam) được đảo giá trị từ $1$ thành $0$.
-Với mã hóa số thực, giá trị tại vị trí $2$ (tô cam) được cộng thêm một
-nhiễu Gauss theo \eqref{eq:dot-bien-gauss}, ở đây lấy mẫu được
-$\mathcal{N}(0,\sigma^2) = -0.4$, cho ra giá trị mới $-1.4$ (tô
-xanh lá).
+phân, gen tại vị trí $3$ được đảo giá trị từ $1$ thành $0$. Với mã hóa
+số thực, giá trị tại vị trí $2$ được cộng thêm một nhiễu Gauss theo
+\eqref{eq:dot-bien-gauss}, ở đây lấy mẫu được $\mathcal{N}(0,\sigma^2)
+= -0.4$, cho ra giá trị mới $-1.4$.
 
 \begin{figure}[H]
 \centering
@@ -1107,8 +1103,7 @@ giữa nhiều cha mẹ để tạo ra cá thể mới.
 
 \end{tikzpicture}
 \caption{Lai ghép trao đổi cây con giữa hai cây cha mẹ (a)--(b), tạo
-ra hai cây con (c)--(d). Nút cắt tô cam; phần vừa nhận từ cha mẹ kia
-ở mỗi cây con tô xanh lá.}
+ra hai cây con (c)--(d).}
 \label{fig:gp-crossover}
 \end{figure}
 
@@ -1197,9 +1192,8 @@ thể mới chỉ còn $x+3$, nhỏ hơn hẳn cây gốc.
 
 \end{tikzpicture}
 \caption{Ba toán tử đột biến minh họa trên cây $x+3$ (đột biến rút
-gọn minh họa trên cây lớn hơn $(x+3)\times x$). Nút hoặc nhánh bị thay
-đổi tô cam trên cây trước đột biến (a, c, e); nút hoặc nhánh kết quả
-tô xanh lá trên cây sau đột biến (b, d, f).}
+gọn minh họa trên cây lớn hơn $(x+3)\times x$): (a)--(b) đột biến thay
+thế cây con, (c)--(d) đột biến điểm, (e)--(f) đột biến rút gọn.}
 \label{fig:gp-mutation}
 \end{figure}
 
