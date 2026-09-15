@@ -25,7 +25,7 @@ biến $x, y$ và một cực tiểu toàn cục đã biết trước, cho phép
 trực tiếp giá trị GA tìm được với giá trị đúng. Với mỗi hàm, đồ thị ba
 chiều và đường hội tụ của GA được đặt trên dưới nhau trong cùng một
 hình. Miền tìm kiếm của từng hàm được lấy theo bộ giá trị chuẩn công bố
-tại \url{https://www.sfu.ca/~ssurjano/optimization.html} [8], nơi người
+tại \url{https://www.sfu.ca/~ssurjano/optimization.html} [7], nơi người
 đọc có thể tham khảo thêm công thức và đặc trưng chi tiết của từng hàm
 benchmark.
 
@@ -330,7 +330,7 @@ không có ý nghĩa.
 
 Thực nghiệm sử dụng bộ benchmark CEC 2006 của Liang và cộng sự
 (\url{https://cw.fel.cvut.cz/b241/_media/courses/a0m33eoa/cviceni/2006_problem_definitions_and_evaluation_criteria_for_the_cec_2006_special_session_on_constraint_real-parameter_optimization.pdf}
-[9]), gồm $24$ bài toán tối ưu có ràng buộc kèm nghiệm tối ưu. Năm bài
+[8]), gồm $24$ bài toán tối ưu có ràng buộc kèm nghiệm tối ưu. Năm bài
 toán g01, g06, g08, g11 và g15 được chọn nhằm bao quát nhiều dạng ràng
 buộc, mức độ chật hẹp của miền khả thi và vị trí của nghiệm tối ưu so
 với biên.
@@ -779,7 +779,7 @@ dùng lai ghép theo thứ tự và đột biến hoán đổi
 thay cho các toán tử số thực ở hai mục trước.
 
 Để đánh giá khách quan trên dữ liệu thực thay vì các ví dụ tự tạo quy
-mô nhỏ, ba bộ dữ liệu chuẩn từ thư viện benchmark TSPLIB95 [7]
+mô nhỏ, ba bộ dữ liệu chuẩn từ thư viện benchmark TSPLIB95 [9]
 (\url{https://comopt.ifi.uni-heidelberg.de/software/TSPLIB95/tsp/tspindex.html})
 được sử dụng: berlin52 ($n=52$ địa điểm tại Berlin), rd100 ($n=100$
 địa điểm ngẫu nhiên), và ch150 ($n=150$ địa điểm). Mỗi bộ dữ liệu đều
@@ -893,12 +893,12 @@ ch150    & 150 & 6528 & 6528 & 37/50 & $14.77$ \\
 
 Ứng dụng cuối cùng minh họa Lập trình Di truyền (Mục~\ref{sec:gp}) cho
 bài toán hồi quy symbolic trên dữ liệu quan trắc thời tiết thực tế —
-bộ dữ liệu thời tiết công khai trên Kaggle [11], có thể truy cập tại
+bộ dữ liệu thời tiết công khai trên Kaggle [10], có thể truy cập tại
 \url{https://www.kaggle.com/datasets/alistairking/weather-long-term-time-series-forecasting}.
 Mục tiêu dự đoán là
 nhiệt độ điểm sương $T_{dew}$ (dew point), tính từ hai đặc trưng đo
 được là nhiệt độ không khí $T$ và độ ẩm tương đối $rh$. Quan hệ vật lý
-đúng giữa ba đại lượng này được mô tả bởi công thức Magnus [10]:
+đúng giữa ba đại lượng này được mô tả bởi công thức Magnus [11]:
 \begin{equation}
 \gamma(T, rh) = \ln\!\left(\frac{rh}{100}\right) + \frac{aT}{b+T},
 \label{eq:magnus-gamma}
