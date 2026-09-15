@@ -764,28 +764,46 @@ số thực, giá trị tại vị trí $2$ được cộng thêm một nhiễu 
 \caption{Ví dụ đột biến trong GA trên hai cách mã hóa. Trên: mã hóa
 nhị phân với đột biến đảo bit tại vị trí thứ $3$. Dưới: mã hóa số
 thực với đột biến Gauss, cộng nhiễu ngẫu nhiên vào vị trí thứ $2$
-theo \eqref{eq:dot-bien-gauss}. Vị trí bị thay đổi tô cam trước đột
-biến; giá trị kết quả tô xanh lá sau đột biến.}
+theo \eqref{eq:dot-bien-gauss}.}
 \label{fig:ga-mutation}
 \end{figure}
 
 \subsection*{Chiến lược giữ lại Cá thể Ưu tú}
 \label{subsec:elitism}
 
-Do các toán tử chọn lọc, lai ghép và đột biến đều mang tính ngẫu nhiên,
-không có cơ chế nào đảm bảo cá thể tốt nhất của thế hệ hiện tại sẽ được
-duy trì sang thế hệ kế tiếp. Trên lý thuyết, độ thích nghi tốt nhất của
-toàn quần thể hoàn toàn có thể giảm đi giữa hai thế hệ liên tiếp. Chiến
-lược \textbf{Elitism} ra đời nhằm khắc phục vấn đề này: $k$ cá thể tốt
-nhất của thế hệ hiện tại được giữ nguyên vẹn và chuyển trực tiếp sang
-thế hệ sau mà không trải qua lai ghép hay đột biến. Nhờ đó, độ thích
-nghi tốt nhất từng đạt được sẽ không bao giờ giảm qua các thế hệ.
+Do các quá trình chọn lọc, lai ghép và đột biến có thể làm thay đổi hoặc loại bỏ
+các cá thể tốt, GA thông thường không đảm bảo cá thể tốt nhất của thế hệ hiện
+tại được duy trì nguyên vẹn ở thế hệ kế tiếp. Vì vậy, độ thích nghi tốt nhất của
+quần thể có thể giảm giữa hai thế hệ liên tiếp. \textbf{Chiến lược Elitism}, do
+De Jong đề xuất [5], được sử dụng để khắc phục vấn đề này bằng cách giữ lại $k$
+cá thể có độ thích nghi cao nhất của thế hệ hiện tại và chuyển trực tiếp sang
+thế hệ kế tiếp mà không thực hiện lai ghép hay đột biến.
 
-Việc lựa chọn kích thước elitism $k$ đòi hỏi một sự cân nhắc. Nếu $k$
-quá nhỏ, các cá thể tốt vẫn có thể bị mất do tác động của các toán tử
-ngẫu nhiên. Ngược lại, nếu $k$ quá lớn, áp lực khám phá của quần thể sẽ
-giảm sút, làm suy giảm tính đa dạng và khiến quá trình tìm kiếm hội tụ
-sớm về một vùng hẹp của không gian tìm kiếm.
+Gọi $E_t$ là tập gồm $k$ cá thể ưu tú của thế hệ $t$. Khi đó, các cá thể này
+được đưa trực tiếp vào thế hệ $t+1$:
+
+\[
+E_t \subseteq P_{t+1}, \qquad |E_t| = k.
+\]
+
+Nhờ đó, nếu bài toán là \textbf{cực đại hóa độ thích nghi}, độ thích nghi tốt
+nhất của quần thể không thể giảm qua các thế hệ:
+
+\[
+\boxed{
+f_{\mathrm{best}}(t+1) \geq f_{\mathrm{best}}(t)
+}
+\]
+
+Đây là đặc tính quan trọng nhất của Elitism, đảm bảo rằng một nghiệm tốt đã
+tìm được sẽ không bị mất do các phép toán tiến hóa ở các thế hệ sau.
+
+Kích thước $k$ cần được lựa chọn phù hợp. Nếu $k$ quá nhỏ, số lượng cá thể
+được bảo toàn trực tiếp ít, nên tác động của Elitism đối với việc duy trì các
+nghiệm tốt bị hạn chế. Ngược lại, nếu $k$ quá lớn, một phần lớn quần thể được
+giữ nguyên qua các thế hệ, làm giảm khả năng khám phá những vùng mới của
+không gian tìm kiếm, đồng thời có thể làm giảm tính đa dạng và khiến quần thể
+hội tụ sớm.
 
 
 \section{Quy trình Thuật toán và Điều kiện Dừng}
@@ -817,7 +835,7 @@ này được minh họa tổng quát trong Hình~\ref{fig:ga-cycle}.
 \node[box, below=of select] (cross) {Lai ghép};
 \node[box, below=of cross] (mut) {Đột biến};
 \node[box, below=of mut] (evalc) {Đánh giá độ thích nghi của quần thể con};
-\node[box, below=of evalc] (update) {Cập nhật quần thể $P(t+1)$ + Elitism};
+\node[box, below=of evalc] (update) {Cập nhật quần thể $P(t+1)$};
 \node[decision, below=of update] (stop) {Đạt điều kiện dừng?};
 \node[box, below=of stop] (ret) {Trả về cá thể tốt nhất};
 
@@ -852,9 +870,9 @@ chu trình tiến hóa trên dưới dạng mã giả (pseudocode).
     \State $t \gets t + 1$
     \State Chọn lọc tập cha mẹ $S(t)$ từ $P(t-1)$
     \State Thực hiện lai ghép trên $S(t)$, tạo tập con $C(t)$
-    \State Thực hiện đột biến trên $C(t)$
-    \State Đánh giá độ thích nghi của $C(t)$
-    \State $P(t) \gets$ cập nhật quần thể mới (áp dụng elitism)
+    \State Thực hiện đột biến trên $C(t)$, tạo tập con $C'(t)$
+    \State Đánh giá độ thích nghi của $C'(t)$
+    \State $P(t) \gets$ tạo quần thể mới từ $C'(t)$, giữ lại $k$ cá thể ưu tú
 \EndWhile
 \State \Return cá thể tốt nhất tìm được
 \end{algorithmic}
@@ -893,7 +911,7 @@ minh để kết thúc quá trình lặp. Ba tiêu chuẩn dừng phổ biến, 
 
 Lập trình Di truyền do John Koza phát triển
 từ cuối thập niên 1980 và được hệ thống hóa trong công trình năm 1992
-[5]. GP là một mở rộng trực tiếp của GA, tương ứng với dạng \textit{mã
+[6]. GP là một mở rộng trực tiếp của GA, tương ứng với dạng \textit{mã
 hóa dựa trên cấu trúc} đã được giới thiệu trong
 Mục~\ref{subsec:ma-hoa}. Khác biệt cốt lõi so với GA dùng mã hóa số
 thực hay hoán vị là: thay vì tiến hóa một chuỗi giá trị có độ dài cố
