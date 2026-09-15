@@ -36,49 +36,67 @@ dự đoán dạng hộp đen.
 \noindent\textbf{Hạn chế}
 \medskip
 
-Bên cạnh các kết quả đạt được, tiểu luận còn một số hạn chế cần được
-nhìn nhận rõ. Thứ nhất, tính linh hoạt của GA/GP — không đặt giả định
-trước về cấu trúc bài toán — đi kèm với hiệu quả thấp hơn các phương
-pháp chuyên dụng khi bài toán có sẵn cấu trúc khai thác được: GA thuần
-túy cần bổ sung tìm kiếm cục bộ mới tiếp cận được nghiệm nằm sát biên
-miền khả thi ở các bài toán CEC 2006, và cần kết hợp 2-opt mới hội tụ
-đủ nhanh, đủ gần nghiệm tối ưu ở bài toán người du lịch quy mô lớn.
-Thứ hai, engine GP tự cài đặt trong tiểu luận giới hạn hằng số tại nút
-lá trong khoảng $[-2,2]$, khiến việc tổng hợp chính xác các hằng số
-lớn (như $a, b$ trong công thức Magnus) đòi hỏi tổ hợp nhiều nút, tiêu
-tốn ngân sách độ sâu vốn cần dùng cho cấu trúc chính của biểu thức —
-đây là nguyên nhân chính khiến GP chưa khôi phục được chính xác tuyệt
-đối công thức Magnus. Thứ ba, các thực nghiệm trong tiểu luận đều chỉ
-chạy với một giá trị seed cố định cho mỗi cấu hình tham số, chưa lặp
-lại nhiều lần với các seed khác nhau để đánh giá phương sai của kết
-quả; quy mô bài toán thử nghiệm (số chiều trong tối ưu ràng buộc, số
-địa điểm trong TSP, số đặc trưng đầu vào trong hồi quy symbolic) cũng
-còn tương đối nhỏ so với các bài toán thực tế phức tạp hơn.
+Bên cạnh những kết quả đạt được, tiểu luận vẫn còn một số hạn chế cần
+được xem xét. Thứ nhất, tính linh hoạt của GA/GP đi kèm với việc không
+khai thác trước các đặc trưng cấu trúc của bài toán, do đó hiệu quả tìm
+kiếm có thể chưa cao trong một số trường hợp. Đối với các bài toán tối
+ưu có ràng buộc, GA thuần túy có thể gặp khó khăn trong việc tìm kiếm
+các nghiệm nằm sát biên của miền khả thi. Kết quả thực nghiệm trên các
+bài toán CEC 2006 cho thấy việc bổ sung cơ chế tìm kiếm cục bộ có thể
+giúp thuật toán tiếp cận nghiệm tốt hơn. Tương tự, đối với bài toán
+người du lịch (TSP) có quy mô lớn, việc kết hợp GA với các phép cải
+thiện nghiệm như 2-opt giúp quá trình hội tụ nhanh hơn và đưa nghiệm
+thu được đến gần nghiệm tối ưu.
+
+Thứ hai, trong bài toán hồi quy biểu thức bằng GP, không gian biểu diễn
+hằng số của các nút lá còn bị giới hạn. Cụ thể, engine GP được xây dựng
+trong tiểu luận chỉ cho phép các hằng số nằm trong khoảng $[-2,2]$.
+Điều này gây khó khăn khi biểu diễn chính xác các hằng số có độ lớn
+lớn hơn, chẳng hạn các hằng số $a, b$ xuất hiện trong công thức Magnus.
+Để biểu diễn những giá trị này, GP phải kết hợp nhiều nút và phép toán
+trung gian, từ đó làm tăng kích thước cây và tiêu tốn ngân sách độ sâu
+vốn cần thiết cho việc xây dựng cấu trúc chính của biểu thức. Đây cũng
+là một trong những nguyên nhân khiến GP chưa thể khôi phục chính xác
+tuyệt đối công thức Magnus.
+
+Thứ ba, phạm vi thực nghiệm của tiểu luận còn tương đối hạn chế. Các
+thí nghiệm hiện mới được thực hiện với một thiết lập ngẫu nhiên cố
+định cho mỗi cấu hình tham số, do đó chưa đánh giá đầy đủ mức độ ổn
+định của thuật toán trước sự thay đổi của quá trình khởi tạo. Bên cạnh
+đó, quy mô của các bài toán được khảo sát, chẳng hạn số chiều trong các
+bài toán tối ưu có ràng buộc, số địa điểm trong TSP hay số lượng và
+đặc trưng của biến đầu vào trong hồi quy biểu thức, vẫn còn tương đối
+nhỏ so với nhiều bài toán thực tế phức tạp. Vì vậy, khả năng mở rộng và
+tính ổn định của GA/GP trên các bài toán có quy mô lớn hơn vẫn cần
+được đánh giá thêm.
 
 \bigskip
 \noindent\textbf{Hướng phát triển}
 \medskip
 
-Từ những hạn chế trên, tiểu luận đề xuất một số hướng phát triển cho
-các nghiên cứu tiếp theo. Một là, thực hiện nhiều lần chạy độc lập với
-các seed khác nhau cho mỗi cấu hình thực nghiệm, báo cáo kết quả dưới
-dạng giá trị trung bình và độ lệch chuẩn, nhằm đánh giá đầy đủ hơn độ
-ổn định của thuật toán thay vì chỉ dựa trên một lần chạy duy nhất. Hai
-là, mở rộng quy mô bài toán thử nghiệm — số chiều lớn hơn cho tối ưu
-có ràng buộc, số địa điểm lớn hơn cho bài toán người du lịch, số đặc
-trưng đầu vào nhiều hơn cho hồi quy symbolic — để đánh giá khả năng mở
-rộng (scalability) của các thuật toán đã cài đặt. Ba là, đối với GP,
-có thể bổ sung một bước tối ưu cục bộ riêng cho các hằng số tại nút lá
-(ví dụ bằng gradient descent hoặc least-squares sau khi cấu trúc cây
-đã cố định), thay vì chỉ dựa vào đột biến ngẫu nhiên để tinh chỉnh
-hằng số — đây là một kỹ thuật đã được chứng minh hiệu quả trong nhiều
-hệ thống GP hiện đại và có thể giúp khắc phục trực tiếp hạn chế về
-khoảng giá trị hằng số nêu ở phần Hạn chế. Bốn là, có thể thử nghiệm
-các cơ chế tham số thích ứng (self-adaptive), trong đó tỉ lệ lai ghép,
-đột biến, hoặc kích thước quần thể tự điều chỉnh theo tiến trình hội
-tụ thay vì cố định trong suốt quá trình chạy. Cuối cùng, ý tưởng kết
-hợp GA/GP với tìm kiếm cục bộ chuyên dụng — đã chứng minh hiệu quả rõ
-rệt ở bài toán người du lịch trong tiểu luận này — có thể được mở rộng
-sang các nhóm bài toán còn lại, chẳng hạn tích hợp một bước tối ưu cục
-bộ dựa trên gradient cho các bài toán tối ưu có ràng buộc khi hàm mục
-tiêu và ràng buộc khả vi.
+Từ những hạn chế đã nêu, tiểu luận đề xuất một số hướng phát triển cho
+các nghiên cứu tiếp theo:
+
+\begin{itemize}
+    \item Đối với hạn chế về hiệu quả tìm kiếm, có thể nghiên cứu việc
+    kết hợp GA với các phương pháp tìm kiếm cục bộ phù hợp với từng
+    bài toán. Bên cạnh 2-opt cho TSP, có thể áp dụng các phương pháp
+    tối ưu dựa trên gradient đối với những bài toán có hàm mục tiêu và
+    ràng buộc khả vi. Đồng thời, có thể sử dụng cơ chế tham số thích
+    ứng để tự điều chỉnh tỷ lệ lai ghép, tỷ lệ đột biến và kích thước
+    quần thể theo tiến trình hội tụ.
+
+    \item Đối với hạn chế về khả năng biểu diễn hằng số trong GP, có
+    thể bổ sung bước tối ưu riêng cho các hằng số tại nút lá sau khi
+    cấu trúc cây được xác định. Các phương pháp như least-squares hoặc
+    gradient descent có thể được sử dụng để tinh chỉnh các hằng số,
+    thay vì chỉ dựa vào đột biến ngẫu nhiên trong một khoảng giá trị
+    cố định.
+
+    \item Đối với hạn chế về phạm vi thực nghiệm, nên thực hiện mỗi
+    cấu hình nhiều lần với các quá trình khởi tạo ngẫu nhiên khác
+    nhau và báo cáo giá trị trung bình cùng độ lệch chuẩn. Đồng thời,
+    có thể tăng quy mô bài toán, chẳng hạn số chiều, số địa điểm trong
+    TSP và số lượng đặc trưng đầu vào, nhằm đánh giá tốt hơn tính ổn
+    định và khả năng mở rộng của GA/GP.
+\end{itemize}
