@@ -11,8 +11,10 @@ phần chính: mục đầu tiên phát biểu bài toán tối ưu hóa tổng 
 thiệu họ thuật toán tiến hóa; mục thứ hai trình bày cơ sở sinh học cũng
 như nguyên lý hoạt động của GA; mục thứ ba phân tích chi tiết các thành
 phần và toán tử cốt lõi; mục thứ tư tổng hợp quy trình tổng thể của
-thuật toán và điều kiện dừng; mục cuối cùng giới thiệu Lập trình Di
-truyền như một mở rộng trực tiếp của GA.
+thuật toán và điều kiện dừng. Phần cuối trình bày Lập trình Di truyền
+(Genetic Programming – GP), một phương pháp phát triển từ các nguyên
+lý của Thuật toán Di truyền (GA), cho phép tiến hóa trực tiếp cấu trúc
+của chương trình hoặc biểu thức để tìm ra lời giải phù hợp.
 
 \section{Tổng quan về Bài toán Tối ưu và Họ Thuật toán Tiến hóa}
 \label{sec:tong-quan}
@@ -197,13 +199,12 @@ nhất được trình bày như sau.
     điển do Holland đề xuất, phù hợp với các bài toán rời rạc hoặc
     logic. Tuy nhiên, khi áp dụng cho biến số thực, cách mã hóa này
     đòi hỏi một bước rời rạc hóa, làm giảm độ chính xác của nghiệm.
-    \item \textbf{Mã hóa số thực}: nghiệm là
-    một dãy số thực, chẳng hạn $[3.14,\, -0.05,\, 12.8]$, trong đó mỗi
-    phần tử tương ứng trực tiếp với một biến quyết định. Cách mã hóa
-    này phù hợp một cách tự nhiên với các bài toán tối ưu liên tục
-    nhiều biến và loại trừ được sai số lượng tử hóa của mã hóa nhị
-    phân. Đây cũng là cách mã hóa được sử dụng trong phần cài đặt thực
-    nghiệm của tiểu luận tại Chương~\ref{chap:ung-dung}.
+    \item \textbf{Mã hóa số thực}: nghiệm được biểu diễn dưới dạng một
+    dãy số thực, chẳng hạn $[3.14,\, -0.05,\, 12.8]$, trong đó mỗi phần
+    tử tương ứng trực tiếp với một biến quyết định. Phương pháp mã hóa
+    này đặc biệt phù hợp với các bài toán tối ưu liên tục nhiều biến,
+    đồng thời tránh được sai số do giới hạn độ chính xác khi biểu diễn
+    nghiệm bằng mã nhị phân.
     \item \textbf{Mã hóa hoán vị}: nghiệm là
     một thứ tự sắp xếp của một tập hợp phần tử, chẳng hạn
     $[3, 1, 4, 2, 5]$. Đây là cách mã hóa tự nhiên cho các bài toán
@@ -226,14 +227,16 @@ tích chi tiết trong Mục~\ref{sec:toan-tu-cot-loi}.
 \subsection*{Hàm độ thích nghi và Ràng buộc}
 \label{subsec:ham-thich-nghi}
 
-Hàm độ thích nghi đóng vai trò đánh giá chất lượng của từng cá thể
-trong quần thể, và là cơ sở cho toàn bộ quá trình chọn lọc. Đối với bài
-toán không ràng buộc, hàm thích nghi thường được xây dựng trực tiếp từ
-hàm mục tiêu; chẳng hạn, đối với bài toán cực tiểu hóa, ta có thể đảo
-dấu hàm mục tiêu do GA nguyên thủy được phát biểu dưới dạng cực đại
-hóa độ thích nghi.
+\textbf{Hàm độ thích nghi} được sử dụng để đánh giá chất lượng của
+từng cá thể trong quần thể và làm cơ sở cho quá trình chọn lọc. Đối
+với bài toán không có ràng buộc, hàm độ thích nghi thường được xây
+dựng dựa trên hàm mục tiêu. Với bài toán cực tiểu hóa, nghiệm tốt là
+nghiệm có giá trị hàm mục tiêu càng nhỏ nhưng do GA thường ưu tiên các
+cá thể có độ thích nghi càng lớn, hàm mục tiêu có thể được biến đổi,
+chẳng hạn bằng cách đổi dấu, để giá trị độ thích nghi tăng tương ứng
+với mức độ tốt của nghiệm.
 
-Đối với bài toán \textbf{có ràng buộc}, trọng tâm của tiểu luận này,
+Đối với bài toán có ràng buộc, trọng tâm của tiểu luận này,
 cách tiếp cận kinh điển là đưa ràng buộc vào hàm mục tiêu thông qua một
 số hạng phạt, tạo thành hàm thích nghi đã phạt:
 \begin{equation}
